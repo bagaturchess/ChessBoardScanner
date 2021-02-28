@@ -24,13 +24,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
+import bagaturchess.scanner.cnn.model.NetworkModel;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
 import deepnetts.util.Tensor;
 
 
-public class NetworkModel_RGB extends NetworkModel {
+public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 	
 	
 	public NetworkModel_RGB(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {

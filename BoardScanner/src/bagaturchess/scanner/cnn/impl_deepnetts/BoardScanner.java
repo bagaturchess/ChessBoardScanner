@@ -22,18 +22,19 @@ package bagaturchess.scanner.cnn.impl_deepnetts;
 
 import java.io.IOException;
 
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel;
+import bagaturchess.scanner.cnn.model.NetworkModel;
+import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.NeuralNetwork;
 
 
 public abstract class BoardScanner {
 	
 	
-	protected NetworkModel networkModel;
+	protected NetworkModel<ConvolutionalNetwork> networkModel;
 	protected NeuralNetwork<?> network;
 	
 	
-	public BoardScanner(NetworkModel _networkModel) throws ClassNotFoundException, IOException {
+	public BoardScanner(NetworkModel<ConvolutionalNetwork> _networkModel) throws ClassNotFoundException, IOException {
 		networkModel = _networkModel;
 		network = networkModel.getNetwork();
 	}

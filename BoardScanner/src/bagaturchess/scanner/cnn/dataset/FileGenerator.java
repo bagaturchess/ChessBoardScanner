@@ -19,6 +19,7 @@
  */
 package bagaturchess.scanner.cnn.dataset;
 
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.impl_deepnetts.learning.DataSetInitPair;
-import bagaturchess.scanner.cnn.impl_deepnetts.learning.DataSetInitPair_ByBoardImage_Gray;
-import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
+
 
 public class FileGenerator {
 

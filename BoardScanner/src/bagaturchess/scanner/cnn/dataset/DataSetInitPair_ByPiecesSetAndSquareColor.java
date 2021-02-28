@@ -17,34 +17,40 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.impl;
+package bagaturchess.scanner.cnn.dataset;
 
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
-import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.common.BoardProperties;
 
 
-public class BGColorTester {
+public class DataSetInitPair_ByPiecesSetAndSquareColor extends DataSetInitPair {
 	
 	
-	public static void main(String[] args) {
+	protected BoardProperties boardProperties;
+	
+	
+	DataSetInitPair_ByPiecesSetAndSquareColor(BoardProperties _imageProperties) {
 		
-		try {
-			
-			int[][] imageMatrix = ScannerUtils.createSquareImage(137, 64);
-			System.out.println(imageMatrix[0][0]);
-			BufferedImage image = ScannerUtils.createGrayImage(imageMatrix);
-			ScannerUtils.saveImage("source", image, "png");
-			
-			imageMatrix = ScannerUtils.convertToGrayMatrix(image);
-			
-			int avg = MatrixUtils.getAVG(imageMatrix);
-			System.out.println(avg);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		super();
+		
+		boardProperties = _imageProperties;
+		
+		for (int pid = 0; pid <= 12; pid++) {
+			BufferedImage whiteImage = ScannerUtils.createPieceImage(boardProperties, pid, new Color(220, 220, 220));
+			BufferedImage blackImage = ScannerUtils.createPieceImage(boardProperties, pid, new Color(120, 120, 120));
+			images.add(ScannerUtils.convertToGrayMatrix(whiteImage));
+			images.add(ScannerUtils.convertToGrayMatrix(blackImage));
+			if (pid == 0) {
+				pids.add(0);
+				pids.add(13);
+			} else {
+				pids.add(pid);
+				pids.add(pid);
+			}
 		}
 	}
 }

@@ -32,7 +32,7 @@ import javax.imageio.ImageIO;
 import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_Gray;
 import bagaturchess.scanner.cnn.impl_deepnetts.MatcherFinder;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 
 

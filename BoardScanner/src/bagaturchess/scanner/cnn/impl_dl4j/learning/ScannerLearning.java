@@ -1,4 +1,4 @@
-package bagaturchess.scanner.cnn.impl_deepnetts.learning;
+package bagaturchess.scanner.cnn.impl_dl4j.learning;
 
 
 import java.awt.image.BufferedImage;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 
 import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
 import bagaturchess.scanner.cnn.dataset.DataSetInitPair_ByBoardImage_Gray;
@@ -28,12 +30,11 @@ public class ScannerLearning {
 	
 	
 	private static final String NET_FILE = "scanner.chesscom1.bin";
-	private static ConvolutionalNetwork network;
+	private static MultiLayerNetwork network;
 	
-	private static BackpropagationTrainer trainer;
-	private static ScannerDataSet dataset;
+	private static DataSetIteratorImpl dataset;
 	
-	private static NetworkModel<ConvolutionalNetwork> netmodel;
+	private static NetworkModel<MultiLayerNetwork> netmodel;
 	
 	private static long lastSave = System.currentTimeMillis();
 	

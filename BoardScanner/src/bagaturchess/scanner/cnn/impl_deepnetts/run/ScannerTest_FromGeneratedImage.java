@@ -28,11 +28,12 @@ import bagaturchess.bitboard.api.BoardUtils;
 import bagaturchess.bitboard.api.IBitBoard;
 import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner;
 import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_RGB;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
-import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
+import deepnetts.net.ConvolutionalNetwork;
 
 
 public class ScannerTest_FromGeneratedImage {
@@ -50,7 +51,7 @@ public class ScannerTest_FromGeneratedImage {
 			BufferedImage boardImage = (BufferedImage) ImageHandlerSingleton.getInstance().createBoardImage(boardProperties, bitboard.toEPD(), new Color(220, 220, 220), new Color(120, 120, 120));
 			//ScannerUtils.saveImage("board", boardImage);
 			
-			NetworkModel netmodel = new NetworkModel_RGB(new FileInputStream(NET_FILE), boardProperties.getSquareSize());
+			NetworkModel<ConvolutionalNetwork> netmodel = new NetworkModel_RGB(new FileInputStream(NET_FILE), boardProperties.getSquareSize());
 			BoardScanner scanner = new BoardScanner_RGB(netmodel);
 			
 			String fen = scanner.scan(ScannerUtils.convertToRGBMatrix(boardImage));

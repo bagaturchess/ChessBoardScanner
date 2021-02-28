@@ -23,15 +23,16 @@ package bagaturchess.scanner.cnn.impl_deepnetts;
 import java.io.IOException;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel;
+import bagaturchess.scanner.cnn.model.NetworkModel;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
+import deepnetts.net.ConvolutionalNetwork;
 
 
 public class BoardScanner_RGB extends BoardScanner {
 	
 	
-	public BoardScanner_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
+	public BoardScanner_RGB(NetworkModel<ConvolutionalNetwork> networkModel) throws ClassNotFoundException, IOException {
 		super(networkModel);
 	}
 	

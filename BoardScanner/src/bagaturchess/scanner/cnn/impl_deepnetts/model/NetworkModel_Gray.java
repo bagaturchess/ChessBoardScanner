@@ -24,14 +24,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
-import bagaturchess.bitboard.impl.utils.VarStatistic;
+import bagaturchess.scanner.cnn.model.NetworkModel;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
 import deepnetts.util.Tensor;
 
 
-public class NetworkModel_Gray extends NetworkModel {
+public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 	
 	
 	public NetworkModel_Gray(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {
@@ -65,7 +65,7 @@ public class NetworkModel_Gray extends NetworkModel {
 		
 		float[][] result = convertInt2Float((int[][])image);
 		
-		VarStatistic stat = new VarStatistic(false);
+		/*VarStatistic stat = new VarStatistic(false);
 		for (int i = 0 ; i < result.length; i++) {
 			for (int j = 0 ; j < result.length; j++) {
 				stat.addValue(result[i][j], result[i][j]);
@@ -76,7 +76,7 @@ public class NetworkModel_Gray extends NetworkModel {
 			for (int j = 0 ; j < result.length; j++) {
 				result[i][j] = (float) ((result[i][j] - stat.getEntropy()) / stat.getDisperse());
 			}
-		}
+		}*/
 		
 		return result;
 	}

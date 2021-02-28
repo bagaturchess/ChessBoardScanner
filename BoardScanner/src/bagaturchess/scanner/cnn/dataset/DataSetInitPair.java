@@ -17,34 +17,32 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.impl;
+package bagaturchess.scanner.cnn.dataset;
 
 
-import java.awt.image.BufferedImage;
-
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
-import bagaturchess.scanner.common.MatrixUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class BGColorTester {
+public class DataSetInitPair {
+
+	
+	protected List<Object> images;
+	protected List<Integer> pids;
 	
 	
-	public static void main(String[] args) {
-		
-		try {
-			
-			int[][] imageMatrix = ScannerUtils.createSquareImage(137, 64);
-			System.out.println(imageMatrix[0][0]);
-			BufferedImage image = ScannerUtils.createGrayImage(imageMatrix);
-			ScannerUtils.saveImage("source", image, "png");
-			
-			imageMatrix = ScannerUtils.convertToGrayMatrix(image);
-			
-			int avg = MatrixUtils.getAVG(imageMatrix);
-			System.out.println(avg);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	DataSetInitPair() {
+		images = new ArrayList<Object>();
+		pids = new ArrayList<Integer>();
+	}
+	
+	
+	public List<Object> getImages() {
+		return images;
+	}
+	
+	
+	public List<Integer> getPIDs() {
+		return pids;
 	}
 }

@@ -17,34 +17,26 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.impl;
+package bagaturchess.scanner.cnn.model;
 
 
-import java.awt.image.BufferedImage;
-
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
-import bagaturchess.scanner.common.MatrixUtils;
-
-
-public class BGColorTester {
+public abstract class NetworkModel<T> {
 	
 	
-	public static void main(String[] args) {
-		
-		try {
-			
-			int[][] imageMatrix = ScannerUtils.createSquareImage(137, 64);
-			System.out.println(imageMatrix[0][0]);
-			BufferedImage image = ScannerUtils.createGrayImage(imageMatrix);
-			ScannerUtils.saveImage("source", image, "png");
-			
-			imageMatrix = ScannerUtils.convertToGrayMatrix(image);
-			
-			int avg = MatrixUtils.getAVG(imageMatrix);
-			System.out.println(avg);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	protected T network;
+	
+	
+	public NetworkModel() {
 	}
+	
+	
+	public T getNetwork() {
+		return network;
+	}
+	
+	
+	public abstract Object createInput(Object image);
+	
+	
+	public abstract void setInputs(Object input);
 }
