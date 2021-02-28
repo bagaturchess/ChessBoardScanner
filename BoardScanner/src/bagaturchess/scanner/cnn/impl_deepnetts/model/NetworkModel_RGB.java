@@ -72,6 +72,14 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 	}
 	
 	
+	@Override
+	public float[] feedForward() {
+		network.forward();
+		float[] output = network.getOutput();
+		return output;
+	}
+	
+	
 	private static float[][][] convertInt2Float(int[][][] array) {
 		float[][][] result = new float[array.length][array.length][array[0][0].length];
 		for (int i = 0 ; i < array.length; i++) {

@@ -65,19 +65,6 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 		
 		float[][] result = convertInt2Float((int[][])image);
 		
-		/*VarStatistic stat = new VarStatistic(false);
-		for (int i = 0 ; i < result.length; i++) {
-			for (int j = 0 ; j < result.length; j++) {
-				stat.addValue(result[i][j], result[i][j]);
-			}
-		}
-		
-		for (int i = 0 ; i < result.length; i++) {
-			for (int j = 0 ; j < result.length; j++) {
-				result[i][j] = (float) ((result[i][j] - stat.getEntropy()) / stat.getDisperse());
-			}
-		}*/
-		
 		return result;
 	}
 	
@@ -85,6 +72,14 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 	@Override
 	public void setInputs(Object input) {
 		network.setInput(new Tensor((float[][])input));
+	}
+	
+	
+	@Override
+	public float[] feedForward() {
+		network.forward();
+		float[] output = network.getOutput();
+		return output;
 	}
 	
 	

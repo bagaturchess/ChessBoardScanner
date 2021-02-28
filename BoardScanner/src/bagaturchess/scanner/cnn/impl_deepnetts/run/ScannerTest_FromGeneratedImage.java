@@ -26,10 +26,10 @@ import java.io.FileInputStream;
 
 import bagaturchess.bitboard.api.BoardUtils;
 import bagaturchess.bitboard.api.IBitBoard;
-import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner;
-import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_RGB;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
 import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.cnn.scan.BoardScanner;
+import bagaturchess.scanner.cnn.scan.BoardScanner_RGB;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;

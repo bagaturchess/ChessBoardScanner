@@ -26,10 +26,10 @@ import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner;
-import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_Gray;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.cnn.scan.BoardScanner;
+import bagaturchess.scanner.cnn.scan.BoardScanner_Gray;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import deepnetts.net.ConvolutionalNetwork;

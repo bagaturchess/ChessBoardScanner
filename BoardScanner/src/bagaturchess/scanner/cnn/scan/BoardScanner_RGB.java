@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_deepnetts;
+package bagaturchess.scanner.cnn.scan;
 
 
 import java.io.IOException;
@@ -26,13 +26,12 @@ import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.cnn.model.NetworkModel;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
-import deepnetts.net.ConvolutionalNetwork;
 
 
 public class BoardScanner_RGB extends BoardScanner {
 	
 	
-	public BoardScanner_RGB(NetworkModel<ConvolutionalNetwork> networkModel) throws ClassNotFoundException, IOException {
+	public BoardScanner_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
 		super(networkModel);
 	}
 	
@@ -62,8 +61,7 @@ public class BoardScanner_RGB extends BoardScanner {
 		
 		networkModel.setInputs(networkModel.createInput(squareMatrix));
 		
-		network.forward();
-		float[] output = network.getOutput();
+		float[] output = networkModel.feedForward();
 		
 		float maxValue = 0;
 		int maxIndex = 0;

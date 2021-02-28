@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_deepnetts.run;
+package bagaturchess.scanner.cnn.impl_dl4j.run;
 
 
 import java.awt.image.BufferedImage;
@@ -29,8 +29,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.scan.BoardScanner_Gray;
 import bagaturchess.scanner.cnn.scan.MatcherFinder;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
@@ -46,16 +44,16 @@ public class ScannerTest_FromImageFile_CNNs {
 			BoardProperties boardProperties = new BoardProperties(256);
 			
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/lichess.org/test8.png"));
-			BufferedImage boardImage = ImageIO.read(new File("./data/tests/chess.com/test5.png"));
+			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/chess.com/test5.png"));
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/lichess.org/set1/input1.png"));
-			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/chess.com/set1/input1.png"));
+			BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/chess.com/set1/input1.png"));
 			boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
 			int[][] boardMatrix = ScannerUtils.convertToGrayMatrix(boardImage);
 			
 			
 			List<String> netsNames = new ArrayList<String>();
-			netsNames.add("scanner_lichessorg1.bin");
-			netsNames.add("scanner_chesscom1.bin");
+			netsNames.add("scanner.lichessorg1.bin");
+			netsNames.add("scanner.chesscom1.bin");
 			
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {

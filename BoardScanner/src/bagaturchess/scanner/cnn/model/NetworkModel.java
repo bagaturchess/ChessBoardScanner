@@ -39,4 +39,7 @@ public abstract class NetworkModel<T> {
 	
 	
 	public abstract void setInputs(Object input);
+	
+	
+	public abstract float[] feedForward();
 }

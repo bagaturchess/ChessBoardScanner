@@ -28,7 +28,6 @@ public class ScannerLearning {
 	
 	
 	private static final String NET_FILE = "scanner.chesscom1.bin";
-	private static ConvolutionalNetwork network;
 	
 	private static BackpropagationTrainer trainer;
 	private static ScannerDataSet dataset;
@@ -44,7 +43,7 @@ public class ScannerLearning {
 			
 			BoardProperties boardProperties = new BoardProperties(256);
 			
-			netmodel = new NetworkModel_Gray(new FileInputStream(NET_FILE), boardProperties.getSquareSize());
+			netmodel = new NetworkModel_Gray((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
 			
 			String[] inputFiles = new String[] {
 				"./data/tests/cnn/chess.com/set1/input1.png",
@@ -85,7 +84,7 @@ public class ScannerLearning {
 				dataset.addItem(networkInput, networkOutput);
 			}
 			
-			network = netmodel.getNetwork();
+			ConvolutionalNetwork network = netmodel.getNetwork();
 			
 			trainer = new BackpropagationTrainer(network);
 			
