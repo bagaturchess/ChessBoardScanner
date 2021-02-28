@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl;
+package bagaturchess.scanner.cnn.impl_dn;
 
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.impl.model.NetworkModel;
+import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 

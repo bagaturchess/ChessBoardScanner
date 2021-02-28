@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl.utils;
+package bagaturchess.scanner.cnn.impl_dn.utils;
 
 
 import java.awt.AlphaComposite;

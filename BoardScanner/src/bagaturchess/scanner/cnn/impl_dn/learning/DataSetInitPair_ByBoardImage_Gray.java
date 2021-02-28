@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl.learning;
+package bagaturchess.scanner.cnn.impl_dn.learning;
 
 
 import java.awt.image.BufferedImage;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.impl.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 
 

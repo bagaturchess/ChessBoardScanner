@@ -17,13 +17,13 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl.learning;
+package bagaturchess.scanner.cnn.impl_dn.learning;
 
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import bagaturchess.scanner.cnn.impl.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 
 

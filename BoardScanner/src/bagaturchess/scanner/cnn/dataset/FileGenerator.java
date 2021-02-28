@@ -27,9 +27,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.impl.learning.DataSetInitPair;
-import bagaturchess.scanner.cnn.impl.learning.DataSetInitPair_ByBoardImage_Gray;
-import bagaturchess.scanner.cnn.impl.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_dn.learning.DataSetInitPair;
+import bagaturchess.scanner.cnn.impl_dn.learning.DataSetInitPair_ByBoardImage_Gray;
+import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 
 public class FileGenerator {

@@ -17,29 +17,32 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl.model;
+package bagaturchess.scanner.cnn.impl_dn.learning;
 
 
-import deepnetts.net.ConvolutionalNetwork;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public abstract class NetworkModel {
+public class DataSetInitPair {
+
+	
+	protected List<Object> images;
+	protected List<Integer> pids;
 	
 	
-	protected ConvolutionalNetwork network;
-	
-	
-	public NetworkModel() {
+	DataSetInitPair() {
+		images = new ArrayList<Object>();
+		pids = new ArrayList<Integer>();
 	}
 	
 	
-	public ConvolutionalNetwork getNetwork() {
-		return network;
+	public List<Object> getImages() {
+		return images;
 	}
 	
 	
-	public abstract Object createInput(Object image);
-	
-	
-	public abstract void setInputs(Object input);
+	public List<Integer> getPIDs() {
+		return pids;
+	}
 }

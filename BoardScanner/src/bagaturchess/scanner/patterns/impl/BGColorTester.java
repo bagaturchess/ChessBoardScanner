@@ -22,7 +22,7 @@ package bagaturchess.scanner.patterns.impl;
 
 import java.awt.image.BufferedImage;
 
-import bagaturchess.scanner.cnn.impl.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 
 
