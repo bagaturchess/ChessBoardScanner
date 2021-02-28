@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="lib/deepnetts/log4j-api-2.14.0.jar"/>
 	<classpathentry kind="lib" path="lib/deepnetts/log4j-core-2.14.0.jar"/>
 	<classpathentry kind="lib" path="lib/BagaturBoard.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv_4.5.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-4.5.1"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
