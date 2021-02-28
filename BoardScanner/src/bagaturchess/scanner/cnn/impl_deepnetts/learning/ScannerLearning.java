@@ -1,21 +1,16 @@
 package bagaturchess.scanner.cnn.impl_deepnetts.learning;
 
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
-import bagaturchess.scanner.cnn.dataset.DataSetInitPair_ByBoardImage_Gray;
+import bagaturchess.scanner.cnn.dataset.DataSetUtils;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
 import bagaturchess.scanner.cnn.model.NetworkModel;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.train.BackpropagationTrainer;
@@ -65,7 +60,7 @@ public class ScannerLearning {
 				*/
 			};
 			
-			DataSetInitPair[] pairs = getInitPairs(boardProperties, inputFiles);
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs(boardProperties, inputFiles);
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();
@@ -166,22 +161,5 @@ public class ScannerLearning {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	private static DataSetInitPair[] getInitPairs(BoardProperties boardProperties, String[] fileNames) throws IOException {
-		DataSetInitPair[] result = new DataSetInitPair[fileNames.length];
-		for (int i = 0; i < result.length; i++) {			
-			result[i] = getInitPair(boardProperties, fileNames[i]);
-		}
-		return result;
-	}
-	
-	
-	private static DataSetInitPair getInitPair(BoardProperties boardProperties, String fileName) throws IOException {
-		BufferedImage boardImage = ImageIO.read(new File(fileName));
-		boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
-		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage);
-		return pair;
 	}
 }
