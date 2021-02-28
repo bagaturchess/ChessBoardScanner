@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 

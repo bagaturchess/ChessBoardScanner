@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn.learning;
+package bagaturchess.scanner.cnn.impl_deepnetts.learning;
 
 
 import java.awt.image.BufferedImage;
@@ -26,33 +26,33 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 
 
-public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
+public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 	
 	
-	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage) {
+	DataSetInitPair_ByBoardImage_RGB(BufferedImage boardImage) {
 		
 		super();
 		
-		//ScannerUtils.saveImage(fileName + "_grayed", boardImage, "png");
+		//ScannerUtils.saveImage(fileName + "_resized", boardImage, "png");
 		
-		int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix(boardImage);
+		int[][][] matrixOfInitialBoard = ScannerUtils.convertToRGBMatrix(boardImage);
 		
-		Map<Integer, int[][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
+		Map<Integer, int[][][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
 		
 		for (Integer fieldID : result.keySet()) {
 			
-			List<int[][]> translations = new ArrayList<int[][]>();
+			List<int[][][]> translations = new ArrayList<int[][][]>();
 			translations.add(result.get(fieldID));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 1));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 2));
 			
 			//System.out.println(translations.size());
 			
-			for (int[][] matrix : translations) {
+			for (int[][][] matrix : translations) {
 				
 				//BufferedImage image = ScannerUtils.createGrayImage(matrix);
 				//ScannerUtils.saveImage("" + fieldID + "_" + (int)(100 * Math.random()), image, "png");

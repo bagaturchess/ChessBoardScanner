@@ -17,13 +17,13 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn;
+package bagaturchess.scanner.cnn.impl_deepnetts;
 
 
 import java.io.IOException;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 

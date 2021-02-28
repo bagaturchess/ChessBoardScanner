@@ -17,23 +17,24 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn.model;
+package bagaturchess.scanner.cnn.impl_deepnetts.model;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
+import bagaturchess.bitboard.impl.utils.VarStatistic;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
 import deepnetts.util.Tensor;
 
 
-public class NetworkModel_RGB extends NetworkModel {
+public class NetworkModel_Gray extends NetworkModel {
 	
 	
-	public NetworkModel_RGB(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {
+	public NetworkModel_Gray(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {
 		
 		super();
 		
@@ -45,7 +46,7 @@ public class NetworkModel_RGB extends NetworkModel {
 		} else {
 			System.out.println("Creating network ...");
 			network =  ConvolutionalNetwork.builder()
-	                .addInputLayer(squareSize, squareSize, 3)
+	                .addInputLayer(squareSize, squareSize, 1)
 	                .addConvolutionalLayer(5, 5, 64)
 	                .addMaxPoolingLayer(2, 2)
 	                .addConvolutionalLayer(5, 5, 16)
@@ -61,23 +62,37 @@ public class NetworkModel_RGB extends NetworkModel {
 	
 	@Override
 	public Object createInput(Object image) {
-		return convertInt2Float((int[][][])image);
+		
+		float[][] result = convertInt2Float((int[][])image);
+		
+		VarStatistic stat = new VarStatistic(false);
+		for (int i = 0 ; i < result.length; i++) {
+			for (int j = 0 ; j < result.length; j++) {
+				stat.addValue(result[i][j], result[i][j]);
+			}
+		}
+		
+		for (int i = 0 ; i < result.length; i++) {
+			for (int j = 0 ; j < result.length; j++) {
+				result[i][j] = (float) ((result[i][j] - stat.getEntropy()) / stat.getDisperse());
+			}
+		}
+		
+		return result;
 	}
 	
 	
 	@Override
 	public void setInputs(Object input) {
-		network.setInput(new Tensor((float[][][])input));
+		network.setInput(new Tensor((float[][])input));
 	}
 	
 	
-	private static float[][][] convertInt2Float(int[][][] array) {
-		float[][][] result = new float[array.length][array.length][array[0][0].length];
+	private static float[][] convertInt2Float(int[][] array) {
+		float[][] result = new float[array.length][array.length];
 		for (int i = 0 ; i < array.length; i++) {
-			for (int j = 0 ; j < array[0].length; j++) {
-				for (int k = 0 ; k < array[0][0].length; k++) {
-					result[i][j][k] = array[i][j][k];
-				}
+			for (int j = 0 ; j < array.length; j++) {
+				result[i][j] = array[i][j];
 			}
 		}
 		return result;

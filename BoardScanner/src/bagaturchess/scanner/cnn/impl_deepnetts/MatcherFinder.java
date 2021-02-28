@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn;
+package bagaturchess.scanner.cnn.impl_deepnetts;
 
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel_Gray;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 
 
 public class MatcherFinder {

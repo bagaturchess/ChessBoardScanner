@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn.run;
+package bagaturchess.scanner.cnn.impl_deepnetts.run;
 
 
 import java.awt.image.BufferedImage;
@@ -29,10 +29,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.impl_dn.BoardScanner_Gray;
-import bagaturchess.scanner.cnn.impl_dn.MatcherFinder;
-import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_Gray;
+import bagaturchess.scanner.cnn.impl_deepnetts.MatcherFinder;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
+import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 
 

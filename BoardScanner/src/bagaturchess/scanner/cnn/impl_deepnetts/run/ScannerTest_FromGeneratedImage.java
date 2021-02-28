@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dn.run;
+package bagaturchess.scanner.cnn.impl_deepnetts.run;
 
 
 import java.awt.Color;
@@ -26,11 +26,11 @@ import java.io.FileInputStream;
 
 import bagaturchess.bitboard.api.BoardUtils;
 import bagaturchess.bitboard.api.IBitBoard;
-import bagaturchess.scanner.cnn.impl_dn.BoardScanner;
-import bagaturchess.scanner.cnn.impl_dn.BoardScanner_RGB;
-import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel;
-import bagaturchess.scanner.cnn.impl_dn.model.NetworkModel_RGB;
-import bagaturchess.scanner.cnn.impl_dn.utils.ScannerUtils;
+import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner;
+import bagaturchess.scanner.cnn.impl_deepnetts.BoardScanner_RGB;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
+import bagaturchess.scanner.cnn.impl_deepnetts.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 
