@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-load-shrinked-proguard.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-learning-shrinked.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
