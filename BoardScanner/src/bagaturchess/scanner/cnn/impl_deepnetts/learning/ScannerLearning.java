@@ -79,7 +79,7 @@ public class ScannerLearning {
 				dataset.addItem(networkInput, networkOutput);
 			}
 			
-			ConvolutionalNetwork network = netmodel.getNetwork();
+			final ConvolutionalNetwork network = netmodel.getNetwork();
 			
 			trainer = new BackpropagationTrainer(network);
 			

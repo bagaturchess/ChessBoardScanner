@@ -1,3 +1,5 @@
 *.class
 *.bin
 BoardScanner/data*
+JarsShrinker/data*
+

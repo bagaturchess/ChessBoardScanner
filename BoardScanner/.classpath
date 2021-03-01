@@ -13,13 +13,11 @@
 	<classpathentry kind="lib" path="libs/deepnetts/json-20201115.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/log4j-api-2.14.0.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/log4j-core-2.14.0.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/mkl-dnn-0.16-1.4.3-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/common-lang-3.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/commons-io-2.5.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/commons-math3-3.5.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/datavec-data-image-1.0.0-beta3.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/deeplearning4j-common-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/deeplearning4j-nn-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/guava-20.0.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/imageio-bmp-3.1.1.jar"/>
@@ -39,6 +37,8 @@
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/protobuf-java-shaded-351-0.9.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/slf4j-simple-1.6.1.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/deeplearning4j-common-1.0.0-beta3.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/mkl-dnn-0.16-1.4.3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
