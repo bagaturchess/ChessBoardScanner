@@ -31,7 +31,6 @@
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/nd4j-buffer-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/nd4j-common-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/nd4j-context-1.0.0-beta3.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/nd4j-native-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/nd4j-native-api-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/openblas-0.3.3-1.4.3.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/protobuf-java-shaded-351-0.9.jar"/>
@@ -40,5 +39,6 @@
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/mkl-dnn-0.16-1.4.3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

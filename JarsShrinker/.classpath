@@ -7,11 +7,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/BoardScanner.jar"/>
-	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-shrinked.jar"/>
-	<classpathentry kind="lib" path="libs/mkl-dnn-0.16-1.4.3-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="libs/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/BagaturBoard.jar"/>
-	<classpathentry kind="lib" path="libs/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="libs/nd4j-native-1.0.0-beta3.jar"/>
+	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/mkl-dnn-0.16-1.4.3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3.jar"/>
+	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="/BoardScanner/libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-load-shrinked-proguard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
