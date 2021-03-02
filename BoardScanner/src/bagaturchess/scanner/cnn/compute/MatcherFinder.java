@@ -61,7 +61,10 @@ public class MatcherFinder {
 				bestProb = currentProb;
 				bestName = currentName;
 			}
-			if (matchingInfo != null) matchingInfo.setMatchingFinderInfo(currentName, currentProb);
+			if (matchingInfo != null) {
+				matchingInfo.setCurrentPhaseProgress(i / (double) scanners.size());
+				matchingInfo.setMatchingFinderInfo(currentName, currentProb);
+			}
 			System.out.println("MatcherFinder: " + currentName + " " + currentProb);
 		}
 		
