@@ -29,9 +29,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import bagaturchess.scanner.cnn.compute.ProbabilitiesCalculator_Gray;
+import bagaturchess.scanner.cnn.compute.MatcherFinder;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.scan.BoardScanner_Gray;
-import bagaturchess.scanner.cnn.scan.MatcherFinder;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 

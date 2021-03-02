@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.scan;
+package bagaturchess.scanner.cnn.compute;
 
 
 import java.io.IOException;
@@ -32,32 +32,42 @@ import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_Gray;
 public class MatcherFinder {
 	
 	
-	private List<BoardScanner> scanners;
+	private List<ProbabilitiesCalculator> scanners;
 	private List<String> netsNames;
 	
 	
 	public MatcherFinder(int squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
 		
-		scanners = new ArrayList<BoardScanner>();
+		scanners = new ArrayList<ProbabilitiesCalculator>();
 		netsNames = _netsNames;
 		
 		for (int i = 0; i < netsStreams.size(); i++) {
-			scanners.add(new BoardScanner_Gray(new NetworkModel_Gray(netsStreams.get(i), squareSize)));
+			scanners.add(new ProbabilitiesCalculator_Gray(new NetworkModel_Gray(netsStreams.get(i), squareSize)));
 		}
 	}
 	
 	
-	public void findMatcher(Object image) {
+	public String findMatcher(Object image) {
 		
 		long startTime = System.currentTimeMillis();
+		
+		String bestName = null;
+		double bestProb = 0;
 		for (int i = 0; i < scanners.size(); i++) {
 			String currentName = netsNames.get(i);
 			double currentProb = scanners.get(i).getAccumulatedProbability(image);
-			
+			if (currentProb > bestProb) {
+				bestProb = currentProb;
+				bestName = currentName;
+			}
 			System.out.println("MatcherFinder: " + currentName + " " + currentProb);
 		}
+		
+		
 		long endTime = System.currentTimeMillis();
 		
-		System.out.println("MatcherFinder: Time is " + (endTime - startTime) + " ms");
+		System.out.println("MatcherFinder: Time is " + (endTime - startTime) + " ms, best is " + bestName);
+		
+		return bestName;
 	}
 }

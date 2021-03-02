@@ -35,7 +35,7 @@ class GeneralContours1 {
     private int threshold = 100;
     private Random rng = new Random(12345);
     public GeneralContours1(String[] args) {
-        String filename = args.length > 0 ? args[0] : "C:\\Users\\i027638\\OneDrive - SAP SE\\DATA\\OWN\\chess\\GIT_REPO\\Bagatur\\Sources\\BoardScanner\\data\\tests\\preprocess\\test13_512.png";;
+        String filename = args.length > 0 ? args[0] : "C:\\Users\\i027638\\OneDrive - SAP SE\\DATA\\OWN\\chess\\GIT_REPO\\Bagatur\\Sources\\ProbabilitiesCalculator\\data\\tests\\preprocess\\test13_512.png";;
         Mat src = Imgcodecs.imread(filename);
         if (src.empty()) {
             System.err.println("Cannot read image: " + filename);

@@ -26,10 +26,10 @@ import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
 
+import bagaturchess.scanner.cnn.compute.ProbabilitiesCalculator;
+import bagaturchess.scanner.cnn.compute.ProbabilitiesCalculator_Gray;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 import bagaturchess.scanner.cnn.model.NetworkModel;
-import bagaturchess.scanner.cnn.scan.BoardScanner;
-import bagaturchess.scanner.cnn.scan.BoardScanner_Gray;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import deepnetts.net.ConvolutionalNetwork;
@@ -47,7 +47,7 @@ public class ScannerTest_FromImageFile {
 			//NetworkModel netmodel = new NetworkModel_Gray("scanner.bin", boardProperties.getSquareSize());
 			//NetworkModel netmodel = new NetworkModel_Gray("scanner.chesscom.bin", boardProperties.getSquareSize());
 			NetworkModel<ConvolutionalNetwork> netmodel = new NetworkModel_Gray(new FileInputStream("scanner.lichessorg.bin"), boardProperties.getSquareSize());
-			BoardScanner scanner = new BoardScanner_Gray(netmodel);
+			ProbabilitiesCalculator scanner = new ProbabilitiesCalculator_Gray(netmodel);
 			
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/lichess.org/test8.png"));
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/lichess.org/set1/input1.png"));
@@ -58,10 +58,6 @@ public class ScannerTest_FromImageFile {
 			double probability = scanner.getAccumulatedProbability(boardMatrix);
 			
 			System.out.println(probability);
-			
-			String fen = scanner.scan(boardMatrix);
-			
-			System.out.println(fen);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.scan;
+package bagaturchess.scanner.cnn.compute;
 
 
 import java.io.IOException;
@@ -25,21 +25,16 @@ import java.io.IOException;
 import bagaturchess.scanner.cnn.model.NetworkModel;
 
 
-public abstract class BoardScanner {
+public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 	
 	
-	protected NetworkModel networkModel;
-	protected Object network;
-	
-	
-	public BoardScanner(NetworkModel _networkModel) throws ClassNotFoundException, IOException {
-		networkModel = _networkModel;
-		network = networkModel.getNetwork();
+	public ProbabilitiesCalculator_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
+		super(networkModel);
 	}
-	
-	
-	public abstract String scan(Object image);
-	
-	
-	public abstract double getAccumulatedProbability(Object image);
+
+
+	@Override
+	public double getAccumulatedProbability(Object image) {
+		throw new UnsupportedOperationException();
+	}
 }

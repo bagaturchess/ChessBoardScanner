@@ -17,69 +17,80 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.scan;
+package bagaturchess.scanner.cnn.compute;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.cnn.model.NetworkModel;
-import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 
 
-public class BoardScanner_RGB extends BoardScanner {
+public class ProbabilitiesCalculator_Gray extends ProbabilitiesCalculator {
 	
 	
-	public BoardScanner_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
+	public ProbabilitiesCalculator_Gray(NetworkModel networkModel) throws ClassNotFoundException, IOException {
 		super(networkModel);
 	}
 	
 	
-	public String scan(Object imageObj) {
+	@Override
+	public double getAccumulatedProbability(Object image) {
 		
-		int[][][] grayImage = (int[][][]) imageObj;
+		int[][] grayImage = (int[][]) image;
 		
-		int[] pids = new int[64];
+		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayImage);
+		
+		double maxProbability = 0;
+		List<Double> probs = new ArrayList<Double>();
 		for (int i = 0; i < grayImage.length; i += grayImage.length / 8) {
 			for (int j = 0; j < grayImage.length; j += grayImage.length / 8) {
 				int file = i / (grayImage.length / 8);
 				int rank = j / (grayImage.length / 8);
 				int fieldID = 63 - (file + 8 * rank);
-				int pid = getPID(grayImage, i, j, fieldID);
-				pids[fieldID] = pid;
+				if (!emptySquares.contains(fieldID)) {
+					double prob = getMaxProbability(grayImage, i, j, fieldID);
+					probs.add(prob);
+					if (maxProbability < prob) {
+						maxProbability = prob;
+					}
+				}
 			}
 		}
 		
-		return BoardUtils.createFENFromPIDs(pids);
+		double probability = 0;
+		
+		for (Double prob: probs) {
+			probability += prob;// / maxProbability;
+		}
+		
+		probability = probability / (double) (65 - emptySquares.size());
+		
+		return probability;
 	}
 	
 	
-	private int getPID(int[][][] matrix, int i1, int j1, int filedID) {
+	private double getMaxProbability(int[][] matrix, int i1, int j1, int filedID) {
 		
-		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
+		int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
 		
 		networkModel.setInputs(networkModel.createInput(squareMatrix));
 		
 		float[] output = networkModel.feedForward();
 		
-		float maxValue = 0;
-		int maxIndex = 0;
+		double maxValue = 0;
 		for (int j = 0; j < output.length; j++) {
+			if (j == 0 || j == 13) {//empty square
+				continue;
+			}
 			if (maxValue < output[j]) {
 				maxValue = output[j];
-				maxIndex = j;
 			}
 		}
 		
-		int pid = (maxIndex == 13 ? Constants.PID_NONE : maxIndex);
-		
-		return pid;
-	}
-
-
-	@Override
-	public double getAccumulatedProbability(Object image) {
-		throw new UnsupportedOperationException();
+		return maxValue;
 	}
 }
