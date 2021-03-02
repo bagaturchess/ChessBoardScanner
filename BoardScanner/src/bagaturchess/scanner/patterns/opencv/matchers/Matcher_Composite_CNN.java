@@ -21,80 +21,67 @@ package bagaturchess.scanner.patterns.opencv.matchers;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import bagaturchess.scanner.cnn.compute.MatcherFinder;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultTriplet;
-import bagaturchess.scanner.patterns.api.ImageHandler;
-import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
 public class Matcher_Composite_CNN extends Matcher_Base {
 	
+	private List<String> netsNames;
+	private List<InputStream> netsStreams;
+	private Map<String, String> netToSetMappings;
 	
-	private static final int CLASSIFIER_SIZE = 128;
+	private Map<String, Matcher_Base> matchers;
+	private MatcherFinder finder;
 	
 	
-	private List<Matcher_Base> matchers = new ArrayList<Matcher_Base>();
-	private List<Matcher_Base> matchers_classifier = new ArrayList<Matcher_Base>();
-	
-	
-	public Matcher_Composite_CNN(int imageSize) {
+	public Matcher_Composite_CNN(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, String> _netToSetMappings) throws ClassNotFoundException, IOException {
 		
 		super(null);
 		
-		//matchers.add(new Matcher_Set0(imageSize));
-		matchers.add(new Matcher_Set1(imageSize));
-		matchers.add(new Matcher_Set2(imageSize));
-		//matchers.add(new Matcher_Set3(imageSize));
+		netsNames = _netsNames;
+		netsStreams = _netsStreams;
+		netToSetMappings = _netToSetMappings;
 		
-		//matchers_classifier.add(new Matcher_Set0(CLASSIFIER_SIZE));
-		matchers_classifier.add(new Matcher_Set1(CLASSIFIER_SIZE));
-		matchers_classifier.add(new Matcher_Set2(CLASSIFIER_SIZE));
-		//matchers_classifier.add(new Matcher_Set3(CLASSIFIER_SIZE));
+		Matcher_Base matcherSet1 = new Matcher_Set1(imageSize);
+		Matcher_Base matcherSet2 = new Matcher_Set2(imageSize);
+		
+		matchers = new HashMap<String, Matcher_Base>();
+		matchers.put(matcherSet1.getPiecesSetName(), matcherSet1);
+		matchers.put(matcherSet2.getPiecesSetName(), matcherSet2);
+		
+		finder = new MatcherFinder(imageSize / 8, netsStreams, netsNames);
 	}
 	
 	
 	@Override
 	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
-		if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 2);
+		if (matchingInfo != null) matchingInfo.setPhasesCount(3);
 		
-		int best_index = 0;
-		double best_delta = Double.MAX_VALUE;
+
+		String cnn_name = finder.findMatcher(grayBoard);
+		String piecesSetName = netToSetMappings.get(cnn_name);
+		Matcher_Base matcher = matchers.get(piecesSetName);
 		
-		ImageHandler imageHandler = ImageHandlerSingleton.getInstance();
-		
-		int[][] grayBoard_classifier = imageHandler.convertToGrayMatrix(
-					imageHandler.resizeImage(imageHandler.createGrayImage(grayBoard), CLASSIFIER_SIZE)
-				);
-		
-		for (int i = 0; i < matchers_classifier.size(); i++) {
-			
-			if (matchingInfo != null) matchingInfo.setCurrentPhase(i + 1);
-			
-			ResultTriplet<String, MatchingStatistics, Double> result = matchers_classifier.get(i).scan(grayBoard_classifier, matchingInfo);
-			
-			MatchingStatistics stat = result.getSecond();
-			
-			System.out.println("Matcher_Composite: scan: " + matchers_classifier.get(i).getClass().getCanonicalName()
-					+ " " + result.getFirst() + " delta is " + stat.totalDelta);
-			
-			if (stat.totalDelta < best_delta) {
-				best_delta = stat.totalDelta;
-				best_index = i;
-			}
+		if (matcher == null) {
+			throw new IllegalStateException("Matcher for pieces set " + piecesSetName + " not found.");
 		}
 		
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName());
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 1);
-		ResultTriplet<String, MatchingStatistics, Double> result = matchers.get(best_index).scan(grayBoard, matchingInfo);
+		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
+		if (matchingInfo != null) matchingInfo.setCurrentPhase(2);
+		ResultTriplet<String, MatchingStatistics, Double> result = matcher.scan(grayBoard, matchingInfo);
 		
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 2);
-		result = matchers.get(best_index).scan(grayBoard, matchingInfo, result.getThird());
+		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
+		if (matchingInfo != null) matchingInfo.setCurrentPhase(3);
+		result = matcher.scan(grayBoard, matchingInfo, result.getThird());
 		
 		return result;
 	}

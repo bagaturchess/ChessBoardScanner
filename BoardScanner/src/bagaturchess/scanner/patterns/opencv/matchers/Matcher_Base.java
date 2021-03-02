@@ -57,6 +57,11 @@ public abstract class Matcher_Base {
 	}
 	
 	
+	public String getPiecesSetName() {
+		return boardProperties.getPiecesSetFileNamePrefix();
+	}
+	
+	
 	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		return scan(grayBoard, matchingInfo, 0.68d);
 	}

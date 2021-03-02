@@ -20,6 +20,13 @@
 package bagaturchess.scanner.patterns;
 
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.opencv.core.Core;
 
 import bagaturchess.scanner.common.BoardProperties;
@@ -54,6 +61,8 @@ public class AllMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/cnn/chess.com/set1/pictures/test7.png");
 			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/cnn/lichess.org/set1/pictures/test7.png");
 			
+			
+			//Preprocess image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
 			ImagePreProcessor_Base processor_crop_kmeans = new ImagePreProcessor_Crop_KMeans(boardProperties_processor);
 			ImagePreProcessor_Base processor_crop = new ImagePreProcessor_Crop(boardProperties_processor);
@@ -75,7 +84,25 @@ public class AllMain {
 			preProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(preProcessedImage, boardProperties_matcher.getImageSize());
 			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(preProcessedImage);
 			
-			Matcher_Base matcher = new Matcher_Composite(boardProperties_matcher.getImageSize());
+			
+			//Create composite matcher
+			List<String> netsNames = new ArrayList<String>();
+			netsNames.add("cnn_lichessorg1.net");
+			netsNames.add("cnn_chesscom1.net");
+
+			Map<String, String> netToSetMappings = new HashMap<String, String>();
+			netToSetMappings.put("cnn_lichessorg1.net", "set1");
+			netToSetMappings.put("cnn_chesscom1.net", "set2");
+			
+			List<InputStream> netsStreams = new ArrayList<InputStream>();
+			for (int i = 0; i < netsNames.size(); i++) {
+				netsStreams.add(new FileInputStream(netsNames.get(i)));
+			}
+			
+			Matcher_Base matcher = new Matcher_Composite_CNN(boardProperties_matcher.getImageSize(), netsNames, netsStreams, netToSetMappings);
+			
+			
+			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
 			ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
