@@ -25,6 +25,7 @@ public interface IMatchingInfo {
 	public void setCurrentPhase(int orderNumber);
 	public void setCurrentPhaseProgress(double progress); //Between [0 and 1]
 	public void setPhaseName(String phaseName);
+	public void setMatchingFinderInfo(String netName, double probability);
 	public void setSquare(int squareID);
 	public String getLatestMessage1();
 	public String getLatestMessage2();

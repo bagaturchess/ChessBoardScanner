@@ -27,6 +27,7 @@ import java.util.List;
 
 import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_Gray;
 //import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
+import bagaturchess.scanner.common.IMatchingInfo;
 
 
 public class MatcherFinder {
@@ -47,7 +48,7 @@ public class MatcherFinder {
 	}
 	
 	
-	public String findMatcher(Object image) {
+	public String findMatcher(Object image, IMatchingInfo matchingInfo) {
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -60,6 +61,7 @@ public class MatcherFinder {
 				bestProb = currentProb;
 				bestName = currentName;
 			}
+			if (matchingInfo != null) matchingInfo.setMatchingFinderInfo(currentName, currentProb);
 			System.out.println("MatcherFinder: " + currentName + " " + currentProb);
 		}
 		

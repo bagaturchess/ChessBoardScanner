@@ -63,7 +63,7 @@ public class ScannerTest_FromImageFile_CNNs {
 			}
 			
 			MatcherFinder finder = new MatcherFinder(boardProperties.getSquareSize(), netsStreams, netsNames);
-			finder.findMatcher(boardMatrix);
+			finder.findMatcher(boardMatrix, null);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

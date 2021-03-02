@@ -67,21 +67,24 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 		if (matchingInfo != null) matchingInfo.setPhasesCount(3);
 		
 
-		String cnn_name = finder.findMatcher(grayBoard);
+		if (matchingInfo != null) matchingInfo.setCurrentPhase(1);
+		String cnn_name = finder.findMatcher(grayBoard, matchingInfo);
 		String piecesSetName = netToSetMappings.get(cnn_name);
 		Matcher_Base matcher = matchers.get(piecesSetName);
-		
 		if (matcher == null) {
 			throw new IllegalStateException("Matcher for pieces set " + piecesSetName + " not found.");
 		}
 		
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
+		
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(2);
+		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
 		ResultTriplet<String, MatchingStatistics, Double> result = matcher.scan(grayBoard, matchingInfo);
 		
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
+		
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(3);
+		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
 		result = matcher.scan(grayBoard, matchingInfo, result.getThird());
+		
 		
 		return result;
 	}
