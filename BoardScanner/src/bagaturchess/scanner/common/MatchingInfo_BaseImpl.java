@@ -99,10 +99,10 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 		return currentSquareID;
 	}
 
-
+	
 	@Override
 	public void setMatchingFinderInfo(String netName, double probability) {
 		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + (int) (100 * currentPhaseProgress) + "%";
-		latestMessage2 = netName + " with probability " + probability;
+		latestMessage2 = netName + " with probability " + (int) (100 * probability) + "%";
 	}
 }
