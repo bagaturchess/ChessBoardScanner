@@ -23,9 +23,11 @@ package bagaturchess.scanner.patterns.opencv;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 
@@ -273,76 +275,68 @@ public class OpenCVUtils {
 	    hull_list.toArray(hull);
 	    
 	    return hull;
-	} 
-	
-    /*contours.clear();
-    contours.add(bigestContour);
-    
-    List<Point> allPoints_array = new ArrayList<Point>();
-    for (int i = 0; i < contours.size(); i++) {
-    	MatOfPoint mop = contours.get(i);
-    	Point[] points = mop.toArray();
-    	for (Point point : points) {
-    		allPoints_array.add(point);
-    	}
-    }
-    Point[] allPoints = new Point[allPoints_array.size()];
-    allPoints_array.toArray(allPoints);
-    Point[] corners = getOrderedCorners(allPoints, source_gray.width(), source_gray.height());
-	corners1_ordered.fromArray(corners);
-	
-	
-    MatOfPoint2f src = new MatOfPoint2f(
-    		corners[0],
-    		corners[1],
-    		corners[2],
-    		corners[3]);
-
-    MatOfPoint2f dst = new MatOfPoint2f(
-            new Point(0, 0),
-            new Point(0, source_gray.height()),
-            new Point(source_gray.width(), source_gray.height()),
-            new Point(source_gray.width(), 0)      
-            );
-    
-	Mat warpMat = Imgproc.getPerspectiveTransform(src, dst);
-    Imgproc.warpPerspective(source, result, warpMat, source.size());
-    */
-    
-    //HighGui.imshow("Draw matches", result);
-    //HighGui.waitKey(0);
-    
-    
-	/*Mat drawing = source_gray;//Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
-	for (int i = 0; i < corners.length; i++) {
-		Imgproc.drawMarker(drawing, corners[i], new Scalar(255, 255, 255));
 	}
-    HighGui.imshow("Draw matches", drawing);
-    HighGui.waitKey(0);
-    */
-    
-   /* Mat drawing = Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
-    for (int i = 0; i < contours.size(); i++) {
-        Scalar color = new Scalar(255, 255, 155);
-        Imgproc.drawContours(drawing, contours, i, color, 2, 0, hierarchy, 0, new Point());
-    }
-    
-    HighGui.imshow("Draw matches", drawing);
-    HighGui.waitKey(0);
-    
-            Mat element = Imgproc.getStructuringElement(elementType, new Size(2 * kernelSize + 1, 2 * kernelSize + 1),
-                new Point(kernelSize, kernelSize));
-        if (doErosion) {
-            Imgproc.erode(matImgSrc, matImgDst, element);
-        } else {
-            Imgproc.dilate(matImgSrc, matImgDst, element);
-        }
-        
-    */
 	
 	
+	public static Mat getHoughTransform(Mat image, double rho, double theta, int threshold) {
+		    
+	 	Mat result = image.clone();
+		Mat lines = new Mat();
+		    
+		Imgproc.HoughLines(image, lines, rho, theta, threshold);
+		
+		List<HoughLine> h_lines = new ArrayList<HoughLine>();
+		List<HoughLine> v_lines = new ArrayList<HoughLine>();
+		for (int i = 0; i < lines.rows(); i++) {
+		  	
+		    double data[] = lines.get(i, 0);
+		    double rho1 = data[0];
+		    double theta1 = data[1];
+		        
+		    HoughLine line = new HoughLine(rho1, theta1);
+		        
+		    if (line.theta < Math.PI / 4 || line.theta > Math.PI - Math.PI / 4) {
+		    	v_lines.add(line);
+		    } else {
+		    	h_lines.add(line);
+		    }
+		}
+		
+		for (HoughLine line: v_lines) {
+	        System.out.println("theta1=" + line.theta + " rho1=" + line.rho);
+		    Imgproc.line(result, line.pt1, line.pt2, new Scalar(255, 255, 255), 2);
+		}
+		
+		return result;
+	}
+	  
+	  
 	private static final class ListItem<T> {
 		public T value;
 		public ListItem<T> next;
+	}
+	
+	
+	public static final class HoughLine {
+		
+		
+		public double rho;
+		public double theta;
+		public Point pt1;
+		public Point pt2;
+		
+		
+		public HoughLine(double _rho, double _theta) {
+			
+			rho = _rho;
+			theta = _theta;
+			
+	        double cosTheta = Math.cos(theta);
+	        double sinTheta = Math.sin(theta);
+	        double x0 = cosTheta * rho;
+	        double y0 = sinTheta * rho;
+	        pt1 = new Point(x0 + 100000 * (-sinTheta), y0 + 100000 * cosTheta);
+	        pt2 = new Point(x0 - 100000 * (-sinTheta), y0 - 100000 * cosTheta);
+		}
 	}
 }

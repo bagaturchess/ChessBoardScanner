@@ -40,6 +40,7 @@ import org.opencv.imgproc.Imgproc;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
+import bagaturchess.scanner.patterns.opencv.Experiments;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
 
 
@@ -80,6 +81,7 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		
 		Mat source_rgb = ImageHandlerSingleton.getInstance().graphic2Mat(image);
 		
+		Experiments.tryit(source_rgb);
 		
 		Mat result = findChessBoardCornersByBuildInFunction(source_rgb);
 		
