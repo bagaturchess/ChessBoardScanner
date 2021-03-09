@@ -27,7 +27,7 @@ import java.util.Map;
 import bagaturchess.bitboard.impl.utils.VarStatistic;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.FilterInfo;
-import bagaturchess.scanner.common.KMeans;
+import bagaturchess.scanner.common.KMeansPixels;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;

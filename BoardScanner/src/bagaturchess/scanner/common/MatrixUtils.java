@@ -68,7 +68,7 @@ public class MatrixUtils {
 				
 				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
 				
-				KMeans kmeans = new KMeans(3, squareMatrix);
+				KMeansPixels kmeans = new KMeansPixels(3, squareMatrix);
 				int maxWeightCentroidID = kmeans.getMaxWeightIndex();
 				int maxWeight = kmeans.weights[maxWeightCentroidID];
 				if(maxWeight >= 0.90f * squareMatrix.length * squareMatrix.length) {
@@ -97,7 +97,7 @@ public class MatrixUtils {
 	
 	public static ResultPair<Integer, Integer> getSquaresColor(int[][] grayBoard) {
 		
-		KMeans kmeans = new KMeans(4, grayBoard);
+		KMeansPixels kmeans = new KMeansPixels(4, grayBoard);
 		int[] clustersIndexes = kmeans.get2MaxWeightsIndexes();
 		
 		int gray1 = 255;

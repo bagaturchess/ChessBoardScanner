@@ -30,6 +30,8 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import bagaturchess.scanner.common.ResultPair;
+
 
 public class OpenCVUtils {
 	
@@ -278,9 +280,8 @@ public class OpenCVUtils {
 	}
 	
 	
-	public static Mat getHoughTransform(Mat image, double rho, double theta, int threshold) {
-		    
-	 	Mat result = image.clone();
+	public static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform(Mat image, double rho, double theta, int threshold) {
+		
 		Mat lines = new Mat();
 		    
 		Imgproc.HoughLines(image, lines, rho, theta, threshold);
@@ -302,12 +303,7 @@ public class OpenCVUtils {
 		    }
 		}
 		
-		for (HoughLine line: v_lines) {
-	        System.out.println("theta1=" + line.theta + " rho1=" + line.rho);
-		    Imgproc.line(result, line.pt1, line.pt2, new Scalar(255, 255, 255), 2);
-		}
-		
-		return result;
+		return new ResultPair<List<HoughLine>, List<HoughLine>>(h_lines, v_lines);
 	}
 	  
 	  

@@ -32,7 +32,7 @@ import java.util.Set;
 import bagaturchess.bitboard.impl.utils.VarStatistic;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.FilterInfo;
-import bagaturchess.scanner.common.KMeans;
+import bagaturchess.scanner.common.KMeansPixels;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
@@ -52,7 +52,7 @@ public class ImagePreProcessor_Crop_KMeans extends ImagePreProcessor_Base {
 		int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(image);
 		ImageHandlerSingleton.getInstance().saveImage("Crop_KMeans_input", "png", image);
 		
-		KMeans kmeans = new KMeans(4, grayBoard);
+		KMeansPixels kmeans = new KMeansPixels(4, grayBoard);
 		
 		//Print clusters
 		/*for (int centoridID = 0; centoridID < kmeans.centroids_values.length; centoridID++) {

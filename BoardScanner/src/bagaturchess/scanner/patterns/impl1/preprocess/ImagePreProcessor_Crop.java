@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import bagaturchess.scanner.common.BoardProperties;
-import bagaturchess.scanner.common.KMeans;
+import bagaturchess.scanner.common.KMeansPixels;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
