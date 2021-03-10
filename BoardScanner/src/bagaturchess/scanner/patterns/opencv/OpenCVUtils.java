@@ -283,7 +283,7 @@ public class OpenCVUtils {
 	public static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform(Mat image, double rho, double theta, int threshold) {
 		
 		Mat lines = new Mat();
-		    
+		
 		Imgproc.HoughLines(image, lines, rho, theta, threshold);
 		
 		List<HoughLine> h_lines = new ArrayList<HoughLine>();
@@ -315,9 +315,11 @@ public class OpenCVUtils {
 	
 	public static final class HoughLine {
 		
-		
+		// x *  Cos(Theta) + y * sin(Theta) - Rho = 0
 		public double rho;
 		public double theta;
+		
+		//double y = pt1.y + ((pt2.y - pt1.y) * (x - pt1.x)) / (double) (pt2.x - pt1.x);
 		public Point pt1;
 		public Point pt2;
 		
@@ -331,8 +333,20 @@ public class OpenCVUtils {
 	        double sinTheta = Math.sin(theta);
 	        double x0 = cosTheta * rho;
 	        double y0 = sinTheta * rho;
+	        
 	        pt1 = new Point(x0 + 100000 * (-sinTheta), y0 + 100000 * cosTheta);
 	        pt2 = new Point(x0 - 100000 * (-sinTheta), y0 - 100000 * cosTheta);
+		}
+		
+		
+		public double calculateY(double x) {
+			
+	        double cosTheta = Math.cos(theta);
+	        double sinTheta = Math.sin(theta);
+			
+	        double y = (rho - x * cosTheta) / sinTheta;
+	        
+			return y;
 		}
 	}
 }
