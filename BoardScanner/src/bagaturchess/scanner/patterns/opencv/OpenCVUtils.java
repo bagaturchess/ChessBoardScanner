@@ -305,8 +305,8 @@ public class OpenCVUtils {
 		
 		return new ResultPair<List<HoughLine>, List<HoughLine>>(h_lines, v_lines);
 	}
-	  
-	  
+	
+	
 	private static final class ListItem<T> {
 		public T value;
 		public ListItem<T> next;
@@ -314,6 +314,7 @@ public class OpenCVUtils {
 	
 	
 	public static final class HoughLine {
+		
 		
 		// x *  Cos(Theta) + y * sin(Theta) - Rho = 0
 		public double rho;
@@ -347,6 +348,17 @@ public class OpenCVUtils {
 	        double y = (rho - x * cosTheta) / sinTheta;
 	        
 			return y;
+		}
+		
+		
+		public double calculateX(double y) {
+			
+	        double cosTheta = Math.cos(theta);
+	        double sinTheta = Math.sin(theta);
+			
+	        double x = (rho - y * sinTheta) / cosTheta;
+	        
+			return x;
 		}
 	}
 }

@@ -109,14 +109,25 @@ public class Experiments {
         
         int x_test1 = 0;
         int x_test2 = source_gray.width();
-        List<Hough9Lines> hough9Lines_H_x1 = genHough9Lines_Horizontal(source_gray.height() / 20, source_gray.height() / 5, x_test1, h_lines);
-        hough9Lines_H_x1 = correctErrorWithSecondPointX(hough9Lines_H_x1, x_test2);
+        List<Hough9Lines> hough9Lines_H = genHough9Lines_Horizontal(source_gray.height() / 20, source_gray.height() / 5, x_test1, h_lines);
+        hough9Lines_H = correctErrorWithSecondPointX(hough9Lines_H, x_test2);
         
-        //List<Hough9Lines> hough9Lines_H_x2 = genHough9Lines_Horizontal(source_gray.height() / 20, source_gray.height() / 5, x_test2, h_lines);
+        int y_test1 = 0;
+        int y_test2 = source_gray.height();
+        List<Hough9Lines> hough9Lines_V = genHough9Lines_Vertical(source_gray.height() / 20, source_gray.height() / 5, y_test1, v_lines);
+        hough9Lines_V = correctErrorWithSecondPointY(hough9Lines_V, y_test2);
         
-        for (int i = 0; i < hough9Lines_H_x1.size(); i++) {
+    	Mat toDraw = cannyOutput.clone();
+    	
+    	drawHough9Lines(hough9Lines_H.get(0), toDraw);
+    	drawHough9Lines(hough9Lines_V.get(0), toDraw);
+    	
+        HighGui.imshow("lines", toDraw);
+        HighGui.waitKey(0);
+        
+        /*for (int i = 0; i < hough9Lines_V.size(); i++) {
         	
-        	Hough9Lines lines = hough9Lines_H_x1.get(i);
+        	Hough9Lines lines = hough9Lines_V.get(i);
         	
         	Mat toDraw = cannyOutput.clone();
         	
@@ -134,7 +145,7 @@ public class Experiments {
         	
             HighGui.imshow("lines", toDraw);
             HighGui.waitKey(0);
-        }
+        }*/
         
         /*double[] x_0 = new double[lines.size()];
         for (int i = 0; i < lines.size(); i++) {
@@ -318,6 +329,19 @@ public class Experiments {
 	}
 
 
+	private static void drawHough9Lines(Hough9Lines lines, Mat toDraw) {
+		Imgproc.line(toDraw, lines.lines.get(0).pt1, lines.lines.get(0).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(1).pt1, lines.lines.get(1).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(2).pt1, lines.lines.get(2).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(3).pt1, lines.lines.get(3).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(4).pt1, lines.lines.get(4).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(5).pt1, lines.lines.get(5).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(6).pt1, lines.lines.get(6).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(7).pt1, lines.lines.get(7).pt2, new Scalar(255, 255, 255), 2);
+    	Imgproc.line(toDraw, lines.lines.get(8).pt1, lines.lines.get(8).pt2, new Scalar(255, 255, 255), 2);
+	}
+
+
 	private static List<Hough9Lines> genHough9Lines_Horizontal(int start_interval, int end_interval, int x_test, List<HoughLine> lines) {
 		
 		lines = sortByYInX(lines, x_test);
@@ -393,6 +417,81 @@ public class Experiments {
 	}
 	
 	
+	private static List<Hough9Lines> genHough9Lines_Vertical(int start_interval, int end_interval, int y_test, List<HoughLine> lines) {
+		
+		lines = sortByXInY(lines, y_test);
+		
+		List<Hough9Lines> result = new ArrayList<Hough9Lines>();
+        for (int i = 0; i < 0.15d * lines.size(); i++) {
+        	for (int interval = start_interval; interval < end_interval; interval++) {
+        		
+        		int line1Index = i;
+        		HoughLine line1 = lines.get(line1Index);
+        		double x1 = line1.calculateX(y_test);
+        		double error1 = 0;
+        		
+        		int line2Index = findClosestLineIndexByY(line1Index + 1, lines, y_test, x1 + 1 * interval);
+        		if (line2Index == -1) continue;
+        		HoughLine line2 = lines.get(line2Index);
+        		double error2 = Math.abs(line2.calculateX(y_test) - (x1 + 1 * interval));
+        		
+        		int line3Index = findClosestLineIndexByY(line2Index + 1, lines, y_test, x1 + 2 * interval);
+        		if (line3Index == -1) continue;
+        		HoughLine line3 = lines.get(line3Index);
+        		double error3 = Math.abs(line3.calculateX(y_test) - (x1 + 2 * interval));
+        		
+        		int line4Index = findClosestLineIndexByY(line3Index + 1, lines, y_test, x1 + 3 * interval);
+        		if (line4Index == -1) continue;
+        		HoughLine line4 = lines.get(line4Index);
+        		double error4 = Math.abs(line4.calculateX(y_test) - (x1 + 3 * interval));
+        		
+        		int line5Index = findClosestLineIndexByY(line4Index + 1, lines, y_test, x1 + 4 * interval);
+        		if (line5Index == -1) continue;
+        		HoughLine line5 = lines.get(line5Index);
+        		double error5 = Math.abs(line5.calculateX(y_test) - (x1 + 4 * interval));
+        		
+        		int line6Index = findClosestLineIndexByY(line5Index + 1, lines, y_test, x1 + 5 * interval);
+        		if (line6Index == -1) continue;
+        		HoughLine line6 = lines.get(line6Index);
+        		double error6 = Math.abs(line6.calculateX(y_test) - (x1 + 5 * interval));
+        		
+        		int line7Index = findClosestLineIndexByY(line6Index + 1, lines, y_test, x1 + 6 * interval);
+        		if (line7Index == -1) continue;
+        		HoughLine line7 = lines.get(line7Index);
+        		double error7 = Math.abs(line7.calculateX(y_test) - (x1 + 6 * interval));
+        		
+        		int line8Index = findClosestLineIndexByY(line7Index + 1, lines, y_test, x1 + 7 * interval);
+        		if (line8Index == -1) continue;
+        		HoughLine line8 = lines.get(line8Index);
+        		double error8 = Math.abs(line8.calculateX(y_test) - (x1 + 7 * interval));
+        		
+        		int line9Index = findClosestLineIndexByY(line8Index + 1, lines, y_test, x1 + 8 * interval);
+        		if (line9Index == -1) continue;
+        		HoughLine line9 = lines.get(line9Index);
+        		double error9 = Math.abs(line9.calculateX(y_test) - (x1 + 8 * interval));
+        		
+        		double error_all = error1 + error2 + error3 + error4 + error5 + error6 + error7 + error8 + error9;
+        		
+        		List<HoughLine> linesList = new ArrayList<HoughLine>();
+        		linesList.add(line1);
+        		linesList.add(line2);
+        		linesList.add(line3);
+        		linesList.add(line4);
+        		linesList.add(line5);
+        		linesList.add(line6);
+        		linesList.add(line7);
+        		linesList.add(line8);
+        		linesList.add(line9);
+        		
+        		Hough9Lines entry = new Hough9Lines(linesList, error_all);
+        		result.add(entry);
+        	}
+        }
+        
+        return sortByError(result);
+	}
+	
+	
 	private static List<Hough9Lines> correctErrorWithSecondPointX(List<Hough9Lines> hough9Lines, int x_test) {
         
 		for (int i = 0; i < hough9Lines.size(); i++) {
@@ -425,26 +524,35 @@ public class Experiments {
 	}
 	
 	
-	private static List<Hough9Lines> sortByError(List<Hough9Lines> result) {
-		
-		Hough9Lines[] array = result.toArray(new Hough9Lines[result.size()]);
+	private static List<Hough9Lines> correctErrorWithSecondPointY(List<Hough9Lines> hough9Lines, int y_test) {
         
-		Arrays.sort(array, new Comparator<Hough9Lines>() {
-			@Override
-			public int compare(Hough9Lines l1, Hough9Lines l2) {
-				double y1 = l1.error;
-				double y2 = l2.error;
-				if (y1 > y2) {
-					return 1;
-				} else if (y1 < y2) {
-					return -1;
-				} else {
-					return -1;
-				}
-			}
-		});
+		for (int i = 0; i < hough9Lines.size(); i++) {
+        	
+        	Hough9Lines lines9 = hough9Lines.get(i);
+        	double minX = Double.MAX_VALUE;
+        	double maxX = Double.MIN_VALUE;
+        	for (int j = 0; j < lines9.lines.size(); j++) {
+        		HoughLine line = lines9.lines.get(j);
+        		double x2 = line.calculateX(y_test);
+        		if (x2 < minX) {
+        			minX = x2;
+        		}
+        		if (x2 > maxX) {
+        			maxX = x2;
+        		}
+        	}
+        	
+        	double errorCorrection = 0;
+        	for (int j = 0; j < lines9.lines.size(); j++) {
+        		HoughLine line = lines9.lines.get(j);
+        		double expectedX = minX + ((maxX - minX) * j) / (double) (lines9.lines.size() - 1);
+        		errorCorrection += Math.abs(expectedX - line.calculateX(y_test));
+        	}
+        	
+        	lines9.error += errorCorrection;
+        }
 		
-		return Arrays.asList(array);
+		return sortByError(hough9Lines);
 	}
 	
 	
@@ -466,6 +574,24 @@ public class Experiments {
 	}
 
 
+	private static int findClosestLineIndexByY(int startIndex, List<HoughLine> lines, double y_test, double x_test) {
+		
+		int bestMatchIndex = -1;
+		double bestMatchDelta = Double.MAX_VALUE;
+		
+		for (int i = startIndex; i < lines.size(); i++) {
+			HoughLine line = lines.get(i);
+			double delta = Math.abs(line.calculateX(y_test) - x_test);
+			if (delta < bestMatchDelta) {
+				bestMatchDelta = delta;
+				bestMatchIndex = i;
+			}
+		}
+		
+		return bestMatchIndex;
+	}
+	
+	
 	private static List<HoughLine> sortByYInX(List<HoughLine> lines, final int x) {
 		
 		HoughLine[] array = lines.toArray(new HoughLine[lines.size()]);
@@ -475,6 +601,52 @@ public class Experiments {
 			public int compare(HoughLine l1, HoughLine l2) {
 				double y1 = l1.calculateY(x);
 				double y2 = l2.calculateY(x);
+				if (y1 > y2) {
+					return 1;
+				} else if (y1 < y2) {
+					return -1;
+				} else {
+					return -1;
+				}
+			}
+		});
+		
+		return Arrays.asList(array);
+	}
+	
+	
+	private static List<HoughLine> sortByXInY(List<HoughLine> lines, final int y) {
+		
+		HoughLine[] array = lines.toArray(new HoughLine[lines.size()]);
+		
+		Arrays.sort(array, new Comparator<HoughLine>() {
+			@Override
+			public int compare(HoughLine l1, HoughLine l2) {
+				double x1 = l1.calculateX(y);
+				double x2 = l2.calculateX(y);
+				if (x1 > x2) {
+					return 1;
+				} else if (x1 < x2) {
+					return -1;
+				} else {
+					return -1;
+				}
+			}
+		});
+		
+		return Arrays.asList(array);
+	}
+	
+	
+	private static List<Hough9Lines> sortByError(List<Hough9Lines> result) {
+		
+		Hough9Lines[] array = result.toArray(new Hough9Lines[result.size()]);
+        
+		Arrays.sort(array, new Comparator<Hough9Lines>() {
+			@Override
+			public int compare(Hough9Lines l1, Hough9Lines l2) {
+				double y1 = l1.error;
+				double y2 = l2.error;
 				if (y1 > y2) {
 					return 1;
 				} else if (y1 < y2) {
