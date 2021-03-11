@@ -1,4 +1,4 @@
-package bagaturchess.scanner.patterns.opencv;
+package bagaturchess.scanner.patterns.opencv.experiments;
 
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import bagaturchess.scanner.common.ResultPair;
+import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils.HoughLine;
 
 
@@ -100,8 +101,8 @@ public class Experiments {
 		Mat cannyOutput = new Mat();
 		Imgproc.Canny(source_gray, cannyOutput, 20, 80);
 		
-        HighGui.imshow("cannyOutput", cannyOutput);
-        HighGui.waitKey(0);
+        //HighGui.imshow("cannyOutput", cannyOutput);
+        //HighGui.waitKey(0);
         
         ResultPair<List<HoughLine>, List<HoughLine>> all_lines = OpenCVUtils.getHoughTransform(cannyOutput, 1, Math.PI / 360, 120);
         List<HoughLine> h_lines = all_lines.getFirst();

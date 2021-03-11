@@ -17,42 +17,40 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv;
+package bagaturchess.scanner.patterns.opencv.experiments;
 
 
-public class KMeansLines_Distances {
+public class KMeansLines_Scalar {
 	
 	
 	public double[] centroids_values;
-	public int[][] centroids_ids;
+	public int[] centroids_ids;
 	public int[] weights;
 	
 	
-	public KMeansLines_Distances(int K, double[][] distances) {
+	public KMeansLines_Scalar(int K, double[] scalars) {
 		
 		//K-Means start
 		int NUMBER_OF_CLUSTERS = K;
 		
 		//Initialize
-		centroids_values = initCentroids(NUMBER_OF_CLUSTERS, distances);
+		centroids_values = initCentroids(NUMBER_OF_CLUSTERS, scalars);
 		
-		centroids_ids = new int[distances.length][distances.length];
+		centroids_ids = new int[scalars.length];
 		
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances.length; j++) {
+		for (int i = 0; i < scalars.length; i++) {
 				
-				double bestDistance = Double.MAX_VALUE;
-				int bestCentroidID = -1;
-				for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
-					double distance = Math.abs(distances[i][j] - centroids_values[centroid_id]);
-					if (distance < bestDistance) {
-						bestDistance = distance;
-						bestCentroidID = centroid_id;
-					}
+			double bestDistance = Double.MAX_VALUE;
+			int bestCentroidID = -1;
+			for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
+				double distance = Math.abs(scalars[i] - centroids_values[centroid_id]);
+				if (distance < bestDistance) {
+					bestDistance = distance;
+					bestCentroidID = centroid_id;
 				}
-				
-				centroids_ids[i][j] = bestCentroidID;
 			}
+			
+			centroids_ids[i] = bestCentroidID;
 		}
 		
 		
@@ -67,12 +65,10 @@ public class KMeansLines_Distances {
 			double[] avgs_sum = new double[NUMBER_OF_CLUSTERS];
 			double[] avgs_cnt = new double[NUMBER_OF_CLUSTERS];
 			
-			for (int i = 0; i < distances.length; i++) {
-				for (int j = 0; j < distances.length; j++) {
-					int centroid_id = centroids_ids[i][j];
-					avgs_sum[centroid_id] += distances[i][j];
-					avgs_cnt[centroid_id]++;
-				}
+			for (int i = 0; i < scalars.length; i++) {
+				int centroid_id = centroids_ids[i];
+				avgs_sum[centroid_id] += scalars[i];
+				avgs_cnt[centroid_id]++;
 			}
 			
 			for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
@@ -84,23 +80,21 @@ public class KMeansLines_Distances {
 			
 			boolean hasChange = false;
 			//Adjust values
-			for (int i = 0; i < distances.length; i++) {
-				for (int j = 0; j < distances.length; j++) {		
+			for (int i = 0; i < scalars.length; i++) {		
 					
-					double bestDistance = Double.MAX_VALUE;
-					int bestCentroidID = -1;
-					for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
-						double distance = Math.abs(distances[i][j] - centroids_values[centroid_id]);
-						if (distance < bestDistance) {
-							bestDistance = distance;
-							bestCentroidID = centroid_id;
-						}
+				double bestDistance = Double.MAX_VALUE;
+				int bestCentroidID = -1;
+				for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
+					double distance = Math.abs(scalars[i] - centroids_values[centroid_id]);
+					if (distance < bestDistance) {
+						bestDistance = distance;
+						bestCentroidID = centroid_id;
 					}
-					
-					if (bestCentroidID != centroids_ids[i][j]) {
-						centroids_ids[i][j] = bestCentroidID;
-						hasChange = true;
-					}
+				}
+				
+				if (bestCentroidID != centroids_ids[i]) {
+					centroids_ids[i] = bestCentroidID;
+					hasChange = true;
 				}
 			}
 			
@@ -110,11 +104,9 @@ public class KMeansLines_Distances {
 		
 		//Init weights
 		weights = new int[NUMBER_OF_CLUSTERS];
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances.length; j++) {
-				int cur_centroid_id = centroids_ids[i][j];
-				weights[cur_centroid_id]++;
-			}
+		for (int i = 0; i < scalars.length; i++) {
+			int cur_centroid_id = centroids_ids[i];
+			weights[cur_centroid_id]++;
 		}
 	}
 	
@@ -165,19 +157,17 @@ public class KMeansLines_Distances {
 	}
 	
 	
-	private double[] initCentroids(int count, double[][] distances) {
+	private double[] initCentroids(int count, double[] scalars) {
 		
 		double min = Double.MAX_VALUE;
 		double max = Double.MIN_VALUE;
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances[0].length; j++) {
-				double value = distances[i][j];
-				if (value < min) {
-					min = value;
-				}
-				if (value > max) {
-					max = value;
-				}
+		for (int i = 0; i < scalars.length; i++) {
+			double value = scalars[i];
+			if (value < min) {
+				min = value;
+			}
+			if (value > max) {
+				max = value;
 			}
 		}
 		

@@ -17,10 +17,12 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv;
+package bagaturchess.scanner.patterns.opencv.experiments;
 
 
 import org.opencv.core.Point;
+
+import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
 
 
 public class KMeansPoints {
