@@ -32,14 +32,12 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
-import bagaturchess.scanner.patterns.opencv.experiments.Experiments;
 
 
 public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
