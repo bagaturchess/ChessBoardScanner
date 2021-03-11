@@ -22,8 +22,6 @@ package bagaturchess.scanner.patterns.impl1.preprocess;
 
 import java.io.IOException;
 
-import org.opencv.core.Point;
-
 import bagaturchess.scanner.common.BoardProperties;
 
 
@@ -39,9 +37,4 @@ public abstract class ImagePreProcessor_Base {
 
 	
 	public abstract Object filter(Object image) throws IOException;
-	
-	
-	public Point[] getBoardContour(Object image)  throws IOException {
-		return null;
-	}
 }

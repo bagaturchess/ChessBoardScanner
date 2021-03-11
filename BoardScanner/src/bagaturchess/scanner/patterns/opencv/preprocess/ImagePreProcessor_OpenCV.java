@@ -27,12 +27,10 @@ import java.util.List;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
@@ -81,16 +79,20 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		
 		Mat source_rgb = ImageHandlerSingleton.getInstance().graphic2Mat(image);
 		
-		Experiments.tryit(source_rgb);
+		//Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
+		//Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
+		
+		//Experiments.tryit(source_rgb);
 		
 		Mat result = findChessBoardCornersByBuildInFunction(source_rgb);
 		
 		if (result == null) {
 			
-			//Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
-			//Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
+			result = findChessBoardCornersByHoughLines(source_rgb);
 			
-	        result = findChessBoardCornersByContour(source_rgb);
+			if (result == null) {
+				result = findChessBoardCornersByContour(source_rgb);
+			}
 		}
 		
 		if (result == null) {
@@ -105,6 +107,85 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_result", "png", resultObj);
 		
 		return resultObj;
+	}
+	
+	
+	public Mat findChessBoardCornersByBuildInFunction(Mat source_rgb) {
+		
+		MatOfPoint2f corners = new MatOfPoint2f();
+		boolean found = Calib3d.findChessboardCorners(source_rgb, new Size(7, 7), corners);
+		
+		if (found && !corners.empty()) {
+			
+			Mat result = new Mat();
+			
+			MatOfPoint2f corners_ordered = new MatOfPoint2f();
+			corners_ordered.fromArray(OpenCVUtils.getOrderedCorners(corners.toArray(), source_rgb.width(), source_rgb.height()));
+			
+			Mat H = Calib3d.findHomography(corners_ordered, targetCorners);
+			
+			Imgproc.warpPerspective(source_rgb, result, H, source_rgb.size());
+			
+			System.out.println("ImagePreProcessor_OpenCV: Chess board found in a standard way.");
+			
+			return result;
+		}
+		
+		return null;
+	}
+	
+	
+	private Mat findChessBoardCornersByHoughLines(Mat source_rgb) {
+		
+		Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
+		Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
+		
+		Imgproc.GaussianBlur(source_gray, source_gray, new Size(15,15), 0.5);
+		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 40);
+        //Imgproc.threshold(source_gray, source_gray, 10, 255, Imgproc.THRESH_BINARY);
+		//Mat bilateralFilter = new Mat();
+		//Imgproc.bilateralFilter(source_gray, bilateralFilter, 5, 150, 150);
+		//source_gray = bilateralFilter;
+		
+        //HighGui.imshow("source_gray", source_gray);
+        //HighGui.waitKey(0);
+		
+		Mat canny = new Mat();
+		Imgproc.Canny(source_gray, canny, 20, 80);
+		
+        //HighGui.imshow("cannyOutput", cannyOutput);
+        //HighGui.waitKey(0);
+        
+		Point[] intersections = OpenCVUtils.gen9HoughLinesCrossPoints(canny);
+		if (intersections == null) {
+			return null;
+		}
+		
+		Point[] boardCorners = OpenCVUtils.getOrderedCorners(intersections, canny.width(), canny.height());
+		
+		MatOfPoint2f src = new MatOfPoint2f(
+				boardCorners[0],
+				boardCorners[1],
+				boardCorners[2],
+				boardCorners[3]);
+		
+		MatOfPoint2f dst = new MatOfPoint2f(
+		        new Point(0, 0),
+		        new Point(0, source_rgb.height()),
+		        new Point(source_rgb.width(), source_rgb.height()),
+		        new Point(source_rgb.width(), 0)      
+		        );
+		
+		Mat result = new Mat();
+		Mat warpMat = Imgproc.getPerspectiveTransform(src, dst);
+		Imgproc.warpPerspective(source_rgb, result, warpMat, source_rgb.size());
+		
+		System.out.println("ImagePreProcessor_OpenCV: Chess board found by HoughLines.");
+		
+        //HighGui.imshow("result", result);
+        //HighGui.waitKey(0);
+		
+		return result;
 	}
 	
 	
@@ -225,47 +306,5 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
         //HighGui.waitKey(0);
 		
 		return result;
-	}
-	
-	
-	public Mat findChessBoardCornersByBuildInFunction(Mat source_rgb) {
-		
-		MatOfPoint2f corners = new MatOfPoint2f();
-		boolean found = Calib3d.findChessboardCorners(source_rgb, new Size(7, 7), corners);
-		
-		if (found && !corners.empty()) {
-			
-			Mat result = new Mat();
-			
-			MatOfPoint2f corners_ordered = new MatOfPoint2f();
-			corners_ordered.fromArray(OpenCVUtils.getOrderedCorners(corners.toArray(), source_rgb.width(), source_rgb.height()));
-			
-			Mat H = Calib3d.findHomography(corners_ordered, targetCorners);
-			
-			Imgproc.warpPerspective(source_rgb, result, H, source_rgb.size());
-			
-			System.out.println("ImagePreProcessor_OpenCV: Chess board found in a standard way.");
-			
-			return result;
-		}
-		
-		return null;
-	}
-	
-	
-	@Override
-	public Point[] getBoardContour(Object image) throws IOException {
-		
-		Mat source = ImageHandlerSingleton.getInstance().graphic2Mat(image);
-		Mat source_gray = new Mat(source.height(), source.width(), CvType.CV_8UC4);
-		Imgproc.cvtColor(source, source_gray, Imgproc.COLOR_BGR2GRAY);
-		
-		MatOfPoint2f corners = new MatOfPoint2f();
-		boolean found = Calib3d.findChessboardCorners(source_gray, new Size(7, 7), corners);
-		if (!found) {
-			return null;
-		}
-		
-		return OpenCVUtils.getOrderedCorners(corners.toArray(), source_gray.width(), source_gray.height());
 	}
 }

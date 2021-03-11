@@ -19,10 +19,11 @@
  */
 package bagaturchess.scanner.patterns.opencv.experiments;
 
+
 import java.util.List;
 
-import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils.HoughLine;
+
 
 public class KMeansLines_Theta {
 	
