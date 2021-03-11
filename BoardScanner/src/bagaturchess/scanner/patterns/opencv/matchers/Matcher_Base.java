@@ -63,29 +63,87 @@ public abstract class Matcher_Base {
 	
 	
 	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
-		return scan(grayBoard, matchingInfo, 0.68d);
-	}
-	
-	
-	protected ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo, double emptySquareThreshold) throws IOException {
 		
 		if (grayBoard.length != boardProperties.getImageSize()) {
 			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
 		}
 		
+		MatchingData matchingData = buildMatchingData(grayBoard, matchingInfo);
+		
+		double emptySquareThreshold = 1;
+		double maxFullThreshold = 0;
+		
+		boolean whileCondition = true;
+		while (whileCondition) {
+			
+			emptySquareThreshold -= 0.01d;
+			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, emptySquareThreshold);
+			//System.out.println("Empty squares: " + emptySquares);
+			
+			double maxFull = 0f;
+			double minEmpty = 1f;
+			
+			for (int fieldID = 0; fieldID < 64; fieldID++) {
+				
+				int pieceID = matchingData.pieceIDs[fieldID];
+				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+				
+				if (pieceID == Constants.PID_NONE || emptySquares.contains(fieldID)) {
+					//System.out.println(fieldID + " EMPTY " + squareData.delta);
+					if (minEmpty > squareData.delta) {
+						minEmpty = squareData.delta;
+					}
+				} else {
+					//System.out.println(fieldID + " FULL " + squareData.delta);
+					if (maxFull < squareData.delta) {
+						maxFull = squareData.delta;
+					}
+				}
+			}
+			
+			//System.out.println("emptySquareThreshold=" + emptySquareThreshold + ", maxFull=" + maxFull + ", minEmpty=" + minEmpty);
+			
+			if (maxFull < minEmpty) {
+				whileCondition = false;
+				maxFullThreshold = maxFull;
+			}
+		}
+		
+		
 		MatchingStatistics result = new MatchingStatistics();
 		result.matcherName = this.getClass().getCanonicalName();
 		
-		if (matchingInfo != null) matchingInfo.setPhaseName(this.getClass().getSimpleName());
+		int[] pids = new int[64];
 		
-		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard);
+		for (int fieldID = 0; fieldID < 64; fieldID++) {
+			
+			int pieceID = matchingData.pieceIDs[fieldID];
+			MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+			
+			pids[fieldID] = squareData.delta <= maxFullThreshold ? pieceID : Constants.PID_NONE;
+			
+			result.totalDelta += squareData.delta;
+		}
+		
+		result.totalDelta = result.totalDelta / (double) 64;
+		
+		
+		return new ResultTriplet<String, MatchingStatistics, Double> (BoardUtils.createFENFromPIDs(pids), result, maxFullThreshold);
+	}
+	
+	
+	private MatchingData buildMatchingData(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
+		
+		if (grayBoard.length != boardProperties.getImageSize()) {
+			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
+		}
+		
+		MatchingData result = new MatchingData();
+		
+		if (matchingInfo != null) matchingInfo.setPhaseName(this.getClass().getSimpleName());
 		
 		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor(grayBoard);
 		
-		double maxFull = 0f;
-		double minEmpty = 1f;
-		
-		int[] pids = new int[64];
 		int countPIDs = 0;
 		for (int i = 0; i < grayBoard.length; i += grayBoard.length / 8) {
 			for (int j = 0; j < grayBoard.length; j += grayBoard.length / 8) {
@@ -94,67 +152,32 @@ public abstract class Matcher_Base {
 				int rank = j / (grayBoard.length / 8);
 				int fieldID = 63 - (file + 8 * rank);
 				
-				pids[fieldID] = Constants.PID_NONE;
-				
 				if (matchingInfo != null) matchingInfo.setSquare(fieldID);
 				
-				//if (!emptySquares.contains(fieldID)) {
-					
-					int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
-					//int bgcolor_avg = (int) MatrixUtils.calculateColorStats(squareMatrix).getEntropy();
-					
-					/*MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
-					bestPatternData.x = 0;
-					bestPatternData.y = 0;
-					bestPatternData.size = squareMatrix.length;
-					ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");
-					*/
-					
-					List<Integer> bgcolors = new ArrayList<Integer>();
-					//bgcolors.add(bgcolor_avg);
-					bgcolors.add((file + rank) % 2 == 0 ? bgcolorsOfSquares.getFirst() : bgcolorsOfSquares.getSecond());
-					
-					ResultPair<Integer, MatrixUtils.PatternMatchingData> pidAndData = getPID(squareMatrix, bgcolors, getAllPIDs(fieldID), fieldID);
-					pids[fieldID] = pidAndData.getFirst();
-					MatrixUtils.PatternMatchingData data = pidAndData.getSecond();
-					
-					/*if (data.delta < 0.00001) {
-						pidAndData = getPID(squareMatrix, true, bgcolors, getPiecesPIDs(fieldID), fieldID);
-						pids[fieldID] = pidAndData.getFirst();
-						data = pidAndData.getSecond();
-					}*/
-					
-					result.totalDelta += data.delta;
-					
-					if (pids[fieldID] == Constants.PID_NONE || emptySquares.contains(fieldID)) {
-						//System.out.println("EMPTY " + data.delta);
-						if (minEmpty > data.delta) {
-							minEmpty = data.delta;
-						}
-					} else {
-						//System.out.println("FULL " + data.delta);
-						if (maxFull < data.delta) {
-							maxFull = data.delta;
-						}
-					}
-					
-					if (data.delta > emptySquareThreshold) {
-						pids[fieldID] = Constants.PID_NONE;
-					}
-					
-					//if (pids[fieldID] != Constants.PID_NONE) {
-					countPIDs++;
-					if (matchingInfo != null) matchingInfo.setCurrentPhaseProgress(countPIDs / (double) 64);
-					//}
-				//}
+				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
+				//int bgcolor_avg = (int) MatrixUtils.calculateColorStats(squareMatrix).getEntropy();
+				
+				/*MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
+				bestPatternData.x = 0;
+				bestPatternData.y = 0;
+				bestPatternData.size = squareMatrix.length;
+				ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");*/
+				
+				
+				List<Integer> bgcolors = new ArrayList<Integer>();
+				//bgcolors.add(bgcolor_avg);
+				bgcolors.add((file + rank) % 2 == 0 ? bgcolorsOfSquares.getFirst() : bgcolorsOfSquares.getSecond());
+				
+				ResultPair<Integer, MatrixUtils.PatternMatchingData> pidAndData = getPID(squareMatrix, bgcolors, getAllPIDs(fieldID), fieldID);
+				result.pieceIDs[fieldID] = pidAndData.getFirst();
+				result.squareData[fieldID] = pidAndData.getSecond();
+				
+				countPIDs++;
+				if (matchingInfo != null) matchingInfo.setCurrentPhaseProgress(countPIDs / (double) 64);
 			}
 		}
 		
-		System.out.println("Matcher_Base: maxFull=" + maxFull + ", minEmpty=" + minEmpty);
-		
-		result.totalDelta = result.totalDelta / (double) (countPIDs);
-		
-		return new ResultTriplet<String, MatchingStatistics, Double> (BoardUtils.createFENFromPIDs(pids), result, maxFull);
+		return result;
 	}
 	
 	
@@ -312,5 +335,11 @@ public abstract class Matcher_Base {
 		Set<Integer> pidsToSearch = new HashSet<Integer>();
 		pidsToSearch.add(Constants.PID_NONE);
 		return pidsToSearch;
+	}
+	
+	
+	private static class MatchingData {
+		private int[] pieceIDs = new int[64];
+		private MatrixUtils.PatternMatchingData[] squareData = new MatrixUtils.PatternMatchingData[64];
 	}
 }

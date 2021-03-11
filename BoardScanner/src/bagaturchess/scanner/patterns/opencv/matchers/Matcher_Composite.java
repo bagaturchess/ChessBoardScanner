@@ -60,7 +60,7 @@ public class Matcher_Composite extends Matcher_Base {
 	@Override
 	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
-		if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 2);
+		if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 1);
 		
 		int best_index = 0;
 		double best_delta = Double.MAX_VALUE;
@@ -92,9 +92,9 @@ public class Matcher_Composite extends Matcher_Base {
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 1);
 		ResultTriplet<String, MatchingStatistics, Double> result = matchers.get(best_index).scan(grayBoard, matchingInfo);
 		
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 2);
-		result = matchers.get(best_index).scan(grayBoard, matchingInfo, result.getThird());
+		//System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
+		//if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 2);
+		//result = matchers.get(best_index).scan(grayBoard, matchingInfo, result.getThird());
 		
 		return result;
 	}

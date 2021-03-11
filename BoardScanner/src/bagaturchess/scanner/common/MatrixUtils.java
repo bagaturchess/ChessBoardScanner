@@ -53,6 +53,12 @@ public class MatrixUtils {
 	
 	
 	public static Set<Integer> getEmptySquares(int[][] grayBoard) {
+		return getEmptySquares(grayBoard, 0.9d);
+		
+	}
+	
+	
+	public static Set<Integer> getEmptySquares(int[][] grayBoard, double emptySquareThreshold) {
 		
 		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
 		
@@ -71,7 +77,7 @@ public class MatrixUtils {
 				KMeansPixels kmeans = new KMeansPixels(3, squareMatrix);
 				int maxWeightCentroidID = kmeans.getMaxWeightIndex();
 				int maxWeight = kmeans.weights[maxWeightCentroidID];
-				if(maxWeight >= 0.90f * squareMatrix.length * squareMatrix.length) {
+				if(maxWeight >= emptySquareThreshold * squareMatrix.length * squareMatrix.length) {
 					markedForEmpty[fieldID] = true;
 				}
 				VarStatistic squareStat = calculateColorStats(squareMatrix, -1); 

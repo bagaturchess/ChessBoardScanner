@@ -293,6 +293,11 @@ public class OpenCVUtils {
         	return null;
         }
         
+        //Too slow otherwise
+        if (h_lines.size() > 500 || v_lines.size() > 500) {
+        	return null;
+        }
+        
         int x_test1 = 0;
         int x_test2 = canny.width();
         List<Hough9Lines> hough9Lines_H = selectHough9Lines_Horizontal(canny.height() / 20, canny.height() / 5, x_test1, h_lines);

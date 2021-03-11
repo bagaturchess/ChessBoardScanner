@@ -64,7 +64,7 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 	@Override
 	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
-		if (matchingInfo != null) matchingInfo.setPhasesCount(3);
+		if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 		
 
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(1);
@@ -81,9 +81,9 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 		ResultTriplet<String, MatchingStatistics, Double> result = matcher.scan(grayBoard, matchingInfo);
 		
 		
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(3);
-		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
-		result = matcher.scan(grayBoard, matchingInfo, result.getThird());
+		//if (matchingInfo != null) matchingInfo.setCurrentPhase(3);
+		//System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
+		//result = matcher.scan(grayBoard, matchingInfo, result.getThird());
 		
 		
 		return result;
