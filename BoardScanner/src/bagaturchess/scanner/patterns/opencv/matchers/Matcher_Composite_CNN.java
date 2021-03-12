@@ -28,6 +28,7 @@ import java.util.Map;
 
 import bagaturchess.scanner.cnn.compute.MatcherFinder;
 import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
@@ -62,7 +63,7 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 	
 	
 	@Override
-	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
+	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
 		if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 		
@@ -78,7 +79,7 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 		
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(2);
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
-		ResultTriplet<String, MatchingStatistics, Double> result = matcher.scan(grayBoard, matchingInfo);
+		ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
 		
 		
 		//if (matchingInfo != null) matchingInfo.setCurrentPhase(3);

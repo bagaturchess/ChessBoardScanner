@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.ImageHandler;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
@@ -58,7 +59,7 @@ public class Matcher_Composite extends Matcher_Base {
 	
 	
 	@Override
-	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
+	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
 		if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 1);
 		
@@ -75,7 +76,7 @@ public class Matcher_Composite extends Matcher_Base {
 			
 			if (matchingInfo != null) matchingInfo.setCurrentPhase(i + 1);
 			
-			ResultTriplet<String, MatchingStatistics, Double> result = matchers_classifier.get(i).scan(grayBoard_classifier, matchingInfo);
+			ResultPair<String, MatchingStatistics> result = matchers_classifier.get(i).scan(grayBoard_classifier, matchingInfo);
 			
 			MatchingStatistics stat = result.getSecond();
 			
@@ -90,7 +91,7 @@ public class Matcher_Composite extends Matcher_Base {
 		
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName());
 		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 1);
-		ResultTriplet<String, MatchingStatistics, Double> result = matchers.get(best_index).scan(grayBoard, matchingInfo);
+		ResultPair<String, MatchingStatistics> result = matchers.get(best_index).scan(grayBoard, matchingInfo);
 		
 		//System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName() + " with emptySquareThreshold = " + result.getThird());
 		//if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 2);

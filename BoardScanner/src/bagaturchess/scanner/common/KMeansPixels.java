@@ -26,8 +26,6 @@ public class KMeansPixels {
 	public int[] centroids_values;
 	public int[][] centroids_ids;
 	public int[] weights;
-	private long[] avgs_sum;
-	private long[] avgs_cnt;
 	
 	
 	public KMeansPixels(int K, int[][] source) {
@@ -66,11 +64,8 @@ public class KMeansPixels {
 			//System.out.println("start iteration " + count++);
 			
 			//Find avg
-			avgs_sum = new long[NUMBER_OF_CLUSTERS];
-			avgs_cnt = new long[NUMBER_OF_CLUSTERS];
-			for (int i = 0; i < avgs_cnt.length; i++){
-				avgs_cnt[i] = 1;//there could be cluster with no elements
-			}
+			long[] avgs_sum = new long[NUMBER_OF_CLUSTERS];
+			long[] avgs_cnt = new long[NUMBER_OF_CLUSTERS];
 			
 			for (int i = 0; i < source.length; i++) {
 				for (int j = 0; j < source.length; j++) {
@@ -81,7 +76,9 @@ public class KMeansPixels {
 			}
 			
 			for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
-				centroids_values[centroid_id] = (int) (avgs_sum[centroid_id] / avgs_cnt[centroid_id]);
+				if (avgs_cnt[centroid_id] != 0) {
+					centroids_values[centroid_id] = (int) (avgs_sum[centroid_id] / avgs_cnt[centroid_id]);
+				}
 				//System.out.println("centroid_id " + centroid_id + " avg " + centroids_values[centroid_id]);
 			}
 			

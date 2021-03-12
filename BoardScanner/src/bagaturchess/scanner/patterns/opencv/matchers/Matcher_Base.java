@@ -63,103 +63,51 @@ public abstract class Matcher_Base {
 	}
 	
 	
-	public ResultTriplet<String, MatchingStatistics, Double> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
+	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
 		if (grayBoard.length != boardProperties.getImageSize()) {
 			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
 		}
 		
+		
 		MatchingData matchingData = buildMatchingData(grayBoard, matchingInfo);
 		
-		double emptySquareThreshold = 1;
-		double maxFullThreshold = 0;
 		
-		/*boolean whileCondition = true;
-		while (whileCondition && emptySquareThreshold > 0.7d) {
-			
-			emptySquareThreshold -= 0.01d;
-			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, emptySquareThreshold);
-			//System.out.println("Empty squares: " + emptySquares);
-			
-			double maxFull = 0f;
-			double minEmpty = 1f;
-			
-			for (int fieldID = 0; fieldID < 64; fieldID++) {
-				
-				int pieceID = matchingData.pieceIDs[fieldID];
-				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
-				
-				if (pieceID == Constants.PID_NONE || emptySquares.contains(fieldID)) {
-					//System.out.println(fieldID + " EMPTY " + squareData.delta);
-					if (minEmpty > squareData.delta) {
-						minEmpty = squareData.delta;
-					}
-				} else {
-					//System.out.println(fieldID + " FULL " + squareData.delta);
-					if (maxFull < squareData.delta) {
-						maxFull = squareData.delta;
-					}
-				}
-			}
-			
-			System.out.println("emptySquareThreshold=" + emptySquareThreshold + ", maxFull=" + maxFull + ", minEmpty=" + minEmpty);
-			
-			if (maxFull < minEmpty) {
-				whileCondition = false;
-				maxFullThreshold = maxFull;
-			}
-		}*/
+		double[] deltas = new double[64];
+		for (int squareID = 0; squareID < 64; squareID++) {
+			deltas[squareID] = matchingData.squareData[squareID].delta;
+		}
 		
+		KMeansScalar deltas_clusters = new KMeansScalar(9, deltas);
+		
+		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
 		
 		int[] pids = new int[64];
 		
-		if (maxFullThreshold > 0) {//Already resolved in the loop above
+		for (int squareID = 0; squareID < 64; squareID++) {
 			
-			for (int fieldID = 0; fieldID < 64; fieldID++) {
+			if (deltas_clusters.centroids_ids[squareID] <= 5 && !emptySquares.contains(squareID)) {
 				
-				int pieceID = matchingData.pieceIDs[fieldID];
-				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+				pids[squareID] = matchingData.pieceIDs[squareID];
+				System.out.println("Square " + squareID + " is in centroid " + deltas_clusters.centroids_ids[squareID] + " and has PID " + pids[squareID]);
 				
-				pids[fieldID] = squareData.delta <= maxFullThreshold ? pieceID : Constants.PID_NONE;
-			}
-			
-		} else {//No solution found yet, so try with Kmeans clustering of deltas
-			
-			double[] deltas = new double[64];
-			for (int fieldID = 0; fieldID < 64; fieldID++) {
-				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
-				deltas[fieldID] = squareData.delta;
-			}
-			
-			KMeansScalar kmeans = new KMeansScalar(9, deltas);
-			
-			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
-			
-			for (int fieldID = 0; fieldID < 64; fieldID++) {
+			} else {
 				
-				if (kmeans.centroids_ids[fieldID] <= 5 && !emptySquares.contains(fieldID)) {
-					
-					pids[fieldID] = matchingData.pieceIDs[fieldID];
-					System.out.println("Square " + fieldID + " is in centroid " + kmeans.centroids_ids[fieldID] + " and has PID " + pids[fieldID]);
-					
-				} else {
-					
-					pids[fieldID] = Constants.PID_NONE;
-				}
+				pids[squareID] = Constants.PID_NONE;
 			}
 		}
 		
 		
 		MatchingStatistics result = new MatchingStatistics();
 		result.matcherName = this.getClass().getCanonicalName();
-		for (int fieldID = 0; fieldID < 64; fieldID++) {
-			MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+		for (int squareID = 0; squareID < 64; squareID++) {
+			MatrixUtils.PatternMatchingData squareData = matchingData.squareData[squareID];
 			result.totalDelta += squareData.delta;
 		}
 		result.totalDelta = result.totalDelta / (double) 64;
 		
 		
-		return new ResultTriplet<String, MatchingStatistics, Double> (BoardUtils.createFENFromPIDs(pids), result, maxFullThreshold);
+		return new ResultPair<String, MatchingStatistics>(BoardUtils.createFENFromPIDs(pids), result);
 	}
 	
 	
