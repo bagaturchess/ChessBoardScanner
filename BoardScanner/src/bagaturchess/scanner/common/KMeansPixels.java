@@ -34,7 +34,7 @@ public class KMeansPixels {
 		int NUMBER_OF_CLUSTERS = K;
 		
 		//Initialize
-		centroids_values = initCentroids(NUMBER_OF_CLUSTERS);
+		centroids_values = initCentroids(NUMBER_OF_CLUSTERS, source);
 		
 		centroids_ids = new int[source.length][source.length];
 		
@@ -165,11 +165,27 @@ public class KMeansPixels {
 	}
 	
 	
-	private int[] initCentroids(int count) {
+	private int[] initCentroids(int count, int[][] source) {
+		
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < source.length; i++) {
+			for (int j = 0; j < source[0].length; j++) {
+				int value = source[i][j];
+				if (value < min) {
+					min = value;
+				}
+				if (value > max) {
+					max = value;
+				}
+			}
+		}
+		
 		int[] centroids_values = new int[count];
 		for (int i = 0; i < centroids_values.length; i++) {
-			centroids_values[i] = 255 / (i + 1);
+			centroids_values[i] = (int) (min + (max - min) * (i + 1) / (double) centroids_values.length);
 		}
+		
 		return centroids_values;
 	}
 }
