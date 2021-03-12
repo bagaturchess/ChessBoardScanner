@@ -40,6 +40,7 @@ import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
+import bagaturchess.scanner.patterns.opencv.KMeansLines_Scalar;
 
 
 public abstract class Matcher_Base {
@@ -74,7 +75,7 @@ public abstract class Matcher_Base {
 		double maxFullThreshold = 0;
 		
 		boolean whileCondition = true;
-		while (whileCondition) {
+		while (whileCondition && emptySquareThreshold > 0.7d) {
 			
 			emptySquareThreshold -= 0.01d;
 			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, emptySquareThreshold);
@@ -101,7 +102,7 @@ public abstract class Matcher_Base {
 				}
 			}
 			
-			//System.out.println("emptySquareThreshold=" + emptySquareThreshold + ", maxFull=" + maxFull + ", minEmpty=" + minEmpty);
+			System.out.println("emptySquareThreshold=" + emptySquareThreshold + ", maxFull=" + maxFull + ", minEmpty=" + minEmpty);
 			
 			if (maxFull < minEmpty) {
 				whileCondition = false;
@@ -110,21 +111,50 @@ public abstract class Matcher_Base {
 		}
 		
 		
-		MatchingStatistics result = new MatchingStatistics();
-		result.matcherName = this.getClass().getCanonicalName();
-		
 		int[] pids = new int[64];
 		
-		for (int fieldID = 0; fieldID < 64; fieldID++) {
+		if (maxFullThreshold > 0) {//Already resolved in the loop above
 			
-			int pieceID = matchingData.pieceIDs[fieldID];
-			MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+			for (int fieldID = 0; fieldID < 64; fieldID++) {
+				
+				int pieceID = matchingData.pieceIDs[fieldID];
+				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+				
+				pids[fieldID] = squareData.delta <= maxFullThreshold ? pieceID : Constants.PID_NONE;
+			}
 			
-			pids[fieldID] = squareData.delta <= maxFullThreshold ? pieceID : Constants.PID_NONE;
+		} else {//No solution found yet, so try with Kmeans clustering of deltas
 			
-			result.totalDelta += squareData.delta;
+			double[] deltas = new double[64];
+			for (int fieldID = 0; fieldID < 64; fieldID++) {
+				MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+				deltas[fieldID] = squareData.delta;
+			}
+			
+			KMeansLines_Scalar kmeans = new KMeansLines_Scalar(4, deltas);
+			
+			for (int fieldID = 0; fieldID < 64; fieldID++) {
+				if (kmeans.centroids_ids[fieldID] == 0) {
+					pids[fieldID] = matchingData.pieceIDs[fieldID];
+					System.out.println("Square " + fieldID + " is in centroid 0 and has PID " + pids[fieldID]);
+				} else if (kmeans.centroids_ids[fieldID] == 1) {
+					pids[fieldID] = matchingData.pieceIDs[fieldID];
+					System.out.println("Square " + fieldID + " is in centroid 1 and has PID " + pids[fieldID]);
+				} else if (kmeans.centroids_ids[fieldID] == 2) {
+					pids[fieldID] = Constants.PID_NONE;
+				} else if (kmeans.centroids_ids[fieldID] == 3) {
+					pids[fieldID] = Constants.PID_NONE;
+				}
+			}
 		}
 		
+		
+		MatchingStatistics result = new MatchingStatistics();
+		result.matcherName = this.getClass().getCanonicalName();
+		for (int fieldID = 0; fieldID < 64; fieldID++) {
+			MatrixUtils.PatternMatchingData squareData = matchingData.squareData[fieldID];
+			result.totalDelta += squareData.delta;
+		}
 		result.totalDelta = result.totalDelta / (double) 64;
 		
 		
@@ -157,12 +187,11 @@ public abstract class Matcher_Base {
 				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
 				//int bgcolor_avg = (int) MatrixUtils.calculateColorStats(squareMatrix).getEntropy();
 				
-				/*MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
+				MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
 				bestPatternData.x = 0;
 				bestPatternData.y = 0;
 				bestPatternData.size = squareMatrix.length;
-				ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");*/
-				
+				ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");
 				
 				List<Integer> bgcolors = new ArrayList<Integer>();
 				//bgcolors.add(bgcolor_avg);
@@ -171,6 +200,8 @@ public abstract class Matcher_Base {
 				ResultPair<Integer, MatrixUtils.PatternMatchingData> pidAndData = getPID(squareMatrix, bgcolors, getAllPIDs(fieldID), fieldID);
 				result.pieceIDs[fieldID] = pidAndData.getFirst();
 				result.squareData[fieldID] = pidAndData.getSecond();
+				
+				//System.out.println("Square " + fieldID + " has delta " + pidAndData.getSecond().delta);
 				
 				countPIDs++;
 				if (matchingInfo != null) matchingInfo.setCurrentPhaseProgress(countPIDs / (double) 64);
