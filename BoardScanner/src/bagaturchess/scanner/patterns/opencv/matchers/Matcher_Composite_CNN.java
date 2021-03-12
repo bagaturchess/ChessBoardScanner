@@ -29,7 +29,6 @@ import java.util.Map;
 import bagaturchess.scanner.cnn.compute.MatcherFinder;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 

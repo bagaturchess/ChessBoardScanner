@@ -26,7 +26,6 @@ import java.util.List;
 
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.ImageHandler;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;

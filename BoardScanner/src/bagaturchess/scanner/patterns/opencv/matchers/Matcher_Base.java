@@ -38,7 +38,6 @@ import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.KMeansScalar;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
@@ -78,15 +77,16 @@ public abstract class Matcher_Base {
 			deltas[squareID] = matchingData.squareData[squareID].delta;
 		}
 		
-		KMeansScalar deltas_clusters = new KMeansScalar(9, deltas);
+		KMeansScalar deltas_clusters = new KMeansScalar(5, deltas);
 		
+		//Set<Integer> emptySquares = new HashSet<Integer>();
 		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
 		
 		int[] pids = new int[64];
 		
 		for (int squareID = 0; squareID < 64; squareID++) {
 			
-			if (deltas_clusters.centroids_ids[squareID] <= 5 && !emptySquares.contains(squareID)) {
+			if (deltas_clusters.centroids_ids[squareID] <= 2 && !emptySquares.contains(squareID)) {
 				
 				pids[squareID] = matchingData.pieceIDs[squareID];
 				System.out.println("Square " + squareID + " is in centroid " + deltas_clusters.centroids_ids[squareID] + " and has PID " + pids[squareID]);
