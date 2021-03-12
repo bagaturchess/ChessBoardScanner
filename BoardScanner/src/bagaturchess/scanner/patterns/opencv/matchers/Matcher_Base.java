@@ -35,12 +35,12 @@ import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.common.KMeansLines_Scalar;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.common.ResultTriplet;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
-import bagaturchess.scanner.patterns.opencv.KMeansLines_Scalar;
 
 
 public abstract class Matcher_Base {
@@ -74,7 +74,7 @@ public abstract class Matcher_Base {
 		double emptySquareThreshold = 1;
 		double maxFullThreshold = 0;
 		
-		boolean whileCondition = true;
+		/*boolean whileCondition = true;
 		while (whileCondition && emptySquareThreshold > 0.7d) {
 			
 			emptySquareThreshold -= 0.01d;
@@ -108,7 +108,7 @@ public abstract class Matcher_Base {
 				whileCondition = false;
 				maxFullThreshold = maxFull;
 			}
-		}
+		}*/
 		
 		
 		int[] pids = new int[64];
@@ -131,18 +131,19 @@ public abstract class Matcher_Base {
 				deltas[fieldID] = squareData.delta;
 			}
 			
-			KMeansLines_Scalar kmeans = new KMeansLines_Scalar(4, deltas);
+			KMeansLines_Scalar kmeans = new KMeansLines_Scalar(9, deltas);
+			
+			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
 			
 			for (int fieldID = 0; fieldID < 64; fieldID++) {
-				if (kmeans.centroids_ids[fieldID] == 0) {
+				
+				if (kmeans.centroids_ids[fieldID] <= 5 && !emptySquares.contains(fieldID)) {
+					
 					pids[fieldID] = matchingData.pieceIDs[fieldID];
-					System.out.println("Square " + fieldID + " is in centroid 0 and has PID " + pids[fieldID]);
-				} else if (kmeans.centroids_ids[fieldID] == 1) {
-					pids[fieldID] = matchingData.pieceIDs[fieldID];
-					System.out.println("Square " + fieldID + " is in centroid 1 and has PID " + pids[fieldID]);
-				} else if (kmeans.centroids_ids[fieldID] == 2) {
-					pids[fieldID] = Constants.PID_NONE;
-				} else if (kmeans.centroids_ids[fieldID] == 3) {
+					System.out.println("Square " + fieldID + " is in centroid " + kmeans.centroids_ids[fieldID] + " and has PID " + pids[fieldID]);
+					
+				} else {
+					
 					pids[fieldID] = Constants.PID_NONE;
 				}
 			}
