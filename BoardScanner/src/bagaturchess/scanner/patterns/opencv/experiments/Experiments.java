@@ -111,7 +111,7 @@ public class Experiments {
         	x_0[i] = lines.get(i).calculateY(0);
         }
         
-        KMeansLines_Scalar kmeans = new KMeansLines_Scalar(9, x_0);
+        KMeansScalar kmeans = new KMeansScalar(9, x_0);
         for (int centroid_id = 0; centroid_id < kmeans.weights.length; centroid_id++) {
         	
         	Mat toDraw = cannyOutput.clone();

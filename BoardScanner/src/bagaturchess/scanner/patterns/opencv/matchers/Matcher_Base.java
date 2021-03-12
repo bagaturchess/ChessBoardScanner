@@ -35,7 +35,7 @@ import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.IMatchingInfo;
-import bagaturchess.scanner.common.KMeansLines_Scalar;
+import bagaturchess.scanner.common.KMeansScalar;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.common.ResultTriplet;
@@ -131,9 +131,9 @@ public abstract class Matcher_Base {
 				deltas[fieldID] = squareData.delta;
 			}
 			
-			KMeansLines_Scalar kmeans = new KMeansLines_Scalar(9, deltas);
+			KMeansScalar kmeans = new KMeansScalar(9, deltas);
 			
-			Set<Integer> emptySquares = MatrixUtils.getEmptySquaresByClustering(grayBoard, 0.9d);
+			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
 			
 			for (int fieldID = 0; fieldID < 64; fieldID++) {
 				

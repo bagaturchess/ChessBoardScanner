@@ -20,7 +20,7 @@
 package bagaturchess.scanner.common;
 
 
-public class KMeansLines_Scalar {
+public class KMeansScalar {
 	
 	
 	public double[] centroids_values;
@@ -28,7 +28,7 @@ public class KMeansLines_Scalar {
 	public int[] weights;
 	
 	
-	public KMeansLines_Scalar(int K, double[] scalars) {
+	public KMeansScalar(int K, double[] scalars) {
 		
 		//K-Means start
 		int NUMBER_OF_CLUSTERS = K;
