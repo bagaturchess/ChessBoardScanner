@@ -133,7 +133,7 @@ public abstract class Matcher_Base {
 			
 			KMeansLines_Scalar kmeans = new KMeansLines_Scalar(9, deltas);
 			
-			Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
+			Set<Integer> emptySquares = MatrixUtils.getEmptySquaresByClustering(grayBoard, 0.9d);
 			
 			for (int fieldID = 0; fieldID < 64; fieldID++) {
 				

@@ -101,6 +101,39 @@ public class MatrixUtils {
 	}
 	
 	
+	public static Set<Integer> getEmptySquaresByClustering(int[][] grayBoard, double emptySquareThreshold) {
+		
+		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
+		
+		boolean[] markedForEmpty = new boolean[64];
+		for (int i = 0; i < grayBoard.length; i += grayBoard.length / 8) {
+			for (int j = 0; j < grayBoard.length; j += grayBoard.length / 8) {
+				
+				int file = i / (grayBoard.length / 8);
+				int rank = j / (grayBoard.length / 8);
+				int fieldID = 63 - (file + 8 * rank);
+				
+				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
+				
+				KMeansPixels kmeans = new KMeansPixels(3, squareMatrix);
+				int maxWeightCentroidID = kmeans.getMaxWeightIndex();
+				int maxWeight = kmeans.weights[maxWeightCentroidID];
+				if(maxWeight >= emptySquareThreshold * squareMatrix.length * squareMatrix.length) {
+					markedForEmpty[fieldID] = true;
+				}
+			}
+		}
+		
+		for (int fieldID = 0; fieldID < markedForEmpty.length; fieldID++) {
+			if (markedForEmpty[fieldID]) {
+				emptySquaresIDs.add(fieldID);
+			}
+		}
+		
+		return emptySquaresIDs;
+	}
+	
+	
 	public static ResultPair<Integer, Integer> getSquaresColor(int[][] grayBoard) {
 		
 		KMeansPixels kmeans = new KMeansPixels(4, grayBoard);
