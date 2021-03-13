@@ -106,6 +106,9 @@ public class NetworkModel_Gray extends NetworkModel<MultiLayerNetwork> {
 	
 	@Override
 	public void setInputs(Object input) {
+		if (network.getInput() != null) {
+			network.getInput().cleanup();
+		}
 		network.setInput(Nd4j.create((float[][])input).reshape(1, 1, squareSize, squareSize));
 	}
 	

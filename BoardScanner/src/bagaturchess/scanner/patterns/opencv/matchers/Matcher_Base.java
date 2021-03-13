@@ -80,7 +80,9 @@ public abstract class Matcher_Base {
 		KMeansScalar deltas_clusters = new KMeansScalar(5, deltas);
 		
 		//Set<Integer> emptySquares = new HashSet<Integer>();
-		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
+		//Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
+		Set<Integer> emptySquares = MatrixUtils.getEmptySquares_Heuristic1(grayBoard, 0.95d);
+		emptySquares.addAll(MatrixUtils.getEmptySquares_Heuristic2(grayBoard));
 		
 		int[] pids = new int[64];
 		

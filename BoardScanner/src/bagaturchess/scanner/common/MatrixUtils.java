@@ -58,7 +58,7 @@ public class MatrixUtils {
 	}
 	
 	
-	public static Set<Integer> getEmptySquares(int[][] grayBoard, double emptySquareThreshold) {
+	private static Set<Integer> getEmptySquares(int[][] grayBoard, double emptySquareThreshold) {
 		
 		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
 		
@@ -101,7 +101,7 @@ public class MatrixUtils {
 	}
 	
 	
-	public static Set<Integer> getEmptySquaresByClustering(int[][] grayBoard, double emptySquareThreshold) {
+	public static Set<Integer> getEmptySquares_Heuristic1(int[][] grayBoard, double emptySquareThreshold) {
 		
 		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
 		
@@ -111,7 +111,7 @@ public class MatrixUtils {
 				
 				int file = i / (grayBoard.length / 8);
 				int rank = j / (grayBoard.length / 8);
-				int fieldID = 63 - (file + 8 * rank);
+				int squareID = 63 - (file + 8 * rank);
 				
 				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
 				
@@ -119,14 +119,45 @@ public class MatrixUtils {
 				int maxWeightCentroidID = kmeans.getMaxWeightIndex();
 				int maxWeight = kmeans.weights[maxWeightCentroidID];
 				if(maxWeight >= emptySquareThreshold * squareMatrix.length * squareMatrix.length) {
-					markedForEmpty[fieldID] = true;
+					markedForEmpty[squareID] = true;
 				}
 			}
 		}
 		
-		for (int fieldID = 0; fieldID < markedForEmpty.length; fieldID++) {
-			if (markedForEmpty[fieldID]) {
-				emptySquaresIDs.add(fieldID);
+		for (int squareID = 0; squareID < 64; squareID++) {
+			if (markedForEmpty[squareID]) {
+				emptySquaresIDs.add(squareID);
+			}
+		}
+		
+		return emptySquaresIDs;
+	}
+	
+	
+	public static Set<Integer> getEmptySquares_Heuristic2(int[][] grayBoard) {
+		
+		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
+		
+		double[] colorDeviations = new double[64];
+		for (int i = 0; i < grayBoard.length; i += grayBoard.length / 8) {
+			for (int j = 0; j < grayBoard.length; j += grayBoard.length / 8) {
+				
+				int file = i / (grayBoard.length / 8);
+				int rank = j / (grayBoard.length / 8);
+				int squareID = 63 - (file + 8 * rank);
+				
+				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
+				
+				VarStatistic squareStat = calculateColorStats(squareMatrix, -1);
+				
+				colorDeviations[squareID] = squareStat.getDisperse();
+			}
+		}
+		
+		KMeansScalar kmeans = new KMeansScalar(11, colorDeviations);
+		for (int squareID = 0; squareID < 64; squareID++) {
+			if (kmeans.centroids_ids[squareID] <= 0) {
+				emptySquaresIDs.add(squareID);
 			}
 		}
 		
