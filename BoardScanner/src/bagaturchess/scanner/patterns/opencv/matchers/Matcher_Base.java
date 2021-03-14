@@ -138,11 +138,12 @@ public abstract class Matcher_Base {
 				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
 				//int bgcolor_avg = (int) MatrixUtils.calculateColorStats(squareMatrix).getEntropy();
 				
-				MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
+				/*MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
 				bestPatternData.x = 0;
 				bestPatternData.y = 0;
 				bestPatternData.size = squareMatrix.length;
 				ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");
+				*/
 				
 				List<Integer> bgcolors = new ArrayList<Integer>();
 				//bgcolors.add(bgcolor_avg);
