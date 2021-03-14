@@ -285,7 +285,7 @@ public class OpenCVUtils {
 	
 	public static Point[] gen9HoughLinesCrossPoints(Mat canny) {
 		
-        ResultPair<List<HoughLine>, List<HoughLine>> all_lines = getHoughTransform(canny, 1, Math.PI / 360, 120);
+        ResultPair<List<HoughLine>, List<HoughLine>> all_lines = getHoughTransform(canny, 1, Math.PI / 720, 120);
         List<HoughLine> h_lines = all_lines.getFirst();
         List<HoughLine> v_lines = all_lines.getSecond();
         System.out.println("gen9HoughLinesCrossPoints: h_lines.size=" + h_lines.size() + ", v_lines.size=" + v_lines.size());
