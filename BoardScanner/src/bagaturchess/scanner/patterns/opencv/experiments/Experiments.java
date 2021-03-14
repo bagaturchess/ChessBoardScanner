@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -18,6 +19,7 @@ import org.opencv.objdetect.CascadeClassifier;
 
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
+import bagaturchess.scanner.patterns.opencv.OpenCVUtils.HoughLine;
 
 
 public class Experiments {
@@ -28,6 +30,36 @@ public class Experiments {
 		Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
 		Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
 		
+        Mat adapted = new Mat();
+        Imgproc.adaptiveThreshold(source_gray, adapted, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, -2);
+        
+        Mat horizontal = adapted.clone();
+        int horizontal_size = horizontal.cols() / 10;
+        
+        Mat horizontalStructure = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(horizontal_size, 1));
+        Imgproc.erode(horizontal, horizontal, horizontalStructure);
+        Imgproc.dilate(horizontal, horizontal, horizontalStructure);
+        
+		Mat lines = new Mat();
+		Imgproc.HoughLines(horizontal, lines, 1, Math.PI / 720, 190);
+		
+		System.out.println(lines.rows());
+		
+		Mat toDraw = source_gray.clone();
+		for (int i = 0; i < lines.rows(); i++) {
+		  	
+		    double data[] = lines.get(i, 0);
+		    double rho1 = data[0];
+		    double theta1 = data[1];
+		        
+		    HoughLine line = new HoughLine(rho1, theta1);
+		       
+		    Imgproc.line(toDraw, line.pt1, line.pt2, new Scalar(255, 255, 255), 2);
+		}
+		
+        HighGui.imshow("Key points", toDraw);
+        HighGui.waitKey(0);
+        
 		//to check:
 		//https://github.com/andrewleeunderwood/project_MYM/blob/master/cv_chess.py
 		//https://github.com/andrewleeunderwood/project_MYM/blob/master/cv_chess_functions.py
@@ -87,7 +119,7 @@ public class Experiments {
         HighGui.waitKey(0);
 		*/
 		
-		Imgproc.GaussianBlur(source_gray, source_gray, new Size(15,15), 0.5);
+		//Imgproc.GaussianBlur(source_gray, source_gray, new Size(15,15), 0.5);
 		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 40);
         //Imgproc.threshold(source_gray, source_gray, 10, 255, Imgproc.THRESH_BINARY);
 		//Mat bilateralFilter = new Mat();
@@ -97,14 +129,14 @@ public class Experiments {
         //HighGui.imshow("source_gray", source_gray);
         //HighGui.waitKey(0);
 		
-		Mat cannyOutput = new Mat();
-		Imgproc.Canny(source_gray, cannyOutput, 20, 80);
+		//Mat cannyOutput = new Mat();
+		//Imgproc.Canny(source_gray, cannyOutput, 20, 80);
 		
         //HighGui.imshow("cannyOutput", cannyOutput);
         //HighGui.waitKey(0);
         
-		Point[] intersections = OpenCVUtils.gen9HoughLinesCrossPoints(cannyOutput);
-		Point[] boardCorners = OpenCVUtils.getOrderedCorners(intersections, cannyOutput.width(), cannyOutput.height());
+		//Point[] intersections = OpenCVUtils.gen9HoughLinesCrossPoints(cannyOutput);
+		//Point[] boardCorners = OpenCVUtils.getOrderedCorners(intersections, cannyOutput.width(), cannyOutput.height());
         
         /*double[] x_0 = new double[lines.size()];
         for (int i = 0; i < lines.size(); i++) {

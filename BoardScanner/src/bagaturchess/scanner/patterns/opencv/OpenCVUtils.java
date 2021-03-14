@@ -30,6 +30,7 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import bagaturchess.scanner.common.ResultPair;
@@ -374,8 +375,8 @@ public class OpenCVUtils {
 		lines = sortByYInX(lines, x_test);
 		
 		List<Hough9Lines> result = new ArrayList<Hough9Lines>();
-        for (int i = 0; i < 0.15d * lines.size(); i++) {
-        	for (int interval = start_interval; interval < end_interval; interval++) {
+        for (int i = 0; i < 0.25d * lines.size(); i++) {
+        	for (double interval = start_interval; interval < end_interval; interval += 0.5) {
         		
         		int line1Index = i;
         		HoughLine line1 = lines.get(line1Index);
@@ -449,8 +450,8 @@ public class OpenCVUtils {
 		lines = sortByXInY(lines, y_test);
 		
 		List<Hough9Lines> result = new ArrayList<Hough9Lines>();
-        for (int i = 0; i < 0.15d * lines.size(); i++) {
-        	for (int interval = start_interval; interval < end_interval; interval++) {
+        for (int i = 0; i < 0.25d * lines.size(); i++) {
+        	for (double interval = start_interval; interval < end_interval; interval += 0.5) {
         		
         		int line1Index = i;
         		HoughLine line1 = lines.get(line1Index);
