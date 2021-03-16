@@ -297,6 +297,7 @@ public class OpenCVUtils {
         	return null;
         }
         
+        //Limit lines to max 100, otherwise the algorithm is too slow
         if (h_lines.size() > 100) {
         	h_lines = genAvgLinesByKMeansClustering(100, h_lines);
         }
