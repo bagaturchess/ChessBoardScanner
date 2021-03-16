@@ -30,9 +30,11 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.highgui.HighGui;
+import org.opencv.core.Size;
+//import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
+import bagaturchess.scanner.common.KMeansScalar;
 import bagaturchess.scanner.common.ResultPair;
 
 
@@ -283,9 +285,10 @@ public class OpenCVUtils {
 	}
 	
 	
-	public static Point[] gen9HoughLinesCrossPoints(Mat canny) {
+	public static Point[] gen9HoughLinesCrossPoints(Mat source_gray) {
 		
-        ResultPair<List<HoughLine>, List<HoughLine>> all_lines = getHoughTransform(canny, 1, Math.PI / 720, 120);
+		ResultPair<List<HoughLine>, List<HoughLine>> all_lines = getHoughTransform(source_gray);
+        //ResultPair<List<HoughLine>, List<HoughLine>> all_lines = getHoughTransform1(source_gray);
         List<HoughLine> h_lines = all_lines.getFirst();
         List<HoughLine> v_lines = all_lines.getSecond();
         System.out.println("gen9HoughLinesCrossPoints: h_lines.size=" + h_lines.size() + ", v_lines.size=" + v_lines.size());
@@ -294,23 +297,27 @@ public class OpenCVUtils {
         	return null;
         }
         
-        //Too slow otherwise
-        if (h_lines.size() > 500 || v_lines.size() > 500) {
-        	return null;
+        if (h_lines.size() > 300) {
+        	h_lines = genAvgLinesByKMeansClustering(300, h_lines);
+        }
+        
+        if (v_lines.size() > 300) {
+        	v_lines = genAvgLinesByKMeansClustering(300, v_lines);
         }
         
         int x_test1 = 0;
-        int x_test2 = canny.width();
-        List<Hough9Lines> hough9Lines_H = selectHough9Lines_Horizontal(canny.height() / 20, canny.height() / 5, x_test1, h_lines);
+        int x_test2 = source_gray.width();
+        List<Hough9Lines> hough9Lines_H = selectHough9Lines_Horizontal(source_gray.height() / 20, source_gray.height() / 5, x_test1, h_lines);
         System.out.println("gen9HoughLinesCrossPoints: hough9Lines_H.size=" + hough9Lines_H.size());
         if (hough9Lines_H.size() < 1) {
         	return null;
         }
         hough9Lines_H = correctErrorWithSecondPointX(hough9Lines_H, x_test2);
         
+        
         int y_test1 = 0;
-        int y_test2 = canny.height();
-        List<Hough9Lines> hough9Lines_V = selectHough9Lines_Vertical(canny.height() / 20, canny.height() / 5, y_test1, v_lines);
+        int y_test2 = source_gray.height();
+        List<Hough9Lines> hough9Lines_V = selectHough9Lines_Vertical(source_gray.height() / 20, source_gray.height() / 5, y_test1, v_lines);
         System.out.println("gen9HoughLinesCrossPoints: hough9Lines_V.size=" + hough9Lines_V.size());
         if (hough9Lines_V.size() < 1) {
         	return null;
@@ -320,11 +327,9 @@ public class OpenCVUtils {
         Hough9Lines horizontal9Lines = hough9Lines_H.get(0);
         Hough9Lines vertical9Lines = hough9Lines_V.get(0);
         
-    	/*Mat toDraw = canny.clone();
-    	
+    	/*Mat toDraw = source_gray.clone();
     	drawHough9Lines(horizontal9Lines, toDraw);
     	drawHough9Lines(vertical9Lines, toDraw);
-    	
         HighGui.imshow("lines", toDraw);
         HighGui.waitKey(0);
         */
@@ -343,33 +348,196 @@ public class OpenCVUtils {
 	}
 	
 	
-	private static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform(Mat image, double rho, double theta, int threshold) {
+	private static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform(Mat source_gray) {
+		
+		Mat blur = new Mat();
+		Imgproc.GaussianBlur(source_gray, blur, new Size(15, 15), 0.5);
+		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, -2);
+        //Imgproc.threshold(source_gray, source_gray, 10, 255, Imgproc.THRESH_BINARY);
+		//Mat bilateralFilter = new Mat();
+		//Imgproc.bilateralFilter(source_gray, bilateralFilter, 5, 150, 150);
+		//source_gray = bilateralFilter;
+		
+        //HighGui.imshow("source_gray", source_gray);
+        //HighGui.waitKey(0);
+		
+		Mat canny = new Mat();
+		Imgproc.Canny(blur, canny, 20, 80);
+		
+        //HighGui.imshow("canny", canny);
+        //HighGui.waitKey(0);
 		
 		Mat lines = new Mat();
 		
-		Imgproc.HoughLines(image, lines, rho, theta, threshold);
+		Imgproc.HoughLines(canny, lines, 1, Math.PI / 360, 120);
+		
+		double deltaAngleInDegrees = 10;
 		
 		List<HoughLine> h_lines = new ArrayList<HoughLine>();
 		List<HoughLine> v_lines = new ArrayList<HoughLine>();
 		for (int i = 0; i < lines.rows(); i++) {
 		  	
 		    double data[] = lines.get(i, 0);
-		    double rho1 = data[0];
-		    double theta1 = data[1];
-		        
-		    HoughLine line = new HoughLine(rho1, theta1);
-		        
-		    if (line.theta < Math.PI / 4 || line.theta > Math.PI - Math.PI / 4) {
+		    double rho = data[0];
+		    double theta = data[1];
+		    
+		    HoughLine line = new HoughLine(rho, theta);
+		    
+		    //System.out.println(theta);
+		    
+		    /*if (line.theta < Math.PI / 4 || line.theta > Math.PI - Math.PI / 4) {
 		    	v_lines.add(line);
 		    } else {
+		    	h_lines.add(line);
+		    }*/
+		    if ((line.theta >= Math.toRadians(0 - deltaAngleInDegrees) && line.theta <= Math.toRadians(0 + deltaAngleInDegrees))
+		    		|| (line.theta >= Math.toRadians(180 - deltaAngleInDegrees) && line.theta <= Math.toRadians(180 + deltaAngleInDegrees))) {
+		    	v_lines.add(line);
+		    } else if ((line.theta >= Math.toRadians(90 - deltaAngleInDegrees) && line.theta <= Math.toRadians(90 + deltaAngleInDegrees))
+		    		|| (line.theta >= Math.toRadians(270 - deltaAngleInDegrees) && line.theta <= Math.toRadians(270 + deltaAngleInDegrees))) {
 		    	h_lines.add(line);
 		    }
 		}
 		
 		return new ResultPair<List<HoughLine>, List<HoughLine>>(h_lines, v_lines);
 	}
+	
+	
+	private static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform1(Mat source_gray) {
+		
+		Mat adapted = new Mat();
+        Imgproc.adaptiveThreshold(source_gray, adapted, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 20);
+        //HighGui.imshow("adapted", adapted);
+        //HighGui.waitKey(0);
+        
+        Mat canny = new Mat();
+		Imgproc.Canny(adapted, canny, 20, 80);
+        //HighGui.imshow("canny", canny);
+        //HighGui.waitKey(0);
+		adapted = canny;
+		
+        
+        double deltaAngleInDegrees = 10;
+        
+        Mat horizontal = adapted.clone();
+        int horizontal_size = horizontal.cols() / 100;
+        
+        Mat horizontalStructure = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(horizontal_size, 1));
+        Imgproc.erode(horizontal, horizontal, horizontalStructure);
+        Imgproc.dilate(horizontal, horizontal, horizontalStructure);
+        
+        //HighGui.imshow("horizontal", horizontal);
+        //HighGui.waitKey(0);
+        
+		Mat horizontalLines = new Mat();
+		Imgproc.HoughLines(horizontal, horizontalLines, 1, Math.PI / 720, 80);
+		
+		//System.out.println("horizontalLines size is " + horizontalLines.rows());
+		
+		//Mat toDraw = source_gray.clone();
+		
+		List<HoughLine> horizontalLinesList = new ArrayList<HoughLine>();
+		for (int i = 0; i < horizontalLines.rows(); i++) {
+		  	
+		    double data[] = horizontalLines.get(i, 0);
+		    double rho = data[0];
+		    double theta = data[1];
+		    
+		    if ((theta >= Math.toRadians(90 - deltaAngleInDegrees) && theta <= Math.toRadians(90 + deltaAngleInDegrees))
+		    		|| (theta >= Math.toRadians(270 - deltaAngleInDegrees) && theta <= Math.toRadians(270 + deltaAngleInDegrees))) {
+		    	
+			    HoughLine line = new HoughLine(rho, theta);
+		    	horizontalLinesList.add(line);
+		    	//Imgproc.line(toDraw, line.pt1, line.pt2, new Scalar(255, 255, 255), 2);
+		    }
+		}
+		
+        //HighGui.imshow("horizontalLines", toDraw);
+        //HighGui.waitKey(0);
+        
+        List<HoughLine> avgHorizontalLinesList = genAvgLinesByKMeansClustering(54, horizontalLinesList);
+		horizontalLinesList = avgHorizontalLinesList;
+        
+        Mat vertical = adapted.clone();
+        int vertical_size = vertical.rows() / 100;
+        Mat verticalStructure = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, vertical_size));
+        Imgproc.erode(vertical, vertical, verticalStructure);
+        Imgproc.dilate(vertical, vertical, verticalStructure);
+        
+        //HighGui.imshow("vertical", vertical);
+        //HighGui.waitKey(0);
+        
+		Mat verticalLines = new Mat();
+		Imgproc.HoughLines(vertical, verticalLines, 1, Math.PI / 720, 80);
+		
+		//System.out.println("verticalLines size is " + verticalLines.rows());
+		
+		List<HoughLine> verticalLinesList = new ArrayList<HoughLine>();
+		for (int i = 0; i < verticalLines.rows(); i++) {
+		  	
+		    double data[] = verticalLines.get(i, 0);
+		    double rho = data[0];
+		    double theta = data[1];
+		    
+		    if ((theta >= Math.toRadians(0 - deltaAngleInDegrees) && theta <= Math.toRadians(0 + deltaAngleInDegrees))
+		    		|| (theta >= Math.toRadians(180 - deltaAngleInDegrees) && theta <= Math.toRadians(180 + deltaAngleInDegrees))) {
+		    	
+			    HoughLine line = new HoughLine(rho, theta);
+			    verticalLinesList.add(line);
+			    //Imgproc.line(toDraw, line.pt1, line.pt2, new Scalar(255, 255, 255), 2);
+		    }
+		}
+        
+        //HighGui.imshow("all", toDraw);
+        //HighGui.waitKey(0);
+		
+        
+		List<HoughLine> avgVerticalLinesList = genAvgLinesByKMeansClustering(54, verticalLinesList);
+		verticalLinesList = avgVerticalLinesList;
+		
+        return new ResultPair<List<HoughLine>, List<HoughLine>>(horizontalLinesList, verticalLinesList);
+	}
 
 
+	private static List<HoughLine> genAvgLinesByKMeansClustering(int K, List<HoughLine> lines) {
+		
+		double[] linesRho = new double[lines.size()];
+		for (int i = 0; i < lines.size(); i++) {
+			linesRho[i] = lines.get(i).rho;
+		}
+		
+		KMeansScalar rhoKMmeansClustering = new KMeansScalar(K, linesRho);
+		
+		List<HoughLine> avgLinesList = new ArrayList<HoughLine>();
+		for (int centroidID = 0; centroidID < rhoKMmeansClustering.weights.length; centroidID++) {
+			
+			if (rhoKMmeansClustering.weights[centroidID] > 0) {
+				
+				double rho_sum = 0;
+				double rho_cnt = 0;
+				double theta_sum = 0;
+				double theta_cnt = 0;
+				
+				for (int i = 0; i < lines.size(); i++) {
+					HoughLine line = lines.get(i);
+					if (rhoKMmeansClustering.centroids_ids[i] == centroidID) {
+						rho_sum += line.rho;
+						rho_cnt++;
+						theta_sum += line.theta;
+						theta_cnt++;
+					}
+				}
+				
+				HoughLine avgLine = new HoughLine(rho_sum / rho_cnt, theta_sum / theta_cnt);
+				avgLinesList.add(avgLine);
+			}
+		}
+		
+		
+		return avgLinesList;
+	}
+	
+	
 	private static List<Hough9Lines> selectHough9Lines_Horizontal(int start_interval, int end_interval, int x_test, List<HoughLine> lines) {
 		
 		lines = sortByYInX(lines, x_test);
@@ -424,6 +592,8 @@ public class OpenCVUtils {
         		double error9 = Math.abs(line9.calculateY(x_test) - (y1 + 8 * interval));
         		
         		double error_all = error1 + error2 + error3 + error4 + error5 + error6 + error7 + error8 + error9;
+        		
+        		error_all = error_all / (double) (line9.calculateY(x_test) - y1);
         		
         		List<HoughLine> linesList = new ArrayList<HoughLine>();
         		linesList.add(line1);
@@ -499,6 +669,8 @@ public class OpenCVUtils {
         		double error9 = Math.abs(line9.calculateX(y_test) - (x1 + 8 * interval));
         		
         		double error_all = error1 + error2 + error3 + error4 + error5 + error6 + error7 + error8 + error9;
+        		
+        		error_all = error_all / (double) (line9.calculateX(y_test) - x1);
         		
         		List<HoughLine> linesList = new ArrayList<HoughLine>();
         		linesList.add(line1);

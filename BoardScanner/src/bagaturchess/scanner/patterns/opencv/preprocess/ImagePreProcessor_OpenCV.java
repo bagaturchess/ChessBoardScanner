@@ -137,29 +137,13 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		
 		Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
 		Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
-		
-		Imgproc.GaussianBlur(source_gray, source_gray, new Size(15,15), 0.5);
-		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 40);
-        //Imgproc.threshold(source_gray, source_gray, 10, 255, Imgproc.THRESH_BINARY);
-		//Mat bilateralFilter = new Mat();
-		//Imgproc.bilateralFilter(source_gray, bilateralFilter, 5, 150, 150);
-		//source_gray = bilateralFilter;
-		
-        //HighGui.imshow("source_gray", source_gray);
-        //HighGui.waitKey(0);
-		
-		Mat canny = new Mat();
-		Imgproc.Canny(source_gray, canny, 20, 80);
-		
-        //HighGui.imshow("cannyOutput", cannyOutput);
-        //HighGui.waitKey(0);
         
-		Point[] intersections = OpenCVUtils.gen9HoughLinesCrossPoints(canny);
+		Point[] intersections = OpenCVUtils.gen9HoughLinesCrossPoints(source_gray);
 		if (intersections == null) {
 			return null;
 		}
 		
-		Point[] boardCorners = OpenCVUtils.getOrderedCorners(intersections, canny.width(), canny.height());
+		Point[] boardCorners = OpenCVUtils.getOrderedCorners(intersections, source_gray.width(), source_gray.height());
 		
 		MatOfPoint2f src = new MatOfPoint2f(
 				boardCorners[0],

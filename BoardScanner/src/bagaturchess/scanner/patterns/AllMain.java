@@ -54,7 +54,7 @@ public class AllMain {
 			
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 			
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/preprocess/test23.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/preprocess/test38.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/test3.jpg");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/test2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
@@ -89,7 +89,7 @@ public class AllMain {
 			List<String> netsNames = new ArrayList<String>();
 			netsNames.add("cnn_lichessorg1.net");
 			netsNames.add("cnn_chesscom1.net");
-
+			
 			Map<String, String> netToSetMappings = new HashMap<String, String>();
 			netToSetMappings.put("cnn_lichessorg1.net", "set1");
 			netToSetMappings.put("cnn_chesscom1.net", "set2");
