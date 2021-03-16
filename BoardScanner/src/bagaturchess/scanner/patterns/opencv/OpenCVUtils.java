@@ -297,12 +297,12 @@ public class OpenCVUtils {
         	return null;
         }
         
-        if (h_lines.size() > 300) {
-        	h_lines = genAvgLinesByKMeansClustering(300, h_lines);
+        if (h_lines.size() > 100) {
+        	h_lines = genAvgLinesByKMeansClustering(100, h_lines);
         }
         
-        if (v_lines.size() > 300) {
-        	v_lines = genAvgLinesByKMeansClustering(300, v_lines);
+        if (v_lines.size() > 100) {
+        	v_lines = genAvgLinesByKMeansClustering(100, v_lines);
         }
         
         int x_test1 = 0;
