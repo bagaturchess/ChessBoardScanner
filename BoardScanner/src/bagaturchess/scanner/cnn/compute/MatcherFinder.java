@@ -57,7 +57,7 @@ public class MatcherFinder {
 		for (int i = 0; i < scanners.size(); i++) {
 			String currentName = netsNames.get(i);
 			double currentProb = scanners.get(i).getAccumulatedProbability(image);
-			if (currentProb > bestProb) {
+			if (currentProb >= bestProb) {
 				bestProb = currentProb;
 				bestName = currentName;
 			}
