@@ -59,7 +59,7 @@ public class Matcher_Composite extends Matcher_Base {
 	@Override
 	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) {
 		
-		if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 1);
+		//if (matchingInfo != null) matchingInfo.setPhasesCount(matchers_classifier.size() + 1);
 		
 		int best_index = 0;
 		double best_delta = Double.MAX_VALUE;
@@ -72,7 +72,7 @@ public class Matcher_Composite extends Matcher_Base {
 		
 		for (int i = 0; i < matchers_classifier.size(); i++) {
 			
-			if (matchingInfo != null) matchingInfo.setCurrentPhase(i + 1);
+			if (matchingInfo != null) matchingInfo.incCurrentPhase();
 			
 			ResultPair<String, MatchingStatistics> result = matchers_classifier.get(i).scan(grayBoard_classifier, matchingInfo);
 			
@@ -89,7 +89,7 @@ public class Matcher_Composite extends Matcher_Base {
 		
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matchers.get(best_index).getClass().getCanonicalName());
 		
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(matchers_classifier.size() + 1);
+		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		ResultPair<String, MatchingStatistics> result = matchers.get(best_index).scan(grayBoard, matchingInfo);
 		
 		/*if (matchers.get(best_index).getTotalDeltaThreshold() < result.getSecond().totalDelta) {

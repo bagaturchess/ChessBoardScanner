@@ -64,10 +64,9 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 	@Override
 	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
-		if (matchingInfo != null) matchingInfo.setPhasesCount(2);
-		
+		//if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(1);
+		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		String cnn_name = finder.findMatcher(grayBoard, matchingInfo);
 		String piecesSetName = netToSetMappings.get(cnn_name);
 		Matcher_Base matcher = matchers.get(piecesSetName);
@@ -76,7 +75,7 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 		}
 		
 		
-		if (matchingInfo != null) matchingInfo.setCurrentPhase(2);
+		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
 		ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
 		

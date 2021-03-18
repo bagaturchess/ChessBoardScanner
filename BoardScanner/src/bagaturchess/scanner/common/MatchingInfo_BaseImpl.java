@@ -39,12 +39,14 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 	private String phaseName;
 	private double currentPhaseProgress;
 	private int currentSquareID;
+	private boolean squareIDSet;
 	
 	private String latestMessage1;
 	private String latestMessage2;
 	
 	
 	public MatchingInfo_BaseImpl() {
+		squareIDSet = false;
 	}
 	
 	
@@ -55,8 +57,8 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 	
 	
 	@Override
-	public void setCurrentPhase(int orderNumber) {
-		currentPhase = orderNumber;
+	public void incCurrentPhase() {
+		currentPhase++;
 		currentPhaseProgress = 0;
 	}
 	
@@ -75,6 +77,7 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 	
 	@Override
 	public void setSquare(int squareID) {
+		squareIDSet = true;
 		currentSquareID = squareID;
 		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + (int) (100 * currentPhaseProgress) + "%";
 		latestMessage2 = phaseName + " working on " + ALL_FIELD_NAMES[squareID];
@@ -99,10 +102,22 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 		return currentSquareID;
 	}
 
+	@Override
+	public boolean isSquareIDSet() {
+		return squareIDSet;
+	}
+	
 	
 	@Override
 	public void setMatchingFinderInfo(String netName, double probability) {
 		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + (int) (100 * currentPhaseProgress) + "%";
-		latestMessage2 = netName + " with probability " + (int) (100 * probability) + "%";
+		latestMessage2 = netName + " probability " + (int) (100 * probability) + "%";
+	}
+
+
+	@Override
+	public void setImageCroppingInfo() {
+		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + "50" + "%";
+		latestMessage2 = "Cropping image ...";
 	}
 }
