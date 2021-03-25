@@ -34,6 +34,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.highgui.HighGui;
 //import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
@@ -299,15 +300,6 @@ public class OpenCVUtils {
         	return null;
         }
         
-        //Limit lines to max 100, otherwise the algorithm is too slow
-        /*if (h_lines.size() > 100) {
-        	h_lines = genAvgLinesByKMeansClustering(100, h_lines);
-        }
-        
-        if (v_lines.size() > 100) {
-        	v_lines = genAvgLinesByKMeansClustering(100, v_lines);
-        }*/
-        
         
         int x_test1 = 0;
         int x_test2 = source_gray.width();
@@ -318,6 +310,14 @@ public class OpenCVUtils {
         }
         hough9Lines_H = correctErrorWithSecondPointX(hough9Lines_H, x_test2);
         
+        /*Mat toDraw = source_gray.clone();
+        for (Hough9Lines lines: hough9Lines_H) {
+        	drawHough9Lines(lines, toDraw);
+        }
+        HighGui.imshow("lines", toDraw);
+        HighGui.waitKey(0);
+        */
+        
         
         int y_test1 = 0;
         int y_test2 = source_gray.height();
@@ -327,6 +327,14 @@ public class OpenCVUtils {
         	return null;
         }
         hough9Lines_V = correctErrorWithSecondPointY(hough9Lines_V, y_test2);
+        
+        /*Mat toDraw = source_gray.clone();
+        for (Hough9Lines lines: hough9Lines_V) {
+        	drawHough9Lines(lines, toDraw);
+        }
+        HighGui.imshow("lines", toDraw);
+        HighGui.waitKey(0);
+        */
         
         
         Hough9Lines horizontal9Lines = hough9Lines_H.get(0);
@@ -349,12 +357,23 @@ public class OpenCVUtils {
         	}
         }
         
+        /*Mat toDraw = source_gray.clone();
+        for (Point point: intersections) {
+        	Imgproc.drawMarker(toDraw, point, new Scalar(255, 255, 255));
+        }
+        HighGui.imshow("lines", toDraw);
+        HighGui.waitKey(0);
+        */
+        
         return intersections.toArray(new Point[intersections.size()]);
 	}
 	
 	
 	private static ResultPair<List<HoughLine>, List<HoughLine>> getHoughTransform_AfterCanny(Mat source_gray) {
 		
+        //HighGui.imshow("source_gray", source_gray);
+        //HighGui.waitKey(0);
+        
 		Mat blur = new Mat();
 		Imgproc.GaussianBlur(source_gray, blur, new Size(55, 55), 1.6);
 		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, -2);
@@ -365,14 +384,12 @@ public class OpenCVUtils {
 		
         //HighGui.imshow("blur", blur);
         //HighGui.waitKey(0);
-        
 		
 		Mat canny = new Mat();
 		Imgproc.Canny(blur, canny, 20, 80);
 		
         //HighGui.imshow("canny", canny);
         //HighGui.waitKey(0);
-		
 		
 		List<HoughLine> h_lines = null;
 		List<HoughLine> v_lines = null;

@@ -31,7 +31,9 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import bagaturchess.scanner.common.BoardProperties;
@@ -96,9 +98,6 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		if (result == null) {
 			return image;
 		}
-		
-        //HighGui.imshow("Dump", result);
-        //HighGui.waitKey(0);
         
 		Object resultObj = ImageHandlerSingleton.getInstance().mat2Graphic(result);
 		
@@ -114,6 +113,16 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		boolean found = Calib3d.findChessboardCorners(source_rgb, new Size(7, 7), corners);
 		
 		if (found && !corners.empty()) {
+			
+	    	/*Mat toDraw = source_rgb.clone();
+	    	MatOfPoint points = new MatOfPoint();
+	    	corners.convertTo(points, CvType.CV_32S);
+	    	List<MatOfPoint> contourTemp = new ArrayList<>();
+	    	contourTemp.add(points);
+	    	Imgproc.drawContours(toDraw, contourTemp, -1, new Scalar(255, 255, 255));
+	        HighGui.imshow("lines", toDraw);
+	        HighGui.waitKey(0);
+	        */
 			
 			Mat result = new Mat();
 			
@@ -173,28 +182,37 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 	
 	private Mat findChessBoardCornersByContour(Mat source_rgb) {
 		
+		//HighGui.imshow("source_rgb", source_rgb);
+		//HighGui.waitKey(0);
 		
-		//Imgproc.GaussianBlur(source_gray, source_gray, new Size(3, 3), 1);
+		Mat blur = new Mat();
+		Imgproc.GaussianBlur(source_rgb, blur, new Size(55, 55), 1.6);
+		
+		//HighGui.imshow("blur", blur);
+		//HighGui.waitKey(0);
 		
 		/*int kernelSize = 2;
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_CROSS, new Size(2 * kernelSize + 1, 2 * kernelSize + 1),
                 new Point(kernelSize, kernelSize));
         Imgproc.erode(source_gray, source_gray, element);*/
         //Imgproc.dilate(source_gray, source_gray, element);
+		
         
-		/*HighGui.imshow("cannyOutput", source_gray);
-		HighGui.waitKey(0);
-        */
-        
-		Mat cannyOutput = new Mat();
-		int threshold = 20;
-		Imgproc.Canny(source_rgb, cannyOutput, threshold, 4 * threshold);
+		Mat canny = new Mat();
+		Imgproc.Canny(blur, canny, 20, 80);
+		
+		//HighGui.imshow("canny", canny);
+		//HighGui.waitKey(0);
+		
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		Mat hierarchy = new Mat();
-		Imgproc.findContours(cannyOutput, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.findContours(canny, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		
-		//HighGui.imshow("cannyOutput", cannyOutput);
-		//HighGui.waitKey(0);
+    	/*Mat toDraw = source_rgb.clone();
+    	Imgproc.drawContours(toDraw, contours, -1, new Scalar(255, 255, 255));
+        HighGui.imshow("contours", toDraw);
+        HighGui.waitKey(0);
+        */
 		
 		MatOfPoint bigestContour = OpenCVUtils.findBigestContour(contours);
 		
@@ -202,59 +220,60 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 			return null;
 		}
 		
-		/*MatOfInt hull = new MatOfInt();
-		Imgproc.convexHull(bigestContour, hull, true);
-		int[] indexes = hull.toArray();
-		Point[] values = bigestContour.toArray();
-		Point[] hullContour = new Point[indexes.length];
-		for (int i = 0; i < indexes.length; i++ ) {
-			hullContour[i] = values[indexes[i]];
-		}*/
+    	/*Mat toDraw = source_rgb.clone();
+    	List<MatOfPoint> contourTemp = new ArrayList<>();
+    	contourTemp.add(bigestContour);
+    	Imgproc.drawContours(toDraw, contourTemp, -1, new Scalar(255, 255, 255));
+        HighGui.imshow("bigestContour", toDraw);
+        HighGui.waitKey(0);
+		*/
+		
 		
 		Point[] hullContour = OpenCVUtils.convexHull(bigestContour.toArray());
-		/*Mat hullDrawing = source_rgb;//Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
+		/*Mat toDraw = source_rgb.clone();
 		for (int i = 0; i < hullContour.length; i++ ) {
-			Imgproc.drawMarker(hullDrawing, hullContour[i], new Scalar(255, 255, 255));
+			Imgproc.drawMarker(toDraw, hullContour[i], new Scalar(255, 255, 255));
 		}
-		HighGui.imshow("hull", hullDrawing);
+		HighGui.imshow("hull", toDraw);
 		HighGui.waitKey(0);
 		*/
 		
-		//MatOfPoint2f curve = new MatOfPoint2f(bigestContour.toArray());
 		MatOfPoint2f curve = new MatOfPoint2f(hullContour);
 		double epsilon = 0.005 * Imgproc.arcLength(curve, true);
 		MatOfPoint2f approxCurve = null;
-		//while (approxCurve == null || approxCurve.toArray().length > 6) {
-			approxCurve = new MatOfPoint2f();
-			Imgproc.approxPolyDP(curve, approxCurve, epsilon, true);
-			//epsilon += 0.001;
-		//}
+		approxCurve = new MatOfPoint2f();
+		Imgproc.approxPolyDP(curve, approxCurve, epsilon, true);
+		
 		Point[] approxCurve_points = approxCurve.toArray();
+		
 		System.out.println("ImagePreProcessor_OpenCV: Chess board found by contours with " + approxCurve_points.length + " points.");
-		/*List<MatOfPoint> curve_in_list = new ArrayList<MatOfPoint>();
+		
+		/*Mat toDraw = source_rgb.clone();
+		List<MatOfPoint> curve_in_list = new ArrayList<MatOfPoint>();
 		curve_in_list.add(new MatOfPoint(approxCurve.toArray()));
-		Mat drawing = source_rgb;//Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
-		Imgproc.drawContours(drawing, curve_in_list, 0, new Scalar(255, 255, 255));
-		HighGui.imshow("curve_in_list", drawing);
+		Imgproc.drawContours(toDraw, curve_in_list, 0, new Scalar(255, 255, 255));
+		HighGui.imshow("curve_in_list", toDraw);
 		HighGui.waitKey(0);
 		*/
+		
 		
 		if (approxCurve_points.length > 4 ) {
 			
 	        Rect boundingRec = Imgproc.boundingRect(bigestContour);
 	        OpenCVUtils.extendRect(boundingRec, 0.05);
+	        
 	        /*Mat bounding = new Mat(source_rgb, boundingRec);
 			HighGui.imshow("bounding", bounding);
 			HighGui.waitKey(0);
 			*/
 	        
 			approxCurve_points = OpenCVUtils.getMinimalQuadrilateral(approxCurve_points, boundingRec);
-			/*Mat drawing = source_rgb;
+			
+			/*Mat toDraw = source_rgb.clone();
 			for (int i = 0; i < approxCurve_points.length; i++ ) {
-				//System.out.println("x=" + minimalQuadrilateral[i].x + " y=" + minimalQuadrilateral[i].y);
-				Imgproc.drawMarker(drawing, approxCurve_points[i], new Scalar(255, 255, 255));
+				Imgproc.drawMarker(toDraw, approxCurve_points[i], new Scalar(255, 255, 255));
 			}
-			HighGui.imshow("getMinimalQuadrilateral", drawing);
+			HighGui.imshow("getMinimalQuadrilateral", toDraw);
 			HighGui.waitKey(0);
 			*/
 		}
