@@ -196,25 +196,25 @@ public abstract class Matcher_Base {
 					int bgcolor = bgcolors.get(i);
 					
 					Object grayPattern = null;
-					Mat garyTemplate = null;
+					Mat grayTemplate = null;
 					if (pid == Constants.PID_NONE) {
 						int[][] emptySquare_matrix = createSquareImage(bgcolor, size);
 						grayPattern = ImageHandlerSingleton.getInstance().createGrayImage(emptySquare_matrix);
 						//ImageHandlerSingleton.getInstance().saveImage("X", "png", grayPattern);
 						curData.pattern = emptySquare_matrix;
-						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
+						grayTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					} else {
 						grayPattern = ImageHandlerSingleton.getInstance().createPieceImage(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
 						//int[][] grayMatrix = ImageHandlerSingleton.getInstance().convertToGrayMatrix(grayPattern);
 						//curData.pattern = grayMatrix;
-						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
+						grayTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					}
 					
-			        Mat outputImage = new Mat();
-			        Imgproc.matchTemplate(graySource, garyTemplate, outputImage, Imgproc.TM_CCOEFF_NORMED);
-			        MinMaxLocResult mmr = Core.minMaxLoc(outputImage);
+			        Mat output = new Mat();
+			        Imgproc.matchTemplate(graySource, grayTemplate, output, Imgproc.TM_CCOEFF_NORMED);
+			        MinMaxLocResult mmr = Core.minMaxLoc(output);
 			        
-			        garyTemplate.release();
+			        grayTemplate.release();
 			        
 			        ImageHandlerSingleton.getInstance().releaseGraphic(grayPattern);
 			        

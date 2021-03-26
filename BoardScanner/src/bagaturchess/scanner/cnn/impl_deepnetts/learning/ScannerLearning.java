@@ -41,22 +41,22 @@ public class ScannerLearning {
 			netmodel = new NetworkModel_Gray((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
 			
 			String[] inputFiles = new String[] {
-				"./data/tests/cnn/chess.com/set1/input1.png",
-				"./data/tests/cnn/chess.com/set1/input2.png",
-				"./data/tests/cnn/chess.com/set1/input3.png",
-				"./data/tests/cnn/chess.com/set1/input4.png",
-				"./data/tests/cnn/chess.com/set1/input5.png",
-				"./data/tests/cnn/chess.com/set1/input6.png",
-				"./data/tests/cnn/chess.com/set1/input7.png",
+				"./res/cnn/chess.com/set1/input1.png",
+				"./res/cnn/chess.com/set1/input2.png",
+				"./res/cnn/chess.com/set1/input3.png",
+				"./res/cnn/chess.com/set1/input4.png",
+				"./res/cnn/chess.com/set1/input5.png",
+				"./res/cnn/chess.com/set1/input6.png",
+				"./res/cnn/chess.com/set1/input7.png",
 				
 					
-				/*"./data/tests/cnn/lichess.org/set1/input1.png",
-				"./data/tests/cnn/lichess.org/set1/input2.png",
-				"./data/tests/cnn/lichess.org/set1/input3.png",
-				"./data/tests/cnn/lichess.org/set1/input4.png",
-				"./data/tests/cnn/lichess.org/set1/input5.png",
-				"./data/tests/cnn/lichess.org/set1/input6.png",
-				"./data/tests/cnn/lichess.org/set1/input7.png",
+				/*"./res/cnn/lichess.org/set1/input1.png",
+				"./res/cnn/lichess.org/set1/input2.png",
+				"./res/cnn/lichess.org/set1/input3.png",
+				"./res/cnn/lichess.org/set1/input4.png",
+				"./res/cnn/lichess.org/set1/input5.png",
+				"./res/cnn/lichess.org/set1/input6.png",
+				"./res/cnn/lichess.org/set1/input7.png",
 				*/
 			};
 			

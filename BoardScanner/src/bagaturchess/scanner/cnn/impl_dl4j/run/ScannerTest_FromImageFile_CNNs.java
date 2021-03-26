@@ -45,8 +45,8 @@ public class ScannerTest_FromImageFile_CNNs {
 			
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/lichess.org/test8.png"));
 			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/chess.com/test5.png"));
-			//BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/lichess.org/set1/input1.png"));
-			BufferedImage boardImage = ImageIO.read(new File("./data/tests/cnn/chess.com/set1/input1.png"));
+			//BufferedImage boardImage = ImageIO.read(new File("./res/cnn/lichess.org/set1/input1.png"));
+			BufferedImage boardImage = ImageIO.read(new File("./res/cnn/chess.com/set1/input1.png"));
 			boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
 			int[][] boardMatrix = ScannerUtils.convertToGrayMatrix(boardImage);
 			
