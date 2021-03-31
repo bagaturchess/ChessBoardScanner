@@ -91,6 +91,7 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 			result = findChessBoardCornersByHoughLines(source_rgb);
 			
 			if (result == null) {
+				
 				result = findChessBoardCornersByContour(source_rgb);
 			}
 		}
@@ -230,6 +231,7 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		
 		
 		Point[] hullContour = OpenCVUtils.convexHull(bigestContour.toArray());
+		
 		/*Mat toDraw = source_rgb.clone();
 		for (int i = 0; i < hullContour.length; i++ ) {
 			Imgproc.drawMarker(toDraw, hullContour[i], new Scalar(255, 255, 255));
@@ -240,8 +242,7 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		
 		MatOfPoint2f curve = new MatOfPoint2f(hullContour);
 		double epsilon = 0.005 * Imgproc.arcLength(curve, true);
-		MatOfPoint2f approxCurve = null;
-		approxCurve = new MatOfPoint2f();
+		MatOfPoint2f approxCurve = new MatOfPoint2f();
 		Imgproc.approxPolyDP(curve, approxCurve, epsilon, true);
 		
 		Point[] approxCurve_points = approxCurve.toArray();

@@ -376,6 +376,7 @@ public class OpenCVUtils {
         
 		Mat blur = new Mat();
 		Imgproc.GaussianBlur(source_gray, blur, new Size(55, 55), 1.6);
+		
 		//Imgproc.adaptiveThreshold(source_gray, source_gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, -2);
         //Imgproc.threshold(source_gray, source_gray, 10, 255, Imgproc.THRESH_BINARY);
 		//Mat bilateralFilter = new Mat();
@@ -400,7 +401,6 @@ public class OpenCVUtils {
 			System.out.println("getHoughTransform_AfterCanny: HoughLines threshould=" + threshould);
 			
 			Mat lines = new Mat();
-			
 			Imgproc.HoughLines(canny, lines, 1, Math.PI / 720, threshould);
 			
 			double deltaAngleInDegrees = 10;
