@@ -11,11 +11,11 @@ All necessary libraries for Deeplearning4j are included into the libs folder, bu
 
 The basic main class is bagaturchess.scanner.patterns.AllMain
 
-#Directions for further development
+# Directions for further development
   -  Improve board corners detection, besides the currently used algorithms: findChessBoardCorners by build-in function, findChessBoardCorners by Hough lines and findChessBoardCorners by contours.
   -  Add additional popular online chess sites, which can be recognized by the program, like for example chess24.com
 
-#Android Application
+# Android Application
 
 The code is used productively by this app, which could be found here: https://play.google.com/store/apps/details?id=com.chessboardscanner
 
