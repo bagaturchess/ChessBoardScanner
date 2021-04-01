@@ -59,7 +59,7 @@ public class AllMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/test2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/lichess.org/set1/pictures/test7.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
 			
 			
 			//Preprocess image
