@@ -29,7 +29,7 @@ This project would not be possible without:
   -  [Deeplearning4j](https://deeplearning4j.org/)
   -  [StackOverflow](https://stackoverflow.com/)
 
-# Like the project?
+# Do you like the project?
 
 You could give it a star by clicking 'Star' button placed top-right of the page.
 This will rank better the project and will allow other people to easily find it out on github.
