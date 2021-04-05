@@ -7,7 +7,7 @@ It uses OpenCV as a computer vision library and Deeplearning4j as a basis for co
 # Running the program
 
 The project structure is an eclipse based project, which can be directly imported into the Eclipse IDE.
-All necessary libraries for Deeplearning4j are included into the libs folder, but you need to add the OpenCV library (java and native parts) and refer them from the project as described here: https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
+All necessary libraries for Deeplearning4j are included into the libs folder, but you need to add the OpenCV library version 4.5.1 (java and native parts) and refer them from the project as described here: https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
 
 The basic main class is bagaturchess.scanner.patterns.AllMain
 
