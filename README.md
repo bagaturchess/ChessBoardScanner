@@ -15,6 +15,7 @@ The basic main class is bagaturchess.scanner.patterns.AllMain
 
   -  Improve board corners detection, besides the currently used algorithms: findChessBoardCorners by build-in function, findChessBoardCorners by Hough lines and findChessBoardCorners by contours.
   -  Add additional popular online chess sites, which can be recognized by the program, like for example chess24.com
+  -  Extend the solution to work with chess diagrams drawn on paper, this will save a lot of positions from old books in computer format.
 
 If you would like to contribute to the project, do not hesitate to contact me.
 
