@@ -19,6 +19,9 @@ The basic main class is bagaturchess.scanner.patterns.AllMain
 
 If you would like to contribute to the project, do not hesitate to contact me.
 
+# Technical details
+If you need technical explanation of the algorithms used, please check this [YoutTube video](https://youtu.be/PS5xAGx89mU)
+
 # Android Application
 
 The code is used productively by this app, which could be found here: https://play.google.com/store/apps/details?id=com.chessboardscanner
