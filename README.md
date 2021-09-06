@@ -1,3 +1,7 @@
+# License
+
+The license is GPL-2.0-only
+
 # Overview
 
 This project aims to demonstrate how to extract the chess position in a machine readable format called Forsyth–Edwards Notation (FEN) having the 2D picture of the board.
