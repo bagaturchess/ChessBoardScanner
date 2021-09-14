@@ -89,7 +89,7 @@ public class ScannerLearning {
 				"./res/cnn/chess24.com/set2/input11.png",
 			};
 			
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs(boardProperties, inputFiles);
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles);
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();

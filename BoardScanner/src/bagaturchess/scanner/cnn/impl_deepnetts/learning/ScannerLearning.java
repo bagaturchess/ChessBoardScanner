@@ -10,6 +10,7 @@ import java.util.List;
 import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
 import bagaturchess.scanner.cnn.dataset.DataSetUtils;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
 import bagaturchess.scanner.cnn.model.NetworkModel;
 import bagaturchess.scanner.common.BoardProperties;
 import deepnetts.net.ConvolutionalNetwork;
@@ -22,7 +23,8 @@ import deepnetts.util.FileIO;
 public class ScannerLearning {
 	
 	
-	private static final String NET_FILE = "scanner.chesscom1.bin";
+	private static final String NET_FILE = "CNN_DeepNetts_chess24com_set_2.net";
+	
 	
 	private static BackpropagationTrainer trainer;
 	private static ScannerDataSet dataset;
@@ -38,17 +40,18 @@ public class ScannerLearning {
 			
 			BoardProperties boardProperties = new BoardProperties(256);
 			
-			netmodel = new NetworkModel_Gray((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
+			netmodel = new NetworkModel_RGB((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
 			
 			String[] inputFiles = new String[] {
-				"./res/cnn/chess.com/set1/input1.png",
+					
+				/*"./res/cnn/chess.com/set1/input1.png",
 				"./res/cnn/chess.com/set1/input2.png",
 				"./res/cnn/chess.com/set1/input3.png",
 				"./res/cnn/chess.com/set1/input4.png",
 				"./res/cnn/chess.com/set1/input5.png",
 				"./res/cnn/chess.com/set1/input6.png",
 				"./res/cnn/chess.com/set1/input7.png",
-				
+				*/
 					
 				/*"./res/cnn/lichess.org/set1/input1.png",
 				"./res/cnn/lichess.org/set1/input2.png",
@@ -56,11 +59,44 @@ public class ScannerLearning {
 				"./res/cnn/lichess.org/set1/input4.png",
 				"./res/cnn/lichess.org/set1/input5.png",
 				"./res/cnn/lichess.org/set1/input6.png",
-				"./res/cnn/lichess.org/set1/input7.png",
-				*/
+				"./res/cnn/lichess.org/set1/input7.png",*/
+				
+				/*"./res/cnn/chess.com/set2/input1.png",
+				"./res/cnn/chess.com/set2/input2.png",
+				"./res/cnn/chess.com/set2/input3.png",
+				"./res/cnn/chess.com/set2/input4.png",
+				"./res/cnn/chess.com/set2/input5.png",
+				"./res/cnn/chess.com/set2/input6.png",
+				"./res/cnn/chess.com/set2/input7.png",
+				"./res/cnn/chess.com/set2/input8.png",
+				"./res/cnn/chess.com/set2/input9.png",
+				"./res/cnn/chess.com/set2/input10.png",*/
+				
+				/*"./res/cnn/lichess.org/set2/input1.png",
+				"./res/cnn/lichess.org/set2/input2.png",
+				"./res/cnn/lichess.org/set2/input3.png",
+				"./res/cnn/lichess.org/set2/input4.png",
+				"./res/cnn/lichess.org/set2/input5.png",
+				"./res/cnn/lichess.org/set2/input6.png",
+				"./res/cnn/lichess.org/set2/input7.png",
+				"./res/cnn/lichess.org/set2/input8.png",
+				"./res/cnn/lichess.org/set2/input9.png",
+				"./res/cnn/lichess.org/set2/input10.png",*/
+				
+				"./res/cnn/chess24.com/set2/input1.png",
+				"./res/cnn/chess24.com/set2/input2.png",
+				"./res/cnn/chess24.com/set2/input3.png",
+				"./res/cnn/chess24.com/set2/input4.png",
+				"./res/cnn/chess24.com/set2/input5.png",
+				"./res/cnn/chess24.com/set2/input6.png",
+				"./res/cnn/chess24.com/set2/input7.png",
+				"./res/cnn/chess24.com/set2/input8.png",
+				"./res/cnn/chess24.com/set2/input9.png",
+				"./res/cnn/chess24.com/set2/input10.png",
+				"./res/cnn/chess24.com/set2/input11.png",
 			};
 			
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs(boardProperties, inputFiles);
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles);
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();
@@ -74,7 +110,7 @@ public class ScannerLearning {
 			dataset = new ScannerDataSet();
 			for (int i = 0; i < images.size(); i++) {
 				Object networkInput = netmodel.createInput(images.get(i));
-				float[] networkOutput = new float[14];
+				float[] networkOutput = new float[13];
 				networkOutput[pids.get(i)] = 1;
 				dataset.addItem(networkInput, networkOutput);
 			}
@@ -83,14 +119,14 @@ public class ScannerLearning {
 			
 			trainer = new BackpropagationTrainer(network);
 			
-			trainer.setLearningRate(1f);
+			trainer.setLearningRate(0.001f);
 	        
-	        trainer.setBatchMode(true);
-	        trainer.setBatchSize(images.size());
+	        //trainer.setBatchMode(true);
+	        //trainer.setBatchSize(images.size());
 	        
-	        trainer.setMaxEpochs(100000);
+	        trainer.setMaxEpochs(100);
 	        
-	        trainer.addListener(new TrainingListener() {
+	        /*trainer.addListener(new TrainingListener() {
 	        	
 	        	
 	        	private int iteration = 0;
@@ -153,11 +189,13 @@ public class ScannerLearning {
 					}
 				}
 			});
+			*/
 	        
 	        
+	        //for (int e = 0; e < 100; e++) {
 	        trainer.train(dataset);
+	        //}
 	        
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
