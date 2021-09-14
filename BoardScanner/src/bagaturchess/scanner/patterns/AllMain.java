@@ -67,6 +67,7 @@ public class AllMain {
 			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
 			
 			long startTime = System.currentTimeMillis();
+			image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties_processor.getImageSize());
 			MatOfPoint2f boardCorners = processor_opencv.filter(image);
 			Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
 			BufferedImage forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
