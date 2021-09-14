@@ -72,7 +72,7 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 
 	public Object extractBoard(Object image, MatOfPoint2f corners) throws IOException {
 
-		//image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties.getImageSize());
+		image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties.getImageSize());
 		//ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_input", "png", image);
 
 		Mat source_rgb = ImageHandlerSingleton.getInstance().graphic2Mat(image);

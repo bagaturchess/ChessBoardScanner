@@ -20,6 +20,7 @@
 package bagaturchess.scanner.patterns;
 
 
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint2f;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
@@ -37,12 +40,8 @@ import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.opencv.matchers.*;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Rotate;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_WhiteBackground;
 import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_OpenCV;
 import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Crop;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Crop_KMeans;
 
 
 public class AllMain {
@@ -65,43 +64,54 @@ public class AllMain {
 			
 			//Preprocess image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
-			ImagePreProcessor_Base processor_crop_kmeans = new ImagePreProcessor_Crop_KMeans(boardProperties_processor);
-			ImagePreProcessor_Base processor_crop = new ImagePreProcessor_Crop(boardProperties_processor);
-			ImagePreProcessor_Base processor_rotate = new ImagePreProcessor_Rotate(boardProperties_processor);
 			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
-			ImagePreProcessor_Base processor_whitebg = new ImagePreProcessor_WhiteBackground(boardProperties_processor);
 			
 			long startTime = System.currentTimeMillis();
-			//Object preProcessedImage = processor_whitebg.filter(image);
-			//Object preProcessedImage = processor_crop_kmeans.filter(image);
-			Object preProcessedImage = processor_opencv.filter(image);
-			//Object preProcessedImage = processor_crop_kmeans.filter(image);
-			//preProcessedImage = processor_crop.filter(preProcessedImage);
-			//preProcessedImage = processor_rotate.filter(preProcessedImage);
+			MatOfPoint2f boardCorners = processor_opencv.filter(image);
+			Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
+			BufferedImage forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
+			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
 			System.out.println("Filtered in " + (System.currentTimeMillis() - startTime) + "ms");
 			
 			
-			BoardProperties boardProperties_matcher = new BoardProperties(256);
-			preProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(preProcessedImage, boardProperties_matcher.getImageSize());
-			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(preProcessedImage);
+			BoardProperties matcherBoardProperties = new BoardProperties(256);
+			Object cropedProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(forMatching, matcherBoardProperties.getImageSize());
+			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
 			
 			
 			//Create composite matcher
-			List<String> netsNames = new ArrayList<String>();
-			netsNames.add("cnn_lichessorg1.net");
-			netsNames.add("cnn_chesscom1.net");
-			
-			Map<String, String> netToSetMappings = new HashMap<String, String>();
-			netToSetMappings.put("cnn_lichessorg1.net", "set1");
-			netToSetMappings.put("cnn_chesscom1.net", "set2");
-			
+            List<String> netsNames = new ArrayList<String>();
+            netsNames.add("cnn_lichessorg_set_1.net");
+            netsNames.add("cnn_chesscom_set_1.net");
+            netsNames.add("cnn_lichessorg_set_2.net");
+            netsNames.add("cnn_chesscom_set_2.net");
+            netsNames.add("cnn_chess24com_set_1.net");
+            netsNames.add("cnn_chess24com_set_2.net");
+            
+            Map<String, String> netToSetMappings = new HashMap<String, String>();
+            netToSetMappings.put("cnn_lichessorg_set_1.net", "set1");
+            netToSetMappings.put("cnn_chesscom_set_1.net", "set2");
+            netToSetMappings.put("cnn_lichessorg_set_2.net", "set1");
+            netToSetMappings.put("cnn_chesscom_set_2.net", "set2");
+            netToSetMappings.put("cnn_chess24com_set_1.net", "set3");
+            netToSetMappings.put("cnn_chess24com_set_2.net", "set3");
+            
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-			Matcher_Base matcher = new Matcher_Composite_CNN(boardProperties_matcher.getImageSize(), netsNames, netsStreams, netToSetMappings);
-			
+            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
+            matchers.put("cnn_chesscom_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
+            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
+            matchers.put("cnn_chesscom_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
+            matchers.put("cnn_chess24com_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
+            matchers.put("cnn_chess24com_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
+
+            //Init matcher using CNNs
+            Matcher_Base matcher = new Matcher_Composite_CNN(matcherBoardProperties.getImageSize(), netsNames, netsStreams, netToSetMappings, matchers);
+
 			
 			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
