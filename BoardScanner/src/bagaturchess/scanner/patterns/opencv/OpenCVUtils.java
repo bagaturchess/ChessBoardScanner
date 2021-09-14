@@ -386,7 +386,11 @@ public class OpenCVUtils {
         //HighGui.imshow("blur", blur);
         //HighGui.waitKey(0);
 		
-		Mat canny = new Mat();
+		
+		//_dx.type() == CV_16SC1 || _dx.type() == CV_16SC3
+		//Mat::Mat(rows, cols, type)
+		//CvType.CV_8UC4
+		Mat canny = new Mat(blur.rows(), blur.cols(), blur.type());
 		Imgproc.Canny(blur, canny, 20, 80);
 		
         //HighGui.imshow("canny", canny);

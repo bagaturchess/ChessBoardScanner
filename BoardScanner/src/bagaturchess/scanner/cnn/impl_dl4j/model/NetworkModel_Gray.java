@@ -36,6 +36,7 @@ import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import bagaturchess.scanner.cnn.model.NetworkModel;
@@ -66,7 +67,7 @@ public class NetworkModel_Gray extends NetworkModel<MultiLayerNetwork> {
 			//Create network
 	        MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
 	                //.seed(rngseed)
-	                //.updater(new Adam.Builder().learningRate(0.00001).build())
+	                .updater(new Adam.Builder().learningRate(0.00001).build())
 	        		//.updater(new Nesterovs(0.00000000000000001, 0))
 	        		//.updater(new RmsProp(0.00000000000000001))
 	                .activation(Activation.TANH)
@@ -106,9 +107,9 @@ public class NetworkModel_Gray extends NetworkModel<MultiLayerNetwork> {
 	
 	@Override
 	public void setInputs(Object input) {
-		if (network.getInput() != null) {
+		/*if (network.getInput() != null) {
 			network.getInput().cleanup();
-		}
+		}*/
 		network.setInput(Nd4j.create((float[][])input).reshape(1, 1, squareSize, squareSize));
 	}
 	

@@ -342,8 +342,6 @@ public class ScannerUtils {
 					//throw new IllegalStateException();
 				}
 				
-				//inputs[count] = (red + green + blue) / 3;
-			    //inputs[count++] = red * 0.299 + green * 0.587 + blue * 0.114;
 				inputs[i][j] = (int) (red * 0.2989d + green * 0.5870 + blue * 0.1140);
 			}
 		}
