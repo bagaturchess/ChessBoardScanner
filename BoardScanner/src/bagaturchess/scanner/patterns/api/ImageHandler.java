@@ -20,9 +20,9 @@
 package bagaturchess.scanner.patterns.api;
 
 
-import java.io.IOException;
-
 import org.opencv.core.Mat;
+
+import java.io.IOException;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.FilterInfo;

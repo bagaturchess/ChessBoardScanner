@@ -116,8 +116,22 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 
 
 	@Override
-	public void setImageCroppingInfo() {
-		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + "50" + "%";
-		latestMessage2 = "Cropping image ...";
+	public void setFindingBoardInfo() {
+		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + "5" + "%";
+		latestMessage2 = "Finding chess board ...";
+	}
+
+
+	@Override
+	public void setExtractingBoardInfo() {
+		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + "15" + "%";
+		latestMessage2 = "Extracting and transforming chess board ...";
+	}
+
+
+	@Override
+	public void setManualCorrectionInfo() {
+		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + "33" + "%";
+		latestMessage2 = "Correct board corners (if necessary).";
 	}
 }

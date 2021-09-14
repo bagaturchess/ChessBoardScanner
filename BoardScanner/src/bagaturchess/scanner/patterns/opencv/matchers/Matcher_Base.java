@@ -20,16 +20,16 @@
 package bagaturchess.scanner.patterns.opencv.matchers;
 
 
+import org.opencv.core.Core;
+import org.opencv.core.Core.MinMaxLocResult;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Core.MinMaxLocResult;
-import org.opencv.imgproc.Imgproc;
 
 import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.BoardProperties;
@@ -42,7 +42,7 @@ import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
-public abstract class Matcher_Base {
+public class Matcher_Base {
 	
 	
 	private static final float SIZE_DELTA_PERCENT_START = 0.65f;
@@ -50,10 +50,12 @@ public abstract class Matcher_Base {
 	
 	
 	protected BoardProperties boardProperties;
-	
-	
-	protected Matcher_Base(BoardProperties _imageProperties) {
+	private String displayName;
+
+
+	public Matcher_Base(BoardProperties _imageProperties, String _displayName) {
 		boardProperties = _imageProperties;
+		displayName = _displayName;
 	}
 	
 	
@@ -121,7 +123,7 @@ public abstract class Matcher_Base {
 		
 		MatchingData result = new MatchingData();
 		
-		if (matchingInfo != null) matchingInfo.setPhaseName(this.getClass().getSimpleName());
+		if (matchingInfo != null) matchingInfo.setPhaseName(getDisplayName());
 		
 		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor(grayBoard);
 		
@@ -162,8 +164,13 @@ public abstract class Matcher_Base {
 		
 		return result;
 	}
-	
-	
+
+
+	protected String getDisplayName() {
+		return displayName;
+	}
+
+
 	private ResultPair<Integer, MatrixUtils.PatternMatchingData> getPID(int[][] graySquareMatrix,
 			List<Integer> bgcolors, Set<Integer> pids, int fieldID) throws IOException {
 		
@@ -196,25 +203,25 @@ public abstract class Matcher_Base {
 					int bgcolor = bgcolors.get(i);
 					
 					Object grayPattern = null;
-					Mat grayTemplate = null;
+					Mat garyTemplate = null;
 					if (pid == Constants.PID_NONE) {
 						int[][] emptySquare_matrix = createSquareImage(bgcolor, size);
 						grayPattern = ImageHandlerSingleton.getInstance().createGrayImage(emptySquare_matrix);
 						//ImageHandlerSingleton.getInstance().saveImage("X", "png", grayPattern);
 						curData.pattern = emptySquare_matrix;
-						grayTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
+						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					} else {
 						grayPattern = ImageHandlerSingleton.getInstance().createPieceImage(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
 						//int[][] grayMatrix = ImageHandlerSingleton.getInstance().convertToGrayMatrix(grayPattern);
 						//curData.pattern = grayMatrix;
-						grayTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
+						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					}
 					
-			        Mat output = new Mat();
-			        Imgproc.matchTemplate(graySource, grayTemplate, output, Imgproc.TM_CCOEFF_NORMED);
-			        MinMaxLocResult mmr = Core.minMaxLoc(output);
+			        Mat outputImage = new Mat();
+			        Imgproc.matchTemplate(graySource, garyTemplate, outputImage, Imgproc.TM_CCOEFF_NORMED);
+			        MinMaxLocResult mmr = Core.minMaxLoc(outputImage);
 			        
-			        grayTemplate.release();
+			        garyTemplate.release();
 			        
 			        ImageHandlerSingleton.getInstance().releaseGraphic(grayPattern);
 			        

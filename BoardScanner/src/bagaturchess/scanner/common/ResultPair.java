@@ -23,8 +23,8 @@ package bagaturchess.scanner.common;
 public class ResultPair<T1, T2> {
 	
 	
-	private T1 first;
-	private T2 second;
+	public T1 first;
+	public T2 second;
 	
 	
 	public ResultPair(T1 _first, T2 _second) {

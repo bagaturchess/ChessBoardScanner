@@ -26,7 +26,9 @@ public interface IMatchingInfo {
 	public void setCurrentPhaseProgress(double progress); //Between [0 and 1]
 	public void setPhaseName(String phaseName);
 	public void setMatchingFinderInfo(String netName, double probability);
-	public void setImageCroppingInfo();
+	public void setFindingBoardInfo();
+	public void setManualCorrectionInfo();
+	public void setExtractingBoardInfo();
 	public void setSquare(int squareID);
 	public boolean isSquareIDSet();
 	public String getLatestMessage1();

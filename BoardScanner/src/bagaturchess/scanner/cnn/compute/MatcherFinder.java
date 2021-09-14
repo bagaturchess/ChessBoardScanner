@@ -26,8 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_Gray;
-//import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 import bagaturchess.scanner.common.IMatchingInfo;
+
+//import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 
 
 public class MatcherFinder {

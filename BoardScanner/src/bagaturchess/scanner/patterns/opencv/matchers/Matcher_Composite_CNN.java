@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.scanner.cnn.compute.MatcherFinder;
+import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
@@ -42,21 +43,15 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 	private MatcherFinder finder;
 	
 	
-	public Matcher_Composite_CNN(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, String> _netToSetMappings) throws ClassNotFoundException, IOException {
+	public Matcher_Composite_CNN(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, String> _netToSetMappings, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
 		
-		super(null);
+		super(null, "Matcher_Composite_CNN");
 		
 		netsNames = _netsNames;
 		netsStreams = _netsStreams;
 		netToSetMappings = _netToSetMappings;
-		
-		Matcher_Base matcherSet1 = new Matcher_Set1(imageSize);
-		Matcher_Base matcherSet2 = new Matcher_Set2(imageSize);
-		
-		matchers = new HashMap<String, Matcher_Base>();
-		matchers.put(matcherSet1.getPiecesSetName(), matcherSet1);
-		matchers.put(matcherSet2.getPiecesSetName(), matcherSet2);
-		
+		matchers = _matchers;
+
 		finder = new MatcherFinder(imageSize / 8, netsStreams, netsNames);
 	}
 	
@@ -68,10 +63,10 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		String cnn_name = finder.findMatcher(grayBoard, matchingInfo);
-		String piecesSetName = netToSetMappings.get(cnn_name);
-		Matcher_Base matcher = matchers.get(piecesSetName);
+
+		Matcher_Base matcher = matchers.get(cnn_name);
 		if (matcher == null) {
-			throw new IllegalStateException("Matcher for pieces set " + piecesSetName + " not found.");
+			throw new IllegalStateException("Matcher " + cnn_name + " not found.");
 		}
 		
 		

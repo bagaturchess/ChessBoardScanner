@@ -20,6 +20,9 @@
 package bagaturchess.scanner.patterns.impl1.preprocess;
 
 
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+
 import java.io.IOException;
 
 import bagaturchess.scanner.common.BoardProperties;
@@ -36,5 +39,13 @@ public abstract class ImagePreProcessor_Base {
 	}
 
 	
-	public abstract Object filter(Object image) throws IOException;
+	public abstract MatOfPoint2f filter(Object image) throws IOException;
+
+
+	public abstract Object extractBoard(Object image, MatOfPoint2f corners) throws IOException;
+	
+	
+	public Point[] getBoardContour(Object image)  throws IOException {
+		return null;
+	}
 }

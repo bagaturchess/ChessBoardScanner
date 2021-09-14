@@ -20,10 +20,6 @@
 package bagaturchess.scanner.patterns.opencv.preprocess;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -31,10 +27,12 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
@@ -70,9 +68,33 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		targetCorners = new MatOfPoint2f();
 		targetCorners.fromArray(targetCorners_array);
 	}
+
+
+	public Object extractBoard(Object image, MatOfPoint2f corners) throws IOException {
+
+		//image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties.getImageSize());
+		//ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_input", "png", image);
+
+		Mat source_rgb = ImageHandlerSingleton.getInstance().graphic2Mat(image);
+
+		MatOfPoint2f dst = new MatOfPoint2f(
+				new Point(0, 0),
+				new Point(source_rgb.width(), 0),
+				new Point(source_rgb.width(), source_rgb.height()),
+				new Point(0, source_rgb.height())
+		);
+
+		Mat warpMat = Imgproc.getPerspectiveTransform(corners, dst);
+
+		Mat result = new Mat();
+
+		Imgproc.warpPerspective(source_rgb, result, warpMat, source_rgb.size());
+
+		return result;
+	}
+
 	
-	
-	public Object filter(Object image) throws IOException {
+	public MatOfPoint2f filter(Object image) throws IOException {
 		
 		image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties.getImageSize());
 		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_input", "png", image);
@@ -83,67 +105,93 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 		//Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
 		
 		//Experiments.tryit(source_rgb);
-		
-		Mat result = findChessBoardCornersByBuildInFunction(source_rgb);
+
+		MatOfPoint2f result = findChessBoardCornersByBuildInFunction(source_rgb);
 		
 		if (result == null) {
 			
 			result = findChessBoardCornersByHoughLines(source_rgb);
 			
 			if (result == null) {
-				
+
 				result = findChessBoardCornersByContour(source_rgb);
 			}
 		}
 		
-		if (result == null) {
-			return image;
-		}
-        
-		Object resultObj = ImageHandlerSingleton.getInstance().mat2Graphic(result);
-		
-		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_result", "png", resultObj);
-		
-		return resultObj;
+		return result;
 	}
 	
 	
-	public Mat findChessBoardCornersByBuildInFunction(Mat source_rgb) {
+	public MatOfPoint2f findChessBoardCornersByBuildInFunction(Mat source_rgb) {
 		
 		MatOfPoint2f corners = new MatOfPoint2f();
 		boolean found = Calib3d.findChessboardCorners(source_rgb, new Size(7, 7), corners);
 		
 		if (found && !corners.empty()) {
-			
-	    	/*Mat toDraw = source_rgb.clone();
-	    	MatOfPoint points = new MatOfPoint();
-	    	corners.convertTo(points, CvType.CV_32S);
-	    	List<MatOfPoint> contourTemp = new ArrayList<>();
-	    	contourTemp.add(points);
-	    	Imgproc.drawContours(toDraw, contourTemp, -1, new Scalar(255, 255, 255));
-	        HighGui.imshow("lines", toDraw);
-	        HighGui.waitKey(0);
-	        */
-			
-			Mat result = new Mat();
+
 			
 			MatOfPoint2f corners_ordered = new MatOfPoint2f();
 			corners_ordered.fromArray(OpenCVUtils.getOrderedCorners(corners.toArray(), source_rgb.width(), source_rgb.height()));
-			
-			Mat H = Calib3d.findHomography(corners_ordered, targetCorners);
-			
-			Imgproc.warpPerspective(source_rgb, result, H, source_rgb.size());
-			
+			//Mat homography = Calib3d.findHomography(corners_ordered, targetCorners);
 			System.out.println("ImagePreProcessor_OpenCV: Chess board found in a standard way.");
-			
-			return result;
+
+
+			//Extend lines in MatOfPoint2f corners_ordered
+			/*for (int i = 0; i < 4; i++) {
+				double[] xy = corners_ordered.get(i, 0);
+				System.out.println("xy = [" + xy[0] + ", " + xy[y] + "]");
+			}*/
+
+			Point[] corners_extended = new Point[4];
+
+			double corner_top_left_x = corners_ordered.get(0, 0)[0];
+			double corner_top_left_y = corners_ordered.get(0, 0)[1];
+			double corner_top_right_x = corners_ordered.get(1, 0)[0];
+			double corner_top_right_y = corners_ordered.get(1, 0)[1];
+			double corner_bottom_right_x = corners_ordered.get(2, 0)[0];
+			double corner_bottom_right_y = corners_ordered.get(2, 0)[1];
+			double corner_bottom_left_x = corners_ordered.get(3, 0)[0];
+			double corner_bottom_left_y = corners_ordered.get(3, 0)[1];
+
+			double delta_top_x = Math.abs(corner_top_right_x - corner_top_left_x);
+			double delta_left_y = Math.abs(corner_bottom_left_y - corner_top_left_y);
+			double delta_right_y = Math.abs(corner_bottom_right_y - corner_top_right_y);
+			double delta_bottom_x = Math.abs(corner_bottom_right_x - corner_bottom_left_x);
+
+			double increment_scale_factor = 1 / (double) 6;
+
+			corners_extended[0] = new Point(
+					corner_top_left_x - delta_top_x * increment_scale_factor,
+					corner_top_left_y - delta_left_y * increment_scale_factor
+			);
+
+			corners_extended[1] = new Point(
+					corner_top_right_x + delta_top_x * increment_scale_factor,
+					corner_top_right_y - delta_right_y * increment_scale_factor
+			);
+
+			corners_extended[2] = new Point(
+					corner_bottom_right_x + delta_bottom_x * increment_scale_factor,
+					corner_bottom_right_y + delta_right_y * increment_scale_factor
+			);
+
+			corners_extended[3] = new Point(
+					corner_bottom_left_x - delta_bottom_x * increment_scale_factor,
+					corner_bottom_left_y  + delta_right_y * increment_scale_factor
+			);
+
+
+			MatOfPoint2f corners_ordered_extended = new MatOfPoint2f();
+			corners_ordered_extended.fromArray(corners_extended);
+
+			return corners_ordered_extended;
 		}
 		
 		return null;
 	}
 	
 	
-	private Mat findChessBoardCornersByHoughLines(Mat source_rgb) {
+	private MatOfPoint2f findChessBoardCornersByHoughLines(Mat source_rgb) {
 		
 		Mat source_gray = new Mat(source_rgb.height(), source_rgb.width(), CvType.CV_8UC4);
 		Imgproc.cvtColor(source_rgb, source_gray, Imgproc.COLOR_BGR2GRAY);
@@ -160,60 +208,47 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 				boardCorners[1],
 				boardCorners[2],
 				boardCorners[3]);
+
+		double contourArea = Imgproc.contourArea(src);
+
+		if (contourArea >= 0.25d * source_gray.width() * source_gray.height()) {
+
+			System.out.println("ImagePreProcessor_OpenCV: Chess board found by HoughLines.");
+
+			//HighGui.imshow("result", result);
+			//HighGui.waitKey(0);
+
+			return src;
+		}
 		
-		MatOfPoint2f dst = new MatOfPoint2f(
-		        new Point(0, 0),
-		        new Point(0, source_rgb.height()),
-		        new Point(source_rgb.width(), source_rgb.height()),
-		        new Point(source_rgb.width(), 0)      
-		        );
-		
-		Mat result = new Mat();
-		Mat warpMat = Imgproc.getPerspectiveTransform(src, dst);
-		Imgproc.warpPerspective(source_rgb, result, warpMat, source_rgb.size());
-		
-		System.out.println("ImagePreProcessor_OpenCV: Chess board found by HoughLines.");
-		
-        //HighGui.imshow("result", result);
-        //HighGui.waitKey(0);
-		
-		return result;
+		return null;
 	}
 	
 	
-	private Mat findChessBoardCornersByContour(Mat source_rgb) {
+	private MatOfPoint2f findChessBoardCornersByContour(Mat source_rgb) {
 		
-		//HighGui.imshow("source_rgb", source_rgb);
-		//HighGui.waitKey(0);
 		
-		Mat blur = new Mat();
-		Imgproc.GaussianBlur(source_rgb, blur, new Size(55, 55), 1.6);
-		
-		//HighGui.imshow("blur", blur);
-		//HighGui.waitKey(0);
+		//Imgproc.GaussianBlur(source_gray, source_gray, new Size(3, 3), 1);
 		
 		/*int kernelSize = 2;
         Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_CROSS, new Size(2 * kernelSize + 1, 2 * kernelSize + 1),
                 new Point(kernelSize, kernelSize));
         Imgproc.erode(source_gray, source_gray, element);*/
         //Imgproc.dilate(source_gray, source_gray, element);
-		
         
-		Mat canny = new Mat();
-		Imgproc.Canny(blur, canny, 20, 80);
-		
-		//HighGui.imshow("canny", canny);
-		//HighGui.waitKey(0);
-		
+		/*HighGui.imshow("cannyOutput", source_gray);
+		HighGui.waitKey(0);
+        */
+        
+		Mat cannyOutput = new Mat();
+		int threshold = 20;
+		Imgproc.Canny(source_rgb, cannyOutput, threshold, 4 * threshold);
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		Mat hierarchy = new Mat();
-		Imgproc.findContours(canny, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.findContours(cannyOutput, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		
-    	/*Mat toDraw = source_rgb.clone();
-    	Imgproc.drawContours(toDraw, contours, -1, new Scalar(255, 255, 255));
-        HighGui.imshow("contours", toDraw);
-        HighGui.waitKey(0);
-        */
+		//HighGui.imshow("cannyOutput", cannyOutput);
+		//HighGui.waitKey(0);
 		
 		MatOfPoint bigestContour = OpenCVUtils.findBigestContour(contours);
 		
@@ -221,60 +256,59 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 			return null;
 		}
 		
-    	/*Mat toDraw = source_rgb.clone();
-    	List<MatOfPoint> contourTemp = new ArrayList<>();
-    	contourTemp.add(bigestContour);
-    	Imgproc.drawContours(toDraw, contourTemp, -1, new Scalar(255, 255, 255));
-        HighGui.imshow("bigestContour", toDraw);
-        HighGui.waitKey(0);
-		*/
-		
+		/*MatOfInt hull = new MatOfInt();
+		Imgproc.convexHull(bigestContour, hull, true);
+		int[] indexes = hull.toArray();
+		Point[] values = bigestContour.toArray();
+		Point[] hullContour = new Point[indexes.length];
+		for (int i = 0; i < indexes.length; i++ ) {
+			hullContour[i] = values[indexes[i]];
+		}*/
 		
 		Point[] hullContour = OpenCVUtils.convexHull(bigestContour.toArray());
-		
-		/*Mat toDraw = source_rgb.clone();
+		/*Mat hullDrawing = source_rgb;//Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
 		for (int i = 0; i < hullContour.length; i++ ) {
-			Imgproc.drawMarker(toDraw, hullContour[i], new Scalar(255, 255, 255));
+			Imgproc.drawMarker(hullDrawing, hullContour[i], new Scalar(255, 255, 255));
 		}
-		HighGui.imshow("hull", toDraw);
+		HighGui.imshow("hull", hullDrawing);
 		HighGui.waitKey(0);
 		*/
 		
+		//MatOfPoint2f curve = new MatOfPoint2f(bigestContour.toArray());
 		MatOfPoint2f curve = new MatOfPoint2f(hullContour);
 		double epsilon = 0.005 * Imgproc.arcLength(curve, true);
-		MatOfPoint2f approxCurve = new MatOfPoint2f();
-		Imgproc.approxPolyDP(curve, approxCurve, epsilon, true);
-		
+		MatOfPoint2f approxCurve = null;
+		//while (approxCurve == null || approxCurve.toArray().length > 6) {
+			approxCurve = new MatOfPoint2f();
+			Imgproc.approxPolyDP(curve, approxCurve, epsilon, true);
+			//epsilon += 0.001;
+		//}
 		Point[] approxCurve_points = approxCurve.toArray();
-		
-		System.out.println("ImagePreProcessor_OpenCV: Chess board found by contours with " + approxCurve_points.length + " points.");
-		
-		/*Mat toDraw = source_rgb.clone();
-		List<MatOfPoint> curve_in_list = new ArrayList<MatOfPoint>();
+
+		/*List<MatOfPoint> curve_in_list = new ArrayList<MatOfPoint>();
 		curve_in_list.add(new MatOfPoint(approxCurve.toArray()));
-		Imgproc.drawContours(toDraw, curve_in_list, 0, new Scalar(255, 255, 255));
-		HighGui.imshow("curve_in_list", toDraw);
+		Mat drawing = source_rgb;//Mat.zeros(cannyOutput.size(), CvType.CV_8UC3);
+		Imgproc.drawContours(drawing, curve_in_list, 0, new Scalar(255, 255, 255));
+		HighGui.imshow("curve_in_list", drawing);
 		HighGui.waitKey(0);
 		*/
-		
 		
 		if (approxCurve_points.length > 4 ) {
 			
 	        Rect boundingRec = Imgproc.boundingRect(bigestContour);
 	        OpenCVUtils.extendRect(boundingRec, 0.05);
-	        
 	        /*Mat bounding = new Mat(source_rgb, boundingRec);
 			HighGui.imshow("bounding", bounding);
 			HighGui.waitKey(0);
 			*/
 	        
 			approxCurve_points = OpenCVUtils.getMinimalQuadrilateral(approxCurve_points, boundingRec);
-			
-			/*Mat toDraw = source_rgb.clone();
+			/*Mat drawing = source_rgb;
 			for (int i = 0; i < approxCurve_points.length; i++ ) {
-				Imgproc.drawMarker(toDraw, approxCurve_points[i], new Scalar(255, 255, 255));
+				//System.out.println("x=" + minimalQuadrilateral[i].x + " y=" + minimalQuadrilateral[i].y);
+				Imgproc.drawMarker(drawing, approxCurve_points[i], new Scalar(255, 255, 255));
 			}
-			HighGui.imshow("getMinimalQuadrilateral", toDraw);
+			HighGui.imshow("getMinimalQuadrilateral", drawing);
 			HighGui.waitKey(0);
 			*/
 		}
@@ -286,27 +320,25 @@ public class ImagePreProcessor_OpenCV extends ImagePreProcessor_Base {
 				corners_of_contour[1],
 				corners_of_contour[2],
 				corners_of_contour[3]);
+
+		double contourArea = Imgproc.contourArea(src);
+
+		if (contourArea >= 0.25d * source_rgb.width() * source_rgb.height()) {
+
+			System.out.println("ImagePreProcessor_OpenCV: Chess board found by contours with " + approxCurve_points.length + " points.");
+
+			/*HighGui.imshow("Draw matches", result);
+			HighGui.waitKey(0);
+
+			Rect boundingRec = Imgproc.boundingRect(bigestContour);
+			result = new Mat(source, boundingRec);*/
+
+			//HighGui.imshow("Draw matches", result);
+			//HighGui.waitKey(0);
+
+			return src;
+		}
 		
-		MatOfPoint2f dst = new MatOfPoint2f(
-		        new Point(0, 0),
-		        new Point(0, source_rgb.height()),
-		        new Point(source_rgb.width(), source_rgb.height()),
-		        new Point(source_rgb.width(), 0)      
-		        );
-		
-		Mat result = new Mat();
-		Mat warpMat = Imgproc.getPerspectiveTransform(src, dst);
-		Imgproc.warpPerspective(source_rgb, result, warpMat, source_rgb.size());
-		
-        /*HighGui.imshow("Draw matches", result);
-        HighGui.waitKey(0);
-        
-        Rect boundingRec = Imgproc.boundingRect(bigestContour);
-        result = new Mat(source, boundingRec);*/
-        
-        //HighGui.imshow("Draw matches", result);
-        //HighGui.waitKey(0);
-		
-		return result;
+		return null;
 	}
 }
