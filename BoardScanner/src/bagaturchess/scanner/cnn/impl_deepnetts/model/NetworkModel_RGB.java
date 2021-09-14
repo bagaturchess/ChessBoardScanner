@@ -50,8 +50,9 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 	                .addConvolutionalLayer(5, 5, 64)
 	                .addMaxPoolingLayer(2, 2)
 	                .addConvolutionalLayer(5, 5, 16)
-	                .addOutputLayer(14, ActivationType.SOFTMAX)
-	                .hiddenActivationFunction(ActivationType.LINEAR)
+	                .addMaxPoolingLayer(2, 2)
+	                .addOutputLayer(13, ActivationType.SOFTMAX)
+	                .hiddenActivationFunction(ActivationType.TANH)
 	                .lossFunction(LossType.CROSS_ENTROPY)
 	                .randomSeed(777)
 	                .build();

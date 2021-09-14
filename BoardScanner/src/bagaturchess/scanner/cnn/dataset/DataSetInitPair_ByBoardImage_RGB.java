@@ -46,6 +46,7 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 		for (Integer fieldID : result.keySet()) {
 			
 			List<int[][][]> translations = new ArrayList<int[][][]>();
+			
 			translations.add(result.get(fieldID));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 1));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 2));
@@ -53,10 +54,9 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 			//System.out.println(translations.size());
 			
 			for (int[][][] matrix : translations) {
-				
-				//BufferedImage image = ScannerUtils.createGrayImage(matrix);
-				//ScannerUtils.saveImage("" + fieldID + "_" + (int)(100 * Math.random()), image, "png");
 			
+				int size_old = pids.size();
+				
 				switch (fieldID) {
 					case 0:
 						images.add(matrix);
@@ -147,6 +147,12 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 						pids.add(Constants.PID_B_ROOK);
 						break;
 				}
+				
+				/*if (pids.size() != size_old) {
+					BufferedImage image = ScannerUtils.createRGBImage(matrix);
+					ScannerUtils.saveImage("pieceid" + pids.get(size_old) + "_random" + System.nanoTime(), image, "png");					
+				}*/
+				
 			}
 		}
 	}

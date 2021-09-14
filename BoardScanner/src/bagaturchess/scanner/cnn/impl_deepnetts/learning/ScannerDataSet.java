@@ -41,7 +41,7 @@ public class ScannerDataSet implements DataSet<MLDataItem> {
 		
 		items = new ArrayList<MLDataItem>();
 		
-		targetNames = new String[64 * 13];
+		targetNames = new String[13];
 		for (int i = 0; i < targetNames.length; i++) {
 			targetNames[i] = "LABEL" + i;
 		}
