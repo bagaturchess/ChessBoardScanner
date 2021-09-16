@@ -63,17 +63,24 @@ public class RecognitionMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/book1/test1.png");
 			
 			//Preprocess image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
 			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
 			
 			long startTime = System.currentTimeMillis();
+			
 			image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties_processor.getImageSize());
+			
 			MatOfPoint2f boardCorners = processor_opencv.filter(image);
+			
+			System.out.println("MatOfPoint2f size is " + boardCorners.rows());
+			
 			Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
+			
 			BufferedImage forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
 			System.out.println("Filtered in " + (System.currentTimeMillis() - startTime) + "ms");
