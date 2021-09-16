@@ -1,15 +1,10 @@
 package bagaturchess.scanner.machinelearning.dataset;
 
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import bagaturchess.scanner.common.BoardProperties;
-import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class DatasetGenerator {
@@ -38,7 +33,7 @@ public class DatasetGenerator {
 				"./res/cnn/lichess.org/set1/input6.png",
 				"./res/cnn/lichess.org/set1/input7.png",*/
 				
-				"./res/cnn/chess.com/set2/input1.png",
+				/*"./res/cnn/chess.com/set2/input1.png",
 				"./res/cnn/chess.com/set2/input2.png",
 				"./res/cnn/chess.com/set2/input3.png",
 				"./res/cnn/chess.com/set2/input4.png",
@@ -47,7 +42,7 @@ public class DatasetGenerator {
 				"./res/cnn/chess.com/set2/input7.png",
 				"./res/cnn/chess.com/set2/input8.png",
 				"./res/cnn/chess.com/set2/input9.png",
-				"./res/cnn/chess.com/set2/input10.png",
+				"./res/cnn/chess.com/set2/input10.png",*/
 				
 				/*"./res/cnn/lichess.org/set2/input1.png",
 				"./res/cnn/lichess.org/set2/input2.png",
@@ -71,11 +66,24 @@ public class DatasetGenerator {
 				"./res/cnn/chess24.com/set2/input9.png",
 				"./res/cnn/chess24.com/set2/input10.png",
 				"./res/cnn/chess24.com/set2/input11.png",*/
+				
+				
+				"./res/cnn/books/set1/input1.png",
+				"./res/cnn/books/set1/input2.png",
+				"./res/cnn/books/set1/input3.png",
+				"./res/cnn/books/set1/input4.png",
+				"./res/cnn/books/set1/input5.png",
+				"./res/cnn/books/set1/input6.png",
+				"./res/cnn/books/set1/input7.png",
+				"./res/cnn/books/set1/input8.png",
+				"./res/cnn/books/set1/input9.png",
+				"./res/cnn/books/set1/input10.png",
+				"./res/cnn/books/set1/input11.png",
 			};
 			
 			
 			BoardProperties boardProperties = new BoardProperties(256);
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles, "./datasets_deepnetts/dataset_gen_test/");
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles, "./datasets_deepnetts/dataset_books_set_1/");
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();

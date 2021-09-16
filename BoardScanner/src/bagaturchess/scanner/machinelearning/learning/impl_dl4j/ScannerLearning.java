@@ -21,7 +21,7 @@ import bagaturchess.scanner.common.BoardProperties;
 public class ScannerLearning {
 	
 	
-	private static final String NET_FILE = "cnn_current.net";
+	private static final String NET_FILE = "cnn_books_set_1.net";
 	
 	
 	private static NetworkModel<MultiLayerNetwork> netmodel;
@@ -76,7 +76,7 @@ public class ScannerLearning {
 				"./res/cnn/lichess.org/set2/input9.png",
 				"./res/cnn/lichess.org/set2/input10.png",*/
 				
-				"./res/cnn/chess24.com/set2/input1.png",
+				/*"./res/cnn/chess24.com/set2/input1.png",
 				"./res/cnn/chess24.com/set2/input2.png",
 				"./res/cnn/chess24.com/set2/input3.png",
 				"./res/cnn/chess24.com/set2/input4.png",
@@ -86,10 +86,23 @@ public class ScannerLearning {
 				"./res/cnn/chess24.com/set2/input8.png",
 				"./res/cnn/chess24.com/set2/input9.png",
 				"./res/cnn/chess24.com/set2/input10.png",
-				"./res/cnn/chess24.com/set2/input11.png",
+				"./res/cnn/chess24.com/set2/input11.png",*/
+					
+				"./res/cnn/books/set1/input1.png",
+				"./res/cnn/books/set1/input2.png",
+				"./res/cnn/books/set1/input3.png",
+				"./res/cnn/books/set1/input4.png",
+				"./res/cnn/books/set1/input5.png",
+				"./res/cnn/books/set1/input6.png",
+				"./res/cnn/books/set1/input7.png",
+				"./res/cnn/books/set1/input8.png",
+				"./res/cnn/books/set1/input9.png",
+				"./res/cnn/books/set1/input10.png",
+				"./res/cnn/books/set1/input11.png",
 			};
 			
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles);
+			
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles, "./data/tmp/");
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();

@@ -1,27 +1,30 @@
 package bagaturchess.scanner.machinelearning.model;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ModelBuilder {
+
+public class ProviderSwitch {
 	
 	
 	private static final String MLFrameworkName = "dl4j";
+	//private static final String MLFrameworkName = "deepnetts";
 	
 	
-	private static ModelBuilder instance = null;
+	private static ProviderSwitch instance = null;
 	
 		
 	
-	private ModelBuilder() {
+	private ProviderSwitch() {
 		
 	}
 	
 	
-	public static ModelBuilder getInstance() {
+	public static ProviderSwitch getInstance() {
 		
 		if (instance == null) {
-			instance = new ModelBuilder();
+			instance = new ProviderSwitch();
 		}
 		
 		return instance;

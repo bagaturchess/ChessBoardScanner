@@ -33,9 +33,14 @@ import bagaturchess.scanner.utils.ScannerUtils;
 public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 	
 	
-	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage) {
+	private String dirToSave;
+	
+	
+	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage, String _dirToSave) {
 		
 		super();
+		
+		dirToSave = _dirToSave;
 		
 		//ScannerUtils.saveImage(fileName + "_grayed", boardImage, "png");
 		
@@ -54,9 +59,8 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 			
 			for (int[][] matrix : translations) {
 				
-				//BufferedImage image = ScannerUtils.createGrayImage(matrix);
-				//ScannerUtils.saveImage("" + fieldID + "_" + (int)(100 * Math.random()), image, "png");
-			
+				int size_old = pids.size();
+				
 				switch (fieldID) {
 					case 0:
 						images.add(matrix);
@@ -146,6 +150,13 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 						images.add(matrix);
 						pids.add(Constants.PID_B_ROOK);
 						break;
+				}
+				
+				if (pids.size() != size_old) {
+					if (dirToSave != null) {
+						BufferedImage image = ScannerUtils.createGrayImage(matrix);
+						ScannerUtils.saveImage("" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
+					}
 				}
 			}
 		}
