@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns;
+package bagaturchess.scanner;
 
 
 import java.awt.image.BufferedImage;
@@ -45,7 +45,7 @@ import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_OpenCV;
 import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
 
 
-public class AllMain {
+public class RecognitionMain {
 	
 	
 	public static void main(String[] args) {
