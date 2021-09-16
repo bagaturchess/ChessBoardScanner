@@ -39,6 +39,7 @@ public interface ImageHandler {
 	public Object resizeImage(Object source, int newsize);
 	public void saveImage(String fileName, String formatName, Object image) throws IOException;
 	public int[][] convertToGrayMatrix(Object image);
+	public int[][][] convertToRGBMatrix(Object image);
 	public Object createGrayImage(int[][] matrix);
 	public Object createRGBImage(int[][][] matrix);
 	public Object loadPieceImageFromMemory(int pid, String piecesSetName, int size);

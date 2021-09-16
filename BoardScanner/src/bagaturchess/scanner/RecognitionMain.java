@@ -36,13 +36,16 @@ import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.MatchingInfo_BaseImpl;
 import bagaturchess.scanner.common.ResultPair;
-//import bagaturchess.scanner.patterns.impl1.matchers.*;
-import bagaturchess.scanner.patterns.opencv.matchers.*;
+import bagaturchess.scanner.patterns.own_impl.matchers.*;
+//import bagaturchess.scanner.patterns.opencv.matchers.*;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
+import bagaturchess.scanner.patterns.api.Matcher_Base;
+import bagaturchess.scanner.patterns.api.Matcher_Composite_Gray;
+import bagaturchess.scanner.patterns.api.Matcher_Composite_RGB;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
+import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_Base;
 import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_OpenCV;
 import bagaturchess.scanner.utils.ScannerUtils;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
 
 
 public class RecognitionMain {
@@ -60,8 +63,8 @@ public class RecognitionMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
-			
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			
 			//Preprocess image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
@@ -94,13 +97,13 @@ public class RecognitionMain {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
-            matchers.put("cnn_chesscom_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
-            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
-            matchers.put("cnn_chesscom_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
-            matchers.put("cnn_chess24com_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
-            matchers.put("cnn_chess24com_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
+            Map<String, Matcher_Base_Gray> matchers = new HashMap<String, Matcher_Base_Gray>();
+            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
+            matchers.put("cnn_chesscom_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
+            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
+            matchers.put("cnn_chesscom_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
+            matchers.put("cnn_chess24com_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
+            matchers.put("cnn_chess24com_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
             */
 			
             List<String> netsNames = new ArrayList<String>();
@@ -123,8 +126,10 @@ public class RecognitionMain {
 			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
+			
 			//int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
 			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			
 			ResultPair<String, MatchingStatistics> result = matcher.scan(rgbBoard, matchingInfo);
             System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
             

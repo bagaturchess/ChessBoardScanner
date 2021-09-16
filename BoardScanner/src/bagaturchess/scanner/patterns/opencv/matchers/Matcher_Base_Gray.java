@@ -39,6 +39,7 @@ import bagaturchess.scanner.common.KMeansScalar;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
+import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 

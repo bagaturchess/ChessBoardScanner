@@ -114,6 +114,12 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 
 
 	@Override
+	public int[][][] convertToRGBMatrix(Object image) {
+		return ScannerUtils.convertToRGBMatrix((BufferedImage) image);
+	}
+	
+	
+	@Override
 	public BufferedImage createGrayImage(int[][] matrix) {
 		return ScannerUtils.createGrayImage(matrix);
 	}

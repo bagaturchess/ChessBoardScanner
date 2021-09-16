@@ -17,35 +17,30 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.impl1.preprocess;
+package bagaturchess.scanner.patterns.api;
 
-
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
-import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_Base;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_Gray;
 
 
-public abstract class ImagePreProcessor_Base {
-
-
-	protected BoardProperties boardProperties;
+public class Matcher_Composite_Gray extends Matcher_Composite_Base {
 	
 	
-	public ImagePreProcessor_Base(BoardProperties _boardProperties) {
-		boardProperties = _boardProperties;
+	
+	public Matcher_Composite_Gray(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
+		super(imageSize, _netsNames, _netsStreams, _matchers);
+		
 	}
-
-	
-	public abstract MatOfPoint2f filter(Object image) throws IOException;
-
-
-	public abstract Object extractBoard(Object image, MatOfPoint2f corners) throws IOException;
 	
 	
-	public Point[] getBoardContour(Object image)  throws IOException {
-		return null;
+	@Override
+	protected MatcherFinder_Base createMatcherFinder(int imageSize) throws ClassNotFoundException, IOException {
+		return new MatcherFinder_Gray(imageSize / 8, netsStreams, netsNames);
 	}
 }

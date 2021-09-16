@@ -488,9 +488,11 @@ public class MatrixUtils {
 		                int pixelPattern_g = rgbPattern[i][j][1];
 		                int pixelPattern_b = rgbPattern[i][j][2];
 		                
-		                cur.delta += Math.sqrt(Math.abs(pixelSource_r - pixelPattern_r) * Math.abs(pixelSource_r - pixelPattern_r)
+		                cur.delta += Math.sqrt(
+		                				Math.abs(pixelSource_r - pixelPattern_r) * Math.abs(pixelSource_r - pixelPattern_r)
 		                				+ Math.abs(pixelSource_g - pixelPattern_g) * Math.abs(pixelSource_g - pixelPattern_g)
-		                				+ Math.abs(pixelSource_b - pixelPattern_b) * Math.abs(pixelSource_b - pixelPattern_b));
+		                				+ Math.abs(pixelSource_b - pixelPattern_b) * Math.abs(pixelSource_b - pixelPattern_b)
+		                			);
 		                
 		                count++;
 		                

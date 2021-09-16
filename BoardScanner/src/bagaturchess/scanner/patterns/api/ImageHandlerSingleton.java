@@ -77,6 +77,12 @@ public class ImageHandlerSingleton implements ImageHandler {
 
 
 	@Override
+	public int[][][] convertToRGBMatrix(Object image) {
+		return instance.convertToRGBMatrix(image);
+	}
+	
+	
+	@Override
 	public Object createGrayImage(int[][] matrix) {
 		return instance.createGrayImage(matrix);
 	}
@@ -183,4 +189,5 @@ public class ImageHandlerSingleton implements ImageHandler {
 	public void releaseGraphic(Object image) throws IOException {
 		instance.releaseGraphic(image);
 	}
+
 }

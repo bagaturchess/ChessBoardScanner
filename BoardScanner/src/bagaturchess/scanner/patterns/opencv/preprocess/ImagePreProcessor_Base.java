@@ -17,39 +17,35 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.matchers;
+package bagaturchess.scanner.patterns.opencv.preprocess;
 
+
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 
 import java.io.IOException;
 
 import bagaturchess.scanner.common.BoardProperties;
-import bagaturchess.scanner.common.IMatchingInfo;
-import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
-public abstract class Matcher_Base {
-	
-	
+public abstract class ImagePreProcessor_Base {
+
+
 	protected BoardProperties boardProperties;
-	private String displayName;
+	
+	
+	public ImagePreProcessor_Base(BoardProperties _boardProperties) {
+		boardProperties = _boardProperties;
+	}
+
+	
+	public abstract MatOfPoint2f filter(Object image) throws IOException;
 
 
-	public Matcher_Base(BoardProperties _imageProperties, String _displayName) {
-		boardProperties = _imageProperties;
-		displayName = _displayName;
-	}
+	public abstract Object extractBoard(Object image, MatOfPoint2f corners) throws IOException;
 	
 	
-	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException;
-	
-	
-	public String getPiecesSetName() {
-		return boardProperties.getPiecesSetFileNamePrefix();
-	}
-	
-	
-	protected String getDisplayName() {
-		return displayName;
+	public Point[] getBoardContour(Object image)  throws IOException {
+		return null;
 	}
 }

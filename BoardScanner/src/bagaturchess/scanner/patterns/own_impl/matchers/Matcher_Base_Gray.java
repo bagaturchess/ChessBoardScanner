@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.impl1.matchers;
+package bagaturchess.scanner.patterns.own_impl.matchers;
 
 
 import java.util.ArrayList;
@@ -32,28 +32,30 @@ import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
+import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
-public abstract class Matcher_Base {
+public class Matcher_Base_Gray extends Matcher_Base {
 	
 	
 	private static final float SIZE_DELTA_PERCENT_START = 0.75f;
 	private static final float SIZE_DELTA_PERCENT_END = 0.99f;
 	
 	
-	protected BoardProperties boardProperties;
-	
-	
-	protected Matcher_Base(BoardProperties _imageProperties) {
-		boardProperties = _imageProperties;
+	public Matcher_Base_Gray(BoardProperties _imageProperties, String displayName) {
+		super(_imageProperties, displayName);
 	}
 	
 	
-	protected abstract double getTotalDeltaThreshold();
+	protected double getTotalDeltaThreshold() {
+		return 320;
+	}
 	
 	
-	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) {
+	public ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) {
+		
+		int[][] grayBoard = (int[][]) boardMatrix;
 		
 		if (grayBoard.length != boardProperties.getImageSize()) {
 			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());

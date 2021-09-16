@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.matchers;
+package bagaturchess.scanner.patterns.api;
 
 
 import java.io.IOException;
@@ -28,7 +28,6 @@ import java.util.Map;
 import bagaturchess.scanner.cnn.compute.MatcherFinder_Base;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
 public abstract class Matcher_Composite_Base extends Matcher_Base {

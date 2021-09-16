@@ -17,30 +17,38 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.matchers;
+package bagaturchess.scanner.patterns.api;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 
-import bagaturchess.scanner.cnn.compute.MatcherFinder_Base;
-import bagaturchess.scanner.cnn.compute.MatcherFinder_Gray;
+import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.common.ResultPair;
 
 
-public class Matcher_Composite_Gray extends Matcher_Composite_Base {
+public abstract class Matcher_Base {
 	
 	
-	
-	public Matcher_Composite_Gray(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
-		super(imageSize, _netsNames, _netsStreams, _matchers);
-		
+	protected BoardProperties boardProperties;
+	private String displayName;
+
+
+	public Matcher_Base(BoardProperties _imageProperties, String _displayName) {
+		boardProperties = _imageProperties;
+		displayName = _displayName;
 	}
 	
 	
-	@Override
-	protected MatcherFinder_Base createMatcherFinder(int imageSize) throws ClassNotFoundException, IOException {
-		return new MatcherFinder_Gray(imageSize / 8, netsStreams, netsNames);
+	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException;
+	
+	
+	public String getPiecesSetName() {
+		return boardProperties.getPiecesSetFileNamePrefix();
+	}
+	
+	
+	protected String getDisplayName() {
+		return displayName;
 	}
 }

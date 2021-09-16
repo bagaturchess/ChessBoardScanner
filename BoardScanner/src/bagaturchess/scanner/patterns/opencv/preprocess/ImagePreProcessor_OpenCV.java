@@ -36,7 +36,6 @@ import java.util.List;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
-import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
 import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
 
 
