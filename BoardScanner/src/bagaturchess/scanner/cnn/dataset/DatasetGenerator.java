@@ -1,33 +1,14 @@
 package bagaturchess.scanner.cnn.dataset;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.impl_deepnetts.learning.ScannerDataSet;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
-import bagaturchess.scanner.cnn.model.NetworkModel;
+
 import bagaturchess.scanner.common.BoardProperties;
-import deepnetts.net.ConvolutionalNetwork;
-import deepnetts.net.train.BackpropagationTrainer;
-import deepnetts.net.train.TrainingEvent;
-import deepnetts.net.train.TrainingListener;
-import deepnetts.util.FileIO;
 
 
 public class DatasetGenerator {
-	
-	
-	private static BackpropagationTrainer trainer;
-	private static ScannerDataSet dataset;
-	
-	private static NetworkModel<ConvolutionalNetwork> netmodel;
-	
-	private static long lastSave = System.currentTimeMillis();
 	
 	
 	public static void main(String[] args) {
