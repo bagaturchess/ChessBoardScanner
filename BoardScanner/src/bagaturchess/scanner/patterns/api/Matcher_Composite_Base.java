@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import bagaturchess.scanner.cnn.classification.MatcherFinder_Base;
+import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
 

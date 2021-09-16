@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.classification;
+package bagaturchess.scanner.machinelearning.classification;
 
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.classification.probabilities.ProbabilitiesCalculator;
+import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
 import bagaturchess.scanner.common.IMatchingInfo;
 
 

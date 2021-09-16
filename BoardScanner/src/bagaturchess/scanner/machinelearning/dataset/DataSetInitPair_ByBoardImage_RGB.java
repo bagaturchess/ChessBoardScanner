@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.dataset;
+package bagaturchess.scanner.machinelearning.dataset;
 
 
 import java.awt.image.BufferedImage;
@@ -30,33 +30,38 @@ import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
-public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
+public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 	
 	
-	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage) {
+	private String dirToSave;
+	
+	
+	DataSetInitPair_ByBoardImage_RGB(BufferedImage boardImage, String _dirToSave) {
 		
 		super();
 		
-		//ScannerUtils.saveImage(fileName + "_grayed", boardImage, "png");
+		dirToSave = _dirToSave;
 		
-		int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix(boardImage);
+		//ScannerUtils.saveImage(fileName + "_resized", boardImage, "png");
 		
-		Map<Integer, int[][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
+		int[][][] matrixOfInitialBoard = ScannerUtils.convertToRGBMatrix(boardImage);
+		
+		Map<Integer, int[][][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
 		
 		for (Integer fieldID : result.keySet()) {
 			
-			List<int[][]> translations = new ArrayList<int[][]>();
+			List<int[][][]> translations = new ArrayList<int[][][]>();
+			
 			translations.add(result.get(fieldID));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 1));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 2));
 			
 			//System.out.println(translations.size());
 			
-			for (int[][] matrix : translations) {
-				
-				//BufferedImage image = ScannerUtils.createGrayImage(matrix);
-				//ScannerUtils.saveImage("" + fieldID + "_" + (int)(100 * Math.random()), image, "png");
+			for (int[][][] matrix : translations) {
 			
+				int size_old = pids.size();
+				
 				switch (fieldID) {
 					case 0:
 						images.add(matrix);
@@ -147,6 +152,14 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 						pids.add(Constants.PID_B_ROOK);
 						break;
 				}
+				
+				if (pids.size() != size_old) {
+					if (dirToSave != null) {
+						BufferedImage image = ScannerUtils.createRGBImage(matrix);
+						ScannerUtils.saveImage("" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
+					}
+				}
+				
 			}
 		}
 	}

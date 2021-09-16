@@ -1,4 +1,4 @@
-package bagaturchess.scanner.cnn.dataset;
+package bagaturchess.scanner.machinelearning.dataset;
 
 
 import java.awt.image.BufferedImage;

@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.learning.impl_deepnetts;
+package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 
 
 import java.util.ArrayList;

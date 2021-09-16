@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.learning.impl_dl4j.model;
+package bagaturchess.scanner.machinelearning.learning.impl_dl4j.model;
 
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
-import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.machinelearning.model.NetworkModel;
 
 
 public class NetworkModel_Gray extends NetworkModel<MultiLayerNetwork> {

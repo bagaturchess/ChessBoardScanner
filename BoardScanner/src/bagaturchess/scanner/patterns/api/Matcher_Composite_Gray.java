@@ -25,8 +25,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import bagaturchess.scanner.cnn.classification.MatcherFinder_Base;
-import bagaturchess.scanner.cnn.classification.MatcherFinder_Gray;
+import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
+import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Gray;
 
 
 public class Matcher_Composite_Gray extends Matcher_Composite_Base {

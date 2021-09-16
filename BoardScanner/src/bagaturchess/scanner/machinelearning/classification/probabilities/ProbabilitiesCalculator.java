@@ -17,12 +17,12 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.classification.probabilities;
+package bagaturchess.scanner.machinelearning.classification.probabilities;
 
 
 import java.io.IOException;
 
-import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.machinelearning.model.NetworkModel;
 
 
 public abstract class ProbabilitiesCalculator {

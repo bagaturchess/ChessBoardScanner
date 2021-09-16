@@ -18,7 +18,7 @@
  *
  */
 
-package bagaturchess.scanner.cnn.learning.impl_dl4j;
+package bagaturchess.scanner.machinelearning.learning.impl_dl4j;
 
 
 import java.util.ArrayList;
