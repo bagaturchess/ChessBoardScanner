@@ -65,9 +65,9 @@ public class RecognitionMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/book1/test1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/test1.png");
 			
-			//Preprocess image
+			//Preprocessing image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
 			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
 			
@@ -77,70 +77,76 @@ public class RecognitionMain {
 			
 			MatOfPoint2f boardCorners = processor_opencv.filter(image);
 			
-			System.out.println("MatOfPoint2f size is " + boardCorners.rows());
-			
-			Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
-			
-			BufferedImage forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
-			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
-			System.out.println("Filtered in " + (System.currentTimeMillis() - startTime) + "ms");
-			
-			
-			BoardProperties matcherBoardProperties = new BoardProperties(256);
-			Object cropedProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(forMatching, matcherBoardProperties.getImageSize());
-			
-			
-			//Create composite matcher
-            /*List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_lichessorg_set_1.net");
-            netsNames.add("cnn_chesscom_set_1.net");
-            netsNames.add("cnn_lichessorg_set_2.net");
-            netsNames.add("cnn_chesscom_set_2.net");
-            netsNames.add("cnn_chess24com_set_1.net");
-            netsNames.add("cnn_chess24com_set_2.net");
+			if (boardCorners != null) {
+				
+				Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
+				
+				BufferedImage forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
+				ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
+				System.out.println("Chess board extracted in " + (System.currentTimeMillis() - startTime) + "ms");
+				
+				
+				BoardProperties matcherBoardProperties = new BoardProperties(256);
+				Object cropedProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(forMatching, matcherBoardProperties.getImageSize());
+				
+				
+				//Create composite matcher
+	            /*List<String> netsNames = new ArrayList<String>();
+	            netsNames.add("cnn_lichessorg_set_1.net");
+	            netsNames.add("cnn_chesscom_set_1.net");
+	            netsNames.add("cnn_lichessorg_set_2.net");
+	            netsNames.add("cnn_chesscom_set_2.net");
+	            netsNames.add("cnn_chess24com_set_1.net");
+	            netsNames.add("cnn_chess24com_set_2.net");
+	            
+				List<InputStream> netsStreams = new ArrayList<InputStream>();
+				for (int i = 0; i < netsNames.size(); i++) {
+					netsStreams.add(new FileInputStream(netsNames.get(i)));
+				}
+				
+	            Map<String, Matcher_Gray> matchers = new HashMap<String, Matcher_Gray>();
+	            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
+	            matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
+	            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
+	            matchers.put("cnn_chesscom_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
+	            matchers.put("cnn_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
+	            matchers.put("cnn_chess24com_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
+	            */
+				
+	            List<String> netsNames = new ArrayList<String>();
+	            netsNames.add("cnn_chess24com_set_2.dnet");
+	            netsNames.add("cnn_chesscom_set_2.dnet");
+	            
+				List<InputStream> netsStreams = new ArrayList<InputStream>();
+				for (int i = 0; i < netsNames.size(); i++) {
+					netsStreams.add(new FileInputStream(netsNames.get(i)));
+				}
+				
+	            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+	            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
+	            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
+				
+	            //Init matcher using CNNs
+	            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
+	            
+				
+				//Start matching
+				IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
+				startTime = System.currentTimeMillis();
+				
+				//int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
+				int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+				
+				ResultPair<String, MatchingStatistics> result = matcher.scan(rgbBoard, matchingInfo);
+	            System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
             
-			List<InputStream> netsStreams = new ArrayList<InputStream>();
-			for (int i = 0; i < netsNames.size(); i++) {
-				netsStreams.add(new FileInputStream(netsNames.get(i)));
+			} else {
+				System.out.println("Cannot extract chess board from image");
 			}
 			
-            Map<String, Matcher_Gray> matchers = new HashMap<String, Matcher_Gray>();
-            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
-            matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
-            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
-            matchers.put("cnn_chesscom_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
-            matchers.put("cnn_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
-            matchers.put("cnn_chess24com_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
-            */
 			
-            List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_chess24com_set_2.dnet");
-            netsNames.add("cnn_chesscom_set_2.dnet");
-            
-			List<InputStream> netsStreams = new ArrayList<InputStream>();
-			for (int i = 0; i < netsNames.size(); i++) {
-				netsStreams.add(new FileInputStream(netsNames.get(i)));
-			}
-			
-            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
-            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
-			
-            //Init matcher using CNNs
-            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
-            
-			
-			//Start matching
-			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
-			startTime = System.currentTimeMillis();
-			
-			//int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
-			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
-			
-			ResultPair<String, MatchingStatistics> result = matcher.scan(rgbBoard, matchingInfo);
-            System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
-            
             System.exit(0);
+            
             
 		} catch (Exception e) {
 			e.printStackTrace();
