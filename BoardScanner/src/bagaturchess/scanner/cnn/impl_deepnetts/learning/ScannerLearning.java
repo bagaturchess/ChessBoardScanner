@@ -95,9 +95,11 @@ public class ScannerLearning {
 
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
+        
         trainer.setLearningRate(0.01f)
                 .setMaxError(0.01f)
                 .setMaxEpochs(10000);
+        
         
         trainer.train(imageSets[0]);
         
