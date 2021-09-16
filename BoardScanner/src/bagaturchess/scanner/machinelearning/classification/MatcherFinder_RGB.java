@@ -26,7 +26,7 @@ import java.util.List;
 
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator_RGB;
-import bagaturchess.scanner.machinelearning.learning.impl_deepnetts.model.NetworkModel_RGB;
+import bagaturchess.scanner.machinelearning.model.ModelBuilder;
 
 
 public class MatcherFinder_RGB extends MatcherFinder_Base {
@@ -38,6 +38,6 @@ public class MatcherFinder_RGB extends MatcherFinder_Base {
 	
 	
 	protected ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException {
-		return new ProbabilitiesCalculator_RGB(new NetworkModel_RGB(stream, squareSize));
+		return new ProbabilitiesCalculator_RGB(ModelBuilder.getInstance().create(3, stream, squareSize));
 	}
 }

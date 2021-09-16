@@ -99,7 +99,7 @@ public class RecognitionMain {
 			
 			
 			//Create composite matcher
-            /*List<String> netsNames = new ArrayList<String>();
+            List<String> netsNames = new ArrayList<String>();
             netsNames.add("cnn_lichessorg_set_1.net");
             netsNames.add("cnn_chesscom_set_1.net");
             netsNames.add("cnn_lichessorg_set_2.net");
@@ -112,7 +112,7 @@ public class RecognitionMain {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-            Map<String, Matcher_Gray> matchers = new HashMap<String, Matcher_Gray>();
+            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
             matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
             matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
             matchers.put("cnn_lichessorg_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
@@ -121,9 +121,10 @@ public class RecognitionMain {
             matchers.put("cnn_chess24com_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
             
             Matcher_Base matcher = new Matcher_Composite_Gray(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
-            */
+            
 			
-            List<String> netsNames = new ArrayList<String>();
+			
+            /*List<String> netsNames = new ArrayList<String>();
             netsNames.add("cnn_chess24com_set_2.dnet");
             netsNames.add("cnn_chesscom_set_2.dnet");
             
@@ -137,16 +138,17 @@ public class RecognitionMain {
             matchers.put("cnn_chesscom_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
 			
             Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
-            
+            */
+			
 			
 			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
 			
-			//int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
-			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
+			//int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
 			
-			ResultPair<String, MatchingStatistics> result = matcher.scan(rgbBoard, matchingInfo);
+			ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
             System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
 			
 			
