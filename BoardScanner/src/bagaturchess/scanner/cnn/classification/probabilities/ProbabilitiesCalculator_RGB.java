@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.compute;
+package bagaturchess.scanner.cnn.classification.probabilities;
 
 
 import java.io.IOException;
@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
-
 import bagaturchess.scanner.cnn.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.utils.ScannerUtils;
+
 import deepnetts.net.ConvolutionalNetwork;
+import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
 
 
 public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {

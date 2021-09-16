@@ -17,13 +17,15 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.compute;
+package bagaturchess.scanner.cnn.classification;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import bagaturchess.scanner.cnn.classification.probabilities.ProbabilitiesCalculator;
+import bagaturchess.scanner.cnn.classification.probabilities.ProbabilitiesCalculator_RGB;
 import bagaturchess.scanner.cnn.learning.impl_deepnetts.model.NetworkModel_RGB;
 
 

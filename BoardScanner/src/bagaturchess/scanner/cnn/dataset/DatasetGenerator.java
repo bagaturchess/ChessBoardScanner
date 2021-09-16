@@ -1,11 +1,15 @@
 package bagaturchess.scanner.cnn.dataset;
 
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class DatasetGenerator {
@@ -81,7 +85,18 @@ public class DatasetGenerator {
 				pids.addAll(pairs[i].getPIDs());
 			}
 			
-			
+			/*for (int i = 0; i < images.size(); i++) {
+				int[][] matrix = (int[][]) images.get(i);
+				BufferedImage image = ScannerUtils.createGrayImage(matrix);
+				int pid = pids.get(i);
+				File curDir = new File(genDir, "" + pid);
+				curDir.mkdirs();
+				
+				File imageFile = new File(curDir, "" + System.currentTimeMillis() + ".png");
+				ImageIO.write(image, "png", imageFile);
+				
+				Thread.currentThread().sleep(3);
+			}*/
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
