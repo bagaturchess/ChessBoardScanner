@@ -67,7 +67,7 @@ public class MatchingTester {
 				int[][] grayPattern = ScannerUtils.convertToGrayMatrix(patternScaled);
 				
 				//BufferedImage resultImage = ScannerUtils.createGrayImage(grayPattern);
-				//ScannerUtils.saveImage("pattern" + size, resultImage, "png");
+				//ScannerUtils.saveImage("pattern_gray" + size, resultImage, "png");
 				
 				PatternMatchingData data = MatrixUtils.matchImages(grayBoard, grayPattern);
 				if (best == null || best.delta > data.delta) {

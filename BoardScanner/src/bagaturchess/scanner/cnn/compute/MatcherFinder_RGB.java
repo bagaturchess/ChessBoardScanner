@@ -17,39 +17,26 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.matchers;
+package bagaturchess.scanner.cnn.compute;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
-import bagaturchess.scanner.common.BoardProperties;
-import bagaturchess.scanner.common.IMatchingInfo;
-import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.api.MatchingStatistics;
+//import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_RGB;
+import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
 
 
-public abstract class Matcher_Base {
+public class MatcherFinder_RGB extends MatcherFinder_Base {
 	
 	
-	protected BoardProperties boardProperties;
-	private String displayName;
-
-
-	public Matcher_Base(BoardProperties _imageProperties, String _displayName) {
-		boardProperties = _imageProperties;
-		displayName = _displayName;
+	public MatcherFinder_RGB(int squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
+		super(squareSize, netsStreams, _netsNames);
 	}
 	
 	
-	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException;
-	
-	
-	public String getPiecesSetName() {
-		return boardProperties.getPiecesSetFileNamePrefix();
-	}
-	
-	
-	protected String getDisplayName() {
-		return displayName;
+	protected ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException {
+		return new ProbabilitiesCalculator_RGB(new NetworkModel_RGB(stream, squareSize));
 	}
 }

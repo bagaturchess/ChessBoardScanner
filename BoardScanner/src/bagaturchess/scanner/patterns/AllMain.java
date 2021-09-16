@@ -32,6 +32,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
 
+import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.MatchingInfo_BaseImpl;
@@ -58,8 +59,8 @@ public class AllMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/test2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
-			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/pdf/test1.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			
 			
 			//Preprocess image
@@ -77,25 +78,16 @@ public class AllMain {
 			
 			BoardProperties matcherBoardProperties = new BoardProperties(256);
 			Object cropedProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(forMatching, matcherBoardProperties.getImageSize());
-			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
 			
 			
 			//Create composite matcher
-            List<String> netsNames = new ArrayList<String>();
+            /*List<String> netsNames = new ArrayList<String>();
             netsNames.add("cnn_lichessorg_set_1.net");
             netsNames.add("cnn_chesscom_set_1.net");
             netsNames.add("cnn_lichessorg_set_2.net");
             netsNames.add("cnn_chesscom_set_2.net");
             netsNames.add("cnn_chess24com_set_1.net");
             netsNames.add("cnn_chess24com_set_2.net");
-            
-            Map<String, String> netToSetMappings = new HashMap<String, String>();
-            netToSetMappings.put("cnn_lichessorg_set_1.net", "set1");
-            netToSetMappings.put("cnn_chesscom_set_1.net", "set2");
-            netToSetMappings.put("cnn_lichessorg_set_2.net", "set1");
-            netToSetMappings.put("cnn_chesscom_set_2.net", "set2");
-            netToSetMappings.put("cnn_chess24com_set_1.net", "set3");
-            netToSetMappings.put("cnn_chess24com_set_2.net", "set3");
             
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {
@@ -109,15 +101,31 @@ public class AllMain {
             matchers.put("cnn_chesscom_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
             matchers.put("cnn_chess24com_set_1.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
             matchers.put("cnn_chess24com_set_2.net", new Matcher_Base(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
-
+            */
+			
+            List<String> netsNames = new ArrayList<String>();
+            netsNames.add("cnn_chess24com_set_2.dnet");
+            netsNames.add("cnn_chesscom_set_2.dnet");
+            
+			List<InputStream> netsStreams = new ArrayList<InputStream>();
+			for (int i = 0; i < netsNames.size(); i++) {
+				netsStreams.add(new FileInputStream(netsNames.get(i)));
+			}
+			
+            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_Base_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
+            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_Base_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
+			
             //Init matcher using CNNs
-            Matcher_Base matcher = new Matcher_Composite_CNN(matcherBoardProperties.getImageSize(), netsNames, netsStreams, netToSetMappings, matchers);
-
+            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
+            
 			
 			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
-			ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
+			//int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
+			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			ResultPair<String, MatchingStatistics> result = matcher.scan(rgbBoard, matchingInfo);
             System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
             
             System.exit(0);

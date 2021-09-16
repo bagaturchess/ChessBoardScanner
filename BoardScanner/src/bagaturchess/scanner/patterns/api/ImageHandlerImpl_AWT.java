@@ -120,6 +120,12 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 
 
 	@Override
+	public BufferedImage createRGBImage(int[][][] matrix) {
+		return ScannerUtils.createRGBImage(matrix);
+	}
+	
+	
+	@Override
 	public BufferedImage loadPieceImageFromMemory(int pid, String piecesSetName, int size) {
 		
 		String key = piecesSetName + "_" + pid + "_" + size;
@@ -220,7 +226,7 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 		int[][] print = new int[matcherData.size][matcherData.size];
 		for (int i = 0; i < matcherData.size; i++) {
 			for (int j = 0; j < matcherData.size; j++) {
-				print[i][j] = matcherData.pattern[i][j];
+				print[i][j] = matcherData.pattern_gray[i][j];
 			}
 		}
 		
@@ -247,7 +253,7 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 	
 	
 	@Override
-	public Object createPieceImage(String pieceSetName, int pid, int bgcolor, int size) {
+	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size) {
 		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, pieceSetName, size);
 		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 		Graphics g = imagePiece.getGraphics();
@@ -260,11 +266,11 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 	
 	
 	@Override
-	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size) {
+	public Object createPieceImage_RGB(String pieceSetName, int pid, bagaturchess.scanner.common.Color bgcolor, int size) {
 		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, pieceSetName, size);
-		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);
+		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 		Graphics g = imagePiece.getGraphics();
-		g.setColor(GRAY_COLORS[bgcolor]);
+		g.setColor(new Color(bgcolor.red, bgcolor.green, bgcolor.blue));
 		g.fillRect(0, 0, imagePiece.getWidth(), imagePiece.getHeight());
 		Image pieceScaled = piece;
 		g.drawImage(pieceScaled, 0, 0, null);

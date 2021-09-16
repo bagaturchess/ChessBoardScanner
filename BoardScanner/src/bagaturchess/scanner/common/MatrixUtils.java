@@ -134,6 +134,32 @@ public class MatrixUtils {
 	}
 	
 	
+	public static Set<Integer> getEmptySquares_Heuristic1(int[][][] rgbBoard, double emptySquareThreshold) {
+		
+		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
+		
+		int[][] rBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] gBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] bBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		
+        for (int i = 0; i < rgbBoard.length; i++ ) {
+            for (int j = 0; j < rgbBoard[0].length; j++ ) {
+            	rBoard[i][j] = rgbBoard[i][j][0];
+            	gBoard[i][j] = rgbBoard[i][j][1];
+            	bBoard[i][j] = rgbBoard[i][j][2];
+            }
+        }
+        
+        
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic1(rBoard, emptySquareThreshold));
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic1(gBoard, emptySquareThreshold));
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic1(bBoard, emptySquareThreshold));
+
+		
+		return emptySquaresIDs;
+	}
+	
+	
 	public static Set<Integer> getEmptySquares_Heuristic2(int[][] grayBoard) {
 		
 		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
@@ -165,7 +191,33 @@ public class MatrixUtils {
 	}
 	
 	
-	public static ResultPair<Integer, Integer> getSquaresColor(int[][] grayBoard) {
+	public static Set<Integer> getEmptySquares_Heuristic2(int[][][] rgbBoard) {
+		
+		Set<Integer> emptySquaresIDs = new HashSet<Integer>();
+		
+		int[][] rBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] gBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] bBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		
+        for (int i = 0; i < rgbBoard.length; i++ ) {
+            for (int j = 0; j < rgbBoard[0].length; j++ ) {
+            	rBoard[i][j] = rgbBoard[i][j][0];
+            	gBoard[i][j] = rgbBoard[i][j][1];
+            	bBoard[i][j] = rgbBoard[i][j][2];
+            }
+        }
+        
+        
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic2(rBoard));
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic2(gBoard));
+		emptySquaresIDs.addAll(getEmptySquares_Heuristic2(bBoard));
+
+		
+		return emptySquaresIDs;
+	}
+	
+	
+	public static ResultPair<Integer, Integer> getSquaresColor_Gray(int[][] grayBoard) {
 		
 		KMeansPixels kmeans = new KMeansPixels(4, grayBoard);
 		int[] clustersIndexes = kmeans.get2MaxWeightsIndexes();
@@ -193,6 +245,28 @@ public class MatrixUtils {
 		}
 				
 		return new ResultPair<Integer, Integer>(Math.max(gray1, gray2), Math.min(gray1, gray2));
+	}
+	
+	
+	public static ResultPair<Color, Color> getSquaresColor_RGB(int[][][] rgbBoard) {
+		
+		int[][] rBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] gBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		int[][] bBoard = new int[rgbBoard.length][rgbBoard[0].length];
+		
+        for (int i = 0; i < rgbBoard.length; i++ ) {
+            for (int j = 0; j < rgbBoard[0].length; j++ ) {
+            	rBoard[i][j] = rgbBoard[i][j][0];
+            	gBoard[i][j] = rgbBoard[i][j][1];
+            	bBoard[i][j] = rgbBoard[i][j][2];
+            }
+        }
+		
+        ResultPair<Integer, Integer> red = getSquaresColor_Gray(rBoard);
+        ResultPair<Integer, Integer> green = getSquaresColor_Gray(gBoard);
+        ResultPair<Integer, Integer> blue = getSquaresColor_Gray(bBoard);
+        
+		return new ResultPair<Color, Color>(new Color(red.getFirst(), green.getFirst(), blue.getFirst()), new Color(red.getSecond(), green.getSecond(), blue.getSecond()));
 	}
 	
 	
@@ -297,11 +371,9 @@ public class MatrixUtils {
 		for (int i = i1; i < i1 + size; i++) {
 			int jc = 0;
 			for (int j = j1; j < j1 + size; j++) {
-				for (int k = 0; k < 3; k++) {
-					result[ic][jc][0] = matrix[i][j][0];
-					result[ic][jc][1] = matrix[i][j][1];
-					result[ic][jc][2] = matrix[i][j][2];
-				}
+				result[ic][jc][0] = matrix[i][j][0];
+				result[ic][jc][1] = matrix[i][j][1];
+				result[ic][jc][2] = matrix[i][j][2];
 				jc++;
 			}
 			ic++;
@@ -366,7 +438,7 @@ public class MatrixUtils {
 		    	cur.x = x;
 		    	cur.y = y;
 		    	cur.size = grayPattern.length;
-		    	cur.pattern = grayPattern;
+		    	cur.pattern_gray = grayPattern;
 		    	
 		    	int count = 0;
 		        for (int i = 0; i < grayPattern.length; i++ ) {
@@ -637,7 +709,8 @@ public class MatrixUtils {
 		public int angle;
 		public int color;
 		public double delta;
-		public int[][] pattern;
+		public int[][] pattern_gray;
+		public int[][][] pattern_rgb;
 	}
 	
 	

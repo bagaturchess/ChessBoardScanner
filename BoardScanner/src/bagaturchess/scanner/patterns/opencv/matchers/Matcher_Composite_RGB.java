@@ -21,35 +21,26 @@ package bagaturchess.scanner.patterns.opencv.matchers;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
-import bagaturchess.scanner.common.BoardProperties;
-import bagaturchess.scanner.common.IMatchingInfo;
-import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.api.MatchingStatistics;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_Base;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_RGB;
 
 
-public abstract class Matcher_Base {
+public class Matcher_Composite_RGB extends Matcher_Composite_Base {
 	
 	
-	protected BoardProperties boardProperties;
-	private String displayName;
-
-
-	public Matcher_Base(BoardProperties _imageProperties, String _displayName) {
-		boardProperties = _imageProperties;
-		displayName = _displayName;
+	
+	public Matcher_Composite_RGB(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
+		super(imageSize, _netsNames, _netsStreams, _matchers);
+		
 	}
 	
 	
-	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException;
-	
-	
-	public String getPiecesSetName() {
-		return boardProperties.getPiecesSetFileNamePrefix();
-	}
-	
-	
-	protected String getDisplayName() {
-		return displayName;
+	@Override
+	protected MatcherFinder_Base createMatcherFinder(int imageSize) throws ClassNotFoundException, IOException {
+		return new MatcherFinder_RGB(imageSize / 8, netsStreams, netsNames);
 	}
 }

@@ -25,28 +25,31 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_Gray;
 import bagaturchess.scanner.common.IMatchingInfo;
 
-//import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 
-
-public class MatcherFinder {
+public abstract class MatcherFinder_Base {
 	
 	
 	private List<ProbabilitiesCalculator> scanners;
-	private List<String> netsNames;
+	protected List<String> netsNames;
+	
+	protected int squareSize;
 	
 	
-	public MatcherFinder(int squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
+	public MatcherFinder_Base(int _squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
 		
-		scanners = new ArrayList<ProbabilitiesCalculator>();
+		squareSize = _squareSize;
 		netsNames = _netsNames;
 		
+		scanners = new ArrayList<ProbabilitiesCalculator>();
 		for (int i = 0; i < netsStreams.size(); i++) {
-			scanners.add(new ProbabilitiesCalculator_Gray(new NetworkModel_Gray(netsStreams.get(i), squareSize)));
+			scanners.add(createScanner(netsStreams.get(i)));
 		}
 	}
+	
+	
+	protected abstract ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException;
 	
 	
 	public String findMatcher(Object image, IMatchingInfo matchingInfo) {
@@ -66,13 +69,13 @@ public class MatcherFinder {
 				matchingInfo.setCurrentPhaseProgress(i / (double) scanners.size());
 				matchingInfo.setMatchingFinderInfo(currentName, currentProb);
 			}
-			System.out.println("MatcherFinder: " + currentName + " " + currentProb);
+			System.out.println("MatcherFinder_Base: " + currentName + " " + currentProb);
 		}
 		
 		
 		long endTime = System.currentTimeMillis();
 		
-		System.out.println("MatcherFinder: Time is " + (endTime - startTime) + " ms, best is " + bestName);
+		System.out.println("MatcherFinder_Base: Time is " + (endTime - startTime) + " ms, best is " + bestName);
 		
 		return bestName;
 	}

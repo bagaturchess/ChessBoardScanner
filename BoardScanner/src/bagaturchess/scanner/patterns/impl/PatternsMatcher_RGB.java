@@ -91,7 +91,7 @@ public class PatternsMatcher_RGB {
 		int[][] print = new int[matcherData.size][matcherData.size];
 		for (int i = 0; i < matcherData.size; i++) {
 			for (int j = 0; j < matcherData.size; j++) {
-				print[i][j] = matcherData.pattern[i][j];
+				print[i][j] = matcherData.pattern_gray[i][j];
 			}
 		}
 		

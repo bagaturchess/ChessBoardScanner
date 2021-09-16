@@ -33,9 +33,14 @@ import bagaturchess.scanner.common.MatrixUtils;
 public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 	
 	
-	DataSetInitPair_ByBoardImage_RGB(BufferedImage boardImage) {
+	private String dirToSave;
+	
+	
+	DataSetInitPair_ByBoardImage_RGB(BufferedImage boardImage, String _dirToSave) {
 		
 		super();
+		
+		dirToSave = _dirToSave;
 		
 		//ScannerUtils.saveImage(fileName + "_resized", boardImage, "png");
 		
@@ -148,10 +153,12 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 						break;
 				}
 				
-				/*if (pids.size() != size_old) {
-					BufferedImage image = ScannerUtils.createRGBImage(matrix);
-					ScannerUtils.saveImage("pieceid" + pids.get(size_old) + "_random" + System.nanoTime(), image, "png");					
-				}*/
+				if (pids.size() != size_old) {
+					if (dirToSave != null) {
+						BufferedImage image = ScannerUtils.createRGBImage(matrix);
+						ScannerUtils.saveImage("" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
+					}
+				}
 				
 			}
 		}

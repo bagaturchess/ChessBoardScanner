@@ -70,7 +70,7 @@ public abstract class Matcher_Base {
 		
 		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard);
 		
-		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor(grayBoard);
+		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor_Gray(grayBoard);
 		
 		int[] pids = new int[64];
 		
@@ -271,7 +271,7 @@ public abstract class Matcher_Base {
 		int[][] print = new int[matcherData.size][matcherData.size];
 		for (int i = 0; i < matcherData.size; i++) {
 			for (int j = 0; j < matcherData.size; j++) {
-				print[i][j] = matcherData.pattern[i][j];
+				print[i][j] = matcherData.pattern_gray[i][j];
 			}
 		}
 		

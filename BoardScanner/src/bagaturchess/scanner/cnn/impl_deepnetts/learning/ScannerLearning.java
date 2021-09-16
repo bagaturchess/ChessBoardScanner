@@ -1,203 +1,134 @@
 package bagaturchess.scanner.cnn.impl_deepnetts.learning;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
-import bagaturchess.scanner.cnn.dataset.DataSetUtils;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
-import bagaturchess.scanner.cnn.model.NetworkModel;
-import bagaturchess.scanner.common.BoardProperties;
+import deepnetts.core.DeepNetts;
+import deepnetts.data.ImageSet;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.train.BackpropagationTrainer;
-import deepnetts.net.train.TrainingEvent;
-import deepnetts.net.train.TrainingListener;
+import deepnetts.util.DeepNettsException;
+import deepnetts.eval.ClassifierEvaluator;
+import deepnetts.eval.ConfusionMatrix;
+import javax.visrec.ml.eval.EvaluationMetrics;
+import deepnetts.net.layers.activation.ActivationType;
+import deepnetts.net.loss.LossType;
 import deepnetts.util.FileIO;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class ScannerLearning {
+
+	
+	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_chess24.com_default_set/";
+	private String OUTPUT_FILE_NAME = "cnn_chess24com_set_2.dnet";
 	
 	
-	private static final String NET_FILE = "CNN_DeepNetts_chess24com_set_2.net";
-	
-	
-	private static BackpropagationTrainer trainer;
-	private static ScannerDataSet dataset;
-	
-	private static NetworkModel<ConvolutionalNetwork> netmodel;
-	
-	private static long lastSave = System.currentTimeMillis();
-	
-	
-	public static void main(String[] args) {
+    // download data set and set these paths
+	private String labelsFile = INPUT_DIR_NAME + "labels.txt";
+	private String trainingFile = INPUT_DIR_NAME + "index.txt";
+    
+    
+	private int imageWidth = 32;
+	private int imageHeight = 32;
+    
+    
+    private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
+    
+    
+    public void run() throws DeepNettsException, IOException {
+
+        LOGGER.info("Training convolutional network");
+        LOGGER.info("Loading images...");
+        
+        // create a data set from images and labels
+        ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
+        
+        //imageSet.setGrayscale(true);
+        //imageSet.setInvertImages(true);  
+        
+        imageSet.loadLabels(new File(labelsFile));
+        imageSet.loadImages(new File(trainingFile));
+
+        ImageSet[] imageSets = imageSet.split(0.7, 0.3);
+        int labelsCount = imageSet.getLabelsCount();
+
+        LOGGER.info("Creating neural network ...");
+
+        // create convolutional neural network architecture
+        /*ConvolutionalNetwork neuralNet = ConvolutionalNetwork.builder()
+                .addInputLayer(imageWidth, imageHeight)
+                .addConvolutionalLayer(3, 3)
+                .addMaxPoolingLayer(2, 2)         
+                .addConvolutionalLayer(6, 3)
+                .addMaxPoolingLayer(2, 2)  
+                .addConvolutionalLayer(12, 3)
+                .addMaxPoolingLayer(2, 2)                  
+                .addFullyConnectedLayer(48)
+                .addFullyConnectedLayer(48)
+                .addFullyConnectedLayer(48)
+                .addOutputLayer(labelsCount, ActivationType.SOFTMAX)
+                .hiddenActivationFunction(ActivationType.TANH)
+                .lossFunction(LossType.CROSS_ENTROPY)
+                .randomSeed(123)
+                .build();*/
+
+        ConvolutionalNetwork neuralNet =  ConvolutionalNetwork.builder()
+                .addInputLayer(imageWidth, imageHeight)
+                .addConvolutionalLayer(5, 5)
+                .addMaxPoolingLayer(2, 2)
+                .addConvolutionalLayer(5, 5)
+                .addMaxPoolingLayer(2, 2)
+                .addFullyConnectedLayer(64)
+                .addOutputLayer(labelsCount, ActivationType.SOFTMAX)
+                .hiddenActivationFunction(ActivationType.TANH)
+                .lossFunction(LossType.CROSS_ENTROPY)
+                .randomSeed(777)
+                .build();
 		
-		try {
-			
-			BoardProperties boardProperties = new BoardProperties(256);
-			
-			netmodel = new NetworkModel_RGB((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
-			
-			String[] inputFiles = new String[] {
-					
-				/*"./res/cnn/chess.com/set1/input1.png",
-				"./res/cnn/chess.com/set1/input2.png",
-				"./res/cnn/chess.com/set1/input3.png",
-				"./res/cnn/chess.com/set1/input4.png",
-				"./res/cnn/chess.com/set1/input5.png",
-				"./res/cnn/chess.com/set1/input6.png",
-				"./res/cnn/chess.com/set1/input7.png",
-				*/
-					
-				/*"./res/cnn/lichess.org/set1/input1.png",
-				"./res/cnn/lichess.org/set1/input2.png",
-				"./res/cnn/lichess.org/set1/input3.png",
-				"./res/cnn/lichess.org/set1/input4.png",
-				"./res/cnn/lichess.org/set1/input5.png",
-				"./res/cnn/lichess.org/set1/input6.png",
-				"./res/cnn/lichess.org/set1/input7.png",*/
-				
-				/*"./res/cnn/chess.com/set2/input1.png",
-				"./res/cnn/chess.com/set2/input2.png",
-				"./res/cnn/chess.com/set2/input3.png",
-				"./res/cnn/chess.com/set2/input4.png",
-				"./res/cnn/chess.com/set2/input5.png",
-				"./res/cnn/chess.com/set2/input6.png",
-				"./res/cnn/chess.com/set2/input7.png",
-				"./res/cnn/chess.com/set2/input8.png",
-				"./res/cnn/chess.com/set2/input9.png",
-				"./res/cnn/chess.com/set2/input10.png",*/
-				
-				/*"./res/cnn/lichess.org/set2/input1.png",
-				"./res/cnn/lichess.org/set2/input2.png",
-				"./res/cnn/lichess.org/set2/input3.png",
-				"./res/cnn/lichess.org/set2/input4.png",
-				"./res/cnn/lichess.org/set2/input5.png",
-				"./res/cnn/lichess.org/set2/input6.png",
-				"./res/cnn/lichess.org/set2/input7.png",
-				"./res/cnn/lichess.org/set2/input8.png",
-				"./res/cnn/lichess.org/set2/input9.png",
-				"./res/cnn/lichess.org/set2/input10.png",*/
-				
-				"./res/cnn/chess24.com/set2/input1.png",
-				"./res/cnn/chess24.com/set2/input2.png",
-				"./res/cnn/chess24.com/set2/input3.png",
-				"./res/cnn/chess24.com/set2/input4.png",
-				"./res/cnn/chess24.com/set2/input5.png",
-				"./res/cnn/chess24.com/set2/input6.png",
-				"./res/cnn/chess24.com/set2/input7.png",
-				"./res/cnn/chess24.com/set2/input8.png",
-				"./res/cnn/chess24.com/set2/input9.png",
-				"./res/cnn/chess24.com/set2/input10.png",
-				"./res/cnn/chess24.com/set2/input11.png",
-			};
-			
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles);
-			
-			final List<Object> images = new ArrayList<Object>();
-			final List<Integer> pids = new ArrayList<Integer>();
-			
-			for (int i = 0; i < pairs.length; i++) {
-				images.addAll(pairs[i].getImages());
-				pids.addAll(pairs[i].getPIDs());
-			}
-			
-			
-			dataset = new ScannerDataSet();
-			for (int i = 0; i < images.size(); i++) {
-				Object networkInput = netmodel.createInput(images.get(i));
-				float[] networkOutput = new float[13];
-				networkOutput[pids.get(i)] = 1;
-				dataset.addItem(networkInput, networkOutput);
-			}
-			
-			final ConvolutionalNetwork network = netmodel.getNetwork();
-			
-			trainer = new BackpropagationTrainer(network);
-			
-			trainer.setLearningRate(0.001f);
-	        
-	        //trainer.setBatchMode(true);
-	        //trainer.setBatchSize(images.size());
-	        
-	        trainer.setMaxEpochs(100);
-	        
-	        /*trainer.addListener(new TrainingListener() {
-	        	
-	        	
-	        	private int iteration = 0;
-	        	private long startTime = System.currentTimeMillis();
-	        	
-	        	
-				@Override
-				public void handleEvent(TrainingEvent event) {
-					
-					if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
-						
-						int success = 0;
-						int failure = 0;
-						for (int i = 0; i < images.size(); i++) {
-							
-							Object networkInput = netmodel.createInput(images.get(i));
-							netmodel.setInputs(networkInput);
-							network.forward();
-							float[] actual_output = network.getOutput();
-							
-							float maxValue = 0;
-							int maxIndex = 0;
-							for (int j = 0; j < actual_output.length; j++) {
-								if (maxValue < actual_output[j]) {
-									maxValue = actual_output[j];
-									maxIndex = j;
-								}
-							}
-							
-							if (maxIndex == pids.get(i)) {
-								success++;
-							} else {
-								failure++;
-							}
-						}
-						
-						if (!Float.isNaN(event.getSource().getTrainingLoss())
-								&& !Float.isInfinite(event.getSource().getTrainingLoss())) {
-							try {
-								long now = System.currentTimeMillis();
-								if (now > lastSave + 10000) {
-									FileIO.writeToFile(network, NET_FILE);
-									lastSave = now;
-								}
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						
-						System.out.println("End iteration " + iteration
-								+ ": Time " + (System.currentTimeMillis() - startTime)
-								+ "ms, Training loss is " + event.getSource().getTrainingLoss()
-								+ ", Success is " + success / (float)(success + failure)
-						);
-						
-						iteration++;
-						
-					} else if (event.getType().equals(TrainingEvent.Type.ITERATION_FINISHED)) {
-						//System.out.println("done");
-					}
-				}
-			});
-			*/
-	        
-	        
-	        //for (int e = 0; e < 100; e++) {
-	        trainer.train(dataset);
-	        //}
-	        
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        LOGGER.info("Training neural network");
+
+        // create a trainer and train network
+        BackpropagationTrainer trainer = neuralNet.getTrainer();
+        trainer.setLearningRate(0.01f)
+                .setMaxError(0.01f)
+                .setMaxEpochs(10000);
+        
+        trainer.train(imageSets[0]);
+        
+        
+        // Test trained network
+        ClassifierEvaluator evaluator = new ClassifierEvaluator();
+        evaluator.evaluate(neuralNet, imageSets[1]);
+        
+        LOGGER.info("------------------------------------------------");
+        LOGGER.info("Classification performance measure" + System.lineSeparator());
+        LOGGER.info("TOTAL AVERAGE");
+        LOGGER.info(evaluator.getMacroAverage());
+        LOGGER.info("By Class");
+        Map<String, EvaluationMetrics> byClass = evaluator.getPerformanceByClass();
+        
+        Set<Map.Entry<String, EvaluationMetrics>> entrySet = byClass.entrySet();
+        for (Map.Entry<String, EvaluationMetrics> curEntry : entrySet) {
+            LOGGER.info("Class " + curEntry.getKey() + ":");
+            LOGGER.info(curEntry.getValue());
+            LOGGER.info("----------------");
+        }
+
+        ConfusionMatrix cm = evaluator.getConfusionMatrix();
+        LOGGER.info(cm.toString());
+        
+        // Save trained network to file
+        FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
+    }
+
+    public static void main(String[] args) throws IOException {
+        (new ScannerLearning()).run();
+    }
 }
+

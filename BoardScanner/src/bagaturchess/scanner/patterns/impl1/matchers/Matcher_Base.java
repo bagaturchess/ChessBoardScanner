@@ -67,7 +67,7 @@ public abstract class Matcher_Base {
 		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard);
 		//System.out.println(emptySquares);
 		
-		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor(grayBoard);
+		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor_Gray(grayBoard);
 		
 		int[] pids = new int[64];
 		int countAll = 0;
@@ -161,7 +161,7 @@ public abstract class Matcher_Base {
 					
 					int[][] grayPattern = pid == Constants.PID_NONE ?
 							ImageHandlerSingleton.getInstance().createSquareImage(bgcolor, size)
-							: ImageHandlerSingleton.getInstance().convertToGrayMatrix(ImageHandlerSingleton.getInstance().createPieceImage(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size));
+							: ImageHandlerSingleton.getInstance().convertToGrayMatrix(ImageHandlerSingleton.getInstance().createPieceImage_Gray(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size));
 					
 							MatrixUtils.PatternMatchingData curData = MatrixUtils.matchImages(graySquareMatrix, grayPattern);
 					

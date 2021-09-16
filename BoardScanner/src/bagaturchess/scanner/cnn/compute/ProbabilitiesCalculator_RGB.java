@@ -21,20 +21,106 @@ package bagaturchess.scanner.cnn.compute;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
 
 import bagaturchess.scanner.cnn.model.NetworkModel;
+import bagaturchess.scanner.cnn.utils.ScannerUtils;
+import bagaturchess.scanner.common.MatrixUtils;
+import deepnetts.net.ConvolutionalNetwork;
 
 
 public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 	
 	
+	private ImageClassifierNetwork imageClassifier;
+	
+	
 	public ProbabilitiesCalculator_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
 		super(networkModel);
+		
+		imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
 	}
 
 
 	@Override
 	public double getAccumulatedProbability(Object image) {
-		throw new UnsupportedOperationException();
+		
+		int[][][] rgbImage = (int[][][]) image;
+		
+		Set<Integer> emptySquares = new HashSet<Integer>(); //MatrixUtils.getEmptySquares(rgbImage);
+		
+		double maxProbability = 0;
+		List<Double> probs = new ArrayList<Double>();
+		for (int i = 0; i < rgbImage.length; i += rgbImage.length / 8) {
+			for (int j = 0; j < rgbImage.length; j += rgbImage.length / 8) {
+				int file = i / (rgbImage.length / 8);
+				int rank = j / (rgbImage.length / 8);
+				int fieldID = 63 - (file + 8 * rank);
+				if (!emptySquares.contains(fieldID)) {
+					
+					double prob = getMaxProbability(rgbImage, i, j, fieldID);
+					//System.out.println("prob=" + prob);
+					
+					probs.add(prob);
+					if (maxProbability < prob) {
+						maxProbability = prob;
+					}
+				}
+			}
+		}
+		
+		double probability = 0;
+		
+		for (Double prob: probs) {
+			probability += prob;// / maxProbability;
+		}
+		
+		probability = probability / (double) (65 - emptySquares.size());
+		
+		return probability;
+	}
+	
+	
+	private double getMaxProbability(int[][][] matrix, int i1, int j1, int filedID) {
+		
+		//networkModel.setInputs(networkModel.createInput(squareMatrix));
+		//float[] output = networkModel.feedForward();
+		
+		
+		//TODO: share instance in this object. Not creating it on each call.
+		imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
+		
+		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
+		
+		Map<String, Float> results = imageClassifier.classify(ScannerUtils.createRGBImage(squareMatrix));
+		
+		float[] output = new float[13];
+		//System.out.println("NEW");
+		for (String key: results.keySet()) {
+			
+			Float value = results.get(key);
+			//System.out.println(key + " " + value);
+			
+			output[Integer.parseInt(key)] = value;
+		}
+		
+		
+		double maxValue = 0;
+		for (int j = 0; j < output.length; j++) {
+			if (j == 0 || j == 13) {//empty square
+				continue;
+			}
+			if (maxValue < output[j]) {
+				maxValue = output[j];
+			}
+		}
+		
+		return maxValue;
 	}
 }

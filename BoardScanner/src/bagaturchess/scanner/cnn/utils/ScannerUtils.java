@@ -244,9 +244,17 @@ public class ScannerUtils {
 	
 	
 	public static void saveImage(String fen, BufferedImage image, String formatName) {
+		saveImage(fen, image, formatName, "data");
+	}
+	
+	
+	public static void saveImage(String fen, BufferedImage image, String formatName, String dir) {
 		try {
-			File file = new File("./data/" + (fen + "." + formatName).replace('/', '_'));
+			File file = new File("./" + dir + "/" + (fen + "." + formatName).replace('/', '_'));
+			file.getParentFile().mkdirs();
+			
 			ImageIO.write(image, formatName, file);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

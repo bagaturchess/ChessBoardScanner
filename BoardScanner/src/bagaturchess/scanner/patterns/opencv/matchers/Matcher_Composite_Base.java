@@ -22,47 +22,47 @@ package bagaturchess.scanner.patterns.opencv.matchers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bagaturchess.scanner.cnn.compute.MatcherFinder;
-import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_Base;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
-public class Matcher_Composite_CNN extends Matcher_Base {
+public abstract class Matcher_Composite_Base extends Matcher_Base {
 	
-	private List<String> netsNames;
-	private List<InputStream> netsStreams;
-	private Map<String, String> netToSetMappings;
+	
+	protected List<String> netsNames;
+	protected List<InputStream> netsStreams;
 	
 	private Map<String, Matcher_Base> matchers;
-	private MatcherFinder finder;
+	private MatcherFinder_Base finder;
 	
 	
-	public Matcher_Composite_CNN(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, String> _netToSetMappings, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
+	public Matcher_Composite_Base(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
 		
-		super(null, "Matcher_Composite_CNN");
+		super(null, "Matcher_Composite_Gray");
 		
 		netsNames = _netsNames;
 		netsStreams = _netsStreams;
-		netToSetMappings = _netToSetMappings;
 		matchers = _matchers;
 
-		finder = new MatcherFinder(imageSize / 8, netsStreams, netsNames);
+		finder = createMatcherFinder(imageSize);
 	}
+
+
+	protected abstract MatcherFinder_Base createMatcherFinder(int imageSize) throws ClassNotFoundException, IOException;
 	
 	
 	@Override
-	public ResultPair<String, MatchingStatistics> scan(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
+	public ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException {
 		
 		//if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
-		String cnn_name = finder.findMatcher(grayBoard, matchingInfo);
+		String cnn_name = finder.findMatcher(boardMatrix, matchingInfo);
 
 		Matcher_Base matcher = matchers.get(cnn_name);
 		if (matcher == null) {
@@ -72,7 +72,7 @@ public class Matcher_Composite_CNN extends Matcher_Base {
 		
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
-		ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
+		ResultPair<String, MatchingStatistics> result = matcher.scan(boardMatrix, matchingInfo);
 		
 		
 		//if (matchingInfo != null) matchingInfo.setCurrentPhase(3);

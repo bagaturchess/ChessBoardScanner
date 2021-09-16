@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.compute.MatcherFinder;
+import bagaturchess.scanner.cnn.compute.MatcherFinder_Gray;
 import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 
@@ -60,7 +60,7 @@ public class ScannerTest_FromImageFile_CNNs {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-			MatcherFinder finder = new MatcherFinder(boardProperties.getSquareSize(), netsStreams, netsNames);
+			MatcherFinder_Gray finder = new MatcherFinder_Gray(boardProperties.getSquareSize(), netsStreams, netsNames);
 			finder.findMatcher(boardMatrix, null);
 			
 		} catch (Exception e) {

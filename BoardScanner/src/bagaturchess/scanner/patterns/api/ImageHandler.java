@@ -25,6 +25,7 @@ import org.opencv.core.Mat;
 import java.io.IOException;
 
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.common.Color;
 import bagaturchess.scanner.common.FilterInfo;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.MatrixUtils.PatternMatchingData;
@@ -39,12 +40,13 @@ public interface ImageHandler {
 	public void saveImage(String fileName, String formatName, Object image) throws IOException;
 	public int[][] convertToGrayMatrix(Object image);
 	public Object createGrayImage(int[][] matrix);
+	public Object createRGBImage(int[][][] matrix);
 	public Object loadPieceImageFromMemory(int pid, String piecesSetName, int size);
 	public void printInfo(int[][] source, MatrixUtils.PatternMatchingData matcherData, String fileName);
 	public void printInfo(MatrixUtils.PatternMatchingData matcherData, String fileName);
 	public int[][] createSquareImage(int bgcolor, int size);
-	public Object createPieceImage(String pieceSetName, int pid, int bgcolor, int size);
 	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size);
+	public Object createPieceImage_RGB(String pieceSetName, int pid, Color bgcolor, int size);
 	public Object createBoardImage(BoardProperties boardProperties, String fen, Object whiteSquareColor, Object blackSquareColor);
 	public Object getColor(int grayColor);
 	public Object enlarge(Object image, double scale, Object bgcolor);

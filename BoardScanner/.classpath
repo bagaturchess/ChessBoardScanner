@@ -7,9 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-4.5.1"/>
-	<classpathentry kind="lib" path="libs/BagaturBoard.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/commons-lang3-3.8.jar"/>
-	<classpathentry kind="lib" path="libs/deepnetts/deepnetts.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/json-20201115.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/log4j-api-2.14.0.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/log4j-core-2.14.0.jar"/>
@@ -40,5 +38,14 @@
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/bcpg-jdk15on-1.64.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/bcprov-jdk15on-1.64.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/license3j-2.0.0-JVM8.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/deepnetts-license-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/deepnetts-core-pro-1.3.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/deepnetts-core-pro-1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/visrec-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/visrec-ri-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/BagaturBoard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

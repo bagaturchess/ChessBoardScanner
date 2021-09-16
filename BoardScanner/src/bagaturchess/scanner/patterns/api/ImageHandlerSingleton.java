@@ -25,6 +25,7 @@ import java.io.IOException;
 import org.opencv.core.Mat;
 
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.common.Color;
 import bagaturchess.scanner.common.FilterInfo;
 import bagaturchess.scanner.common.MatrixUtils.PatternMatchingData;
 
@@ -80,6 +81,12 @@ public class ImageHandlerSingleton implements ImageHandler {
 		return instance.createGrayImage(matrix);
 	}
 
+	
+	@Override
+	public Object createRGBImage(int[][][] matrix) {
+		return instance.createRGBImage(matrix);
+	}
+	
 
 	@Override
 	public Object loadPieceImageFromMemory(int pid, String piecesSetName, int size) {
@@ -106,8 +113,14 @@ public class ImageHandlerSingleton implements ImageHandler {
 
 
 	@Override
-	public Object createPieceImage(String pieceSetName, int pid, int bgcolor, int size) {
-		return instance.createPieceImage(pieceSetName, pid, bgcolor, size);
+	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size) {
+		return instance.createPieceImage_Gray(pieceSetName, pid, bgcolor, size);
+	}
+
+	
+	@Override
+	public Object createPieceImage_RGB(String pieceSetName, int pid, Color bgcolor, int size) {
+		return instance.createPieceImage_RGB(pieceSetName, pid, bgcolor, size);
 	}
 
 
@@ -163,12 +176,6 @@ public class ImageHandlerSingleton implements ImageHandler {
 	@Override
 	public Object mat2Graphic(Mat matrix) throws IOException {
 		return instance.mat2Graphic(matrix);
-	}
-
-
-	@Override
-	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size) {
-		return instance.createPieceImage_Gray(pieceSetName, pid, bgcolor, size);
 	}
 
 
