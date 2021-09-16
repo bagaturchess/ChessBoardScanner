@@ -28,9 +28,6 @@ import java.util.Set;
 
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
-import bagaturchess.scanner.utils.ScannerUtils;
-
-import deepnetts.data.ExampleImage;
 
 
 public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
@@ -82,42 +79,19 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 	
 	private double getMaxProbability(int[][][] matrix, int i1, int j1, int filedID) {
 		
-		//networkModel.setInputs(networkModel.createInput(squareMatrix));
-		//float[] output = networkModel.feedForward();
-		
 		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
 		
-		ExampleImage image = new ExampleImage(ScannerUtils.createRGBImage(squareMatrix));
+		networkModel.setInputs(networkModel.createInput(squareMatrix));
 		
-		//TODO: share instance in this object. Not creating it on each call.
-		/*imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
-		
-		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
-		
-		Map<String, Float> results = imageClassifier.classify(ScannerUtils.createRGBImage(squareMatrix));
-		
-		float[] output = new float[13];
-		//System.out.println("NEW");
-		for (String key: results.keySet()) {
-			
-			Float value = results.get(key);
-			//System.out.println(key + " " + value);
-			
-			output[Integer.parseInt(key)] = value;
-		}*/
-		
-		
-		networkModel.setInputs(image.getInput());
-		float[] probabilities = networkModel.feedForward();
-		
+		float[] output = networkModel.feedForward();
 		
 		double maxValue = 0;
-		for (int j = 0; j < probabilities.length; j++) {
+		for (int j = 0; j < output.length; j++) {
 			if (j == 0 || j == 13) {//empty square
 				continue;
 			}
-			if (maxValue < probabilities[j]) {
-				maxValue = probabilities[j];
+			if (maxValue < output[j]) {
+				maxValue = output[j];
 			}
 		}
 		

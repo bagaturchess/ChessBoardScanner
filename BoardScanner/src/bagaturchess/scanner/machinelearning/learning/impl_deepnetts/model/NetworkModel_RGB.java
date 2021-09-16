@@ -69,7 +69,12 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 	
 	@Override
 	public void setInputs(Object input) {
-		network.setInput(new Tensor((float[][][])input));
+		
+		float[][][] pixels = (float[][][]) input;
+		
+		Tensor tensor = extractPixelColors(pixels, pixels.length);
+		
+		network.setInput(tensor);
 	}
 	
 	
@@ -92,4 +97,27 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 		}
 		return result;
 	}
+	
+	
+    private Tensor extractPixelColors(float[][][] pixels, int size) {
+    	
+        float[] rgbVector = new float[size * size * 3];
+
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+
+            	float red = pixels[y][x][0];
+            	float green = pixels[y][x][1];
+            	float blue = pixels[y][x][2];
+                
+                rgbVector[y * size + x] = blue / 255.0f;
+                rgbVector[size * size + y * size + x] = green / 255.0f;
+                rgbVector[2 * size * size + y * size + x] = red / 255.0f;
+            }
+        }
+        
+        Tensor rgbTensor = new Tensor(size, size, 3, rgbVector);
+        
+        return rgbTensor;
+    }    
 }
