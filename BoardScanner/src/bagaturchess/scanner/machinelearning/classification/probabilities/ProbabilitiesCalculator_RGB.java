@@ -24,27 +24,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.utils.ScannerUtils;
 
-import deepnetts.net.ConvolutionalNetwork;
-import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
+import deepnetts.data.ExampleImage;
 
 
 public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 	
 	
-	private ImageClassifierNetwork imageClassifier;
-	
-	
 	public ProbabilitiesCalculator_RGB(NetworkModel networkModel) throws ClassNotFoundException, IOException {
 		super(networkModel);
-		
-		imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
 	}
 
 
@@ -92,9 +85,12 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 		//networkModel.setInputs(networkModel.createInput(squareMatrix));
 		//float[] output = networkModel.feedForward();
 		
+		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
+		
+		ExampleImage image = new ExampleImage(ScannerUtils.createRGBImage(squareMatrix));
 		
 		//TODO: share instance in this object. Not creating it on each call.
-		imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
+		/*imageClassifier = new ImageClassifierNetwork((ConvolutionalNetwork) network);
 		
 		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
 		
@@ -108,16 +104,20 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 			//System.out.println(key + " " + value);
 			
 			output[Integer.parseInt(key)] = value;
-		}
+		}*/
+		
+		
+		networkModel.setInputs(image.getInput());
+		float[] probabilities = networkModel.feedForward();
 		
 		
 		double maxValue = 0;
-		for (int j = 0; j < output.length; j++) {
+		for (int j = 0; j < probabilities.length; j++) {
 			if (j == 0 || j == 13) {//empty square
 				continue;
 			}
-			if (maxValue < output[j]) {
-				maxValue = output[j];
+			if (maxValue < probabilities[j]) {
+				maxValue = probabilities[j];
 			}
 		}
 		
