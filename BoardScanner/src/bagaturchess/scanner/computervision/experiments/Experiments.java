@@ -1,4 +1,4 @@
-package bagaturchess.scanner.patterns.opencv.experiments;
+package bagaturchess.scanner.computervision.experiments;
 
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.opencv.OpenCVUtils;
-import bagaturchess.scanner.patterns.opencv.OpenCVUtils.HoughLine;
+import bagaturchess.scanner.computervision.OpenCVUtils;
+import bagaturchess.scanner.computervision.OpenCVUtils.HoughLine;
 
 
 public class Experiments {

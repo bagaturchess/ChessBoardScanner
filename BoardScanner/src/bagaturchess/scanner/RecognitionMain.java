@@ -36,15 +36,15 @@ import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.MatchingInfo_BaseImpl;
 import bagaturchess.scanner.common.ResultPair;
-import bagaturchess.scanner.patterns.own_impl.matchers.*;
-//import bagaturchess.scanner.patterns.opencv.matchers.*;
+import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_Base;
+import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_OpenCV;
+//import bagaturchess.scanner.patterns.own_impl.matchers.*;
+import bagaturchess.scanner.patterns.opencv.matchers.*;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.Matcher_Composite_Gray;
 import bagaturchess.scanner.patterns.api.Matcher_Composite_RGB;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
-import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_Base;
-import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_OpenCV;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
@@ -97,13 +97,13 @@ public class RecognitionMain {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-            Map<String, Matcher_Base_Gray> matchers = new HashMap<String, Matcher_Base_Gray>();
-            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
-            matchers.put("cnn_chesscom_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
-            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
-            matchers.put("cnn_chesscom_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
-            matchers.put("cnn_chess24com_set_1.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
-            matchers.put("cnn_chess24com_set_2.net", new Matcher_Base_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
+            Map<String, Matcher_Gray> matchers = new HashMap<String, Matcher_Gray>();
+            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
+            matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
+            matchers.put("cnn_lichessorg_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
+            matchers.put("cnn_chesscom_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
+            matchers.put("cnn_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
+            matchers.put("cnn_chess24com_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
             */
 			
             List<String> netsNames = new ArrayList<String>();
@@ -116,8 +116,8 @@ public class RecognitionMain {
 			}
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_Base_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
-            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_Base_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
+            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
+            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
 			
             //Init matcher using CNNs
             Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);

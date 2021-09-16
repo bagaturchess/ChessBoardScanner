@@ -1,4 +1,4 @@
-package bagaturchess.scanner.patterns.opencv.experiments;
+package bagaturchess.scanner.computervision.experiments;
 
 import org.opencv.core.Core;
 

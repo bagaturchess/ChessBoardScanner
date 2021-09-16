@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.experiments;
+package bagaturchess.scanner.computervision.experiments;
 
 
 import java.io.File;

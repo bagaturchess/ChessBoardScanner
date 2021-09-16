@@ -17,42 +17,63 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.patterns.opencv.experiments;
+package bagaturchess.scanner.computervision.experiments;
 
 
-public class KMeansLines_Distances {
+import java.util.List;
+
+import bagaturchess.scanner.computervision.OpenCVUtils.HoughLine;
+
+
+public class KMeansLines_Theta {
 	
 	
 	public double[] centroids_values;
-	public int[][] centroids_ids;
+	public int[] centroids_ids;
 	public int[] weights;
+	private double[] avgs_sum;
+	private long[] avgs_cnt;
 	
 	
-	public KMeansLines_Distances(int K, double[][] distances) {
+	public KMeansLines_Theta(int K, List<HoughLine> lines) {
 		
 		//K-Means start
 		int NUMBER_OF_CLUSTERS = K;
 		
 		//Initialize
-		centroids_values = initCentroids(NUMBER_OF_CLUSTERS, distances);
-		
-		centroids_ids = new int[distances.length][distances.length];
-		
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances.length; j++) {
-				
-				double bestDistance = Double.MAX_VALUE;
-				int bestCentroidID = -1;
-				for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
-					double distance = Math.abs(distances[i][j] - centroids_values[centroid_id]);
-					if (distance < bestDistance) {
-						bestDistance = distance;
-						bestCentroidID = centroid_id;
-					}
-				}
-				
-				centroids_ids[i][j] = bestCentroidID;
+		double min = Double.MAX_VALUE;
+		double max = Double.MIN_VALUE;
+		for (HoughLine line: lines) {
+			if (line.theta < min) {
+				min = line.theta;
 			}
+			if (line.theta > max) {
+				max = line.theta;
+			}
+			//System.out.println("line.theta=" + line.theta);
+		}
+		//System.out.println("MIN=" + min);
+		//System.out.println("MAX=" + max);
+		
+		centroids_values = initCentroids(NUMBER_OF_CLUSTERS, min, max);
+		
+		centroids_ids = new int[lines.size()];
+		
+		for (int i = 0; i < lines.size(); i++) {
+			
+			HoughLine line = lines.get(i);
+			
+			double bestDistance = Double.MAX_VALUE;
+			int bestCentroidID = -1;
+			for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
+				double distance = Math.abs(line.theta - centroids_values[centroid_id]);
+				if (distance < bestDistance) {
+					bestDistance = distance;
+					bestCentroidID = centroid_id;
+				}
+			}
+			
+			centroids_ids[i] = bestCentroidID;
 		}
 		
 		
@@ -64,15 +85,17 @@ public class KMeansLines_Distances {
 			//System.out.println("start iteration " + count++);
 			
 			//Find avg
-			double[] avgs_sum = new double[NUMBER_OF_CLUSTERS];
-			double[] avgs_cnt = new double[NUMBER_OF_CLUSTERS];
+			avgs_sum = new double[NUMBER_OF_CLUSTERS];
+			avgs_cnt = new long[NUMBER_OF_CLUSTERS];
+			for (int i = 0; i < avgs_cnt.length; i++){
+				//avgs_cnt[i] = 1;//there could be cluster with no elements
+			}
 			
-			for (int i = 0; i < distances.length; i++) {
-				for (int j = 0; j < distances.length; j++) {
-					int centroid_id = centroids_ids[i][j];
-					avgs_sum[centroid_id] += distances[i][j];
-					avgs_cnt[centroid_id]++;
-				}
+			for (int i = 0; i < lines.size(); i++) {
+				HoughLine line = lines.get(i);
+				int centroid_id = centroids_ids[i];
+				avgs_sum[centroid_id] += line.theta;
+				avgs_cnt[centroid_id]++;
 			}
 			
 			for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
@@ -84,23 +107,23 @@ public class KMeansLines_Distances {
 			
 			boolean hasChange = false;
 			//Adjust values
-			for (int i = 0; i < distances.length; i++) {
-				for (int j = 0; j < distances.length; j++) {		
+			for (int i = 0; i < lines.size(); i++) {
+				
+				HoughLine line = lines.get(i);	
 					
-					double bestDistance = Double.MAX_VALUE;
-					int bestCentroidID = -1;
-					for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
-						double distance = Math.abs(distances[i][j] - centroids_values[centroid_id]);
-						if (distance < bestDistance) {
-							bestDistance = distance;
-							bestCentroidID = centroid_id;
-						}
+				double bestDistance = Double.MAX_VALUE;
+				int bestCentroidID = -1;
+				for (int centroid_id = 0; centroid_id < centroids_values.length; centroid_id++) {
+					double distance = Math.abs(line.theta - centroids_values[centroid_id]);
+					if (distance < bestDistance) {
+						bestDistance = distance;
+						bestCentroidID = centroid_id;
 					}
-					
-					if (bestCentroidID != centroids_ids[i][j]) {
-						centroids_ids[i][j] = bestCentroidID;
-						hasChange = true;
-					}
+				}
+				
+				if (bestCentroidID != centroids_ids[i]) {
+					centroids_ids[i] = bestCentroidID;
+					hasChange = true;
 				}
 			}
 			
@@ -110,11 +133,10 @@ public class KMeansLines_Distances {
 		
 		//Init weights
 		weights = new int[NUMBER_OF_CLUSTERS];
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances.length; j++) {
-				int cur_centroid_id = centroids_ids[i][j];
-				weights[cur_centroid_id]++;
-			}
+		for (int i = 0; i < lines.size(); i++) {
+			//HoughLine line = lines.get(i);	
+			int cur_centroid_id = centroids_ids[i];
+			weights[cur_centroid_id]++;
 		}
 	}
 	
@@ -165,27 +187,12 @@ public class KMeansLines_Distances {
 	}
 	
 	
-	private double[] initCentroids(int count, double[][] distances) {
-		
-		double min = Double.MAX_VALUE;
-		double max = Double.MIN_VALUE;
-		for (int i = 0; i < distances.length; i++) {
-			for (int j = 0; j < distances[0].length; j++) {
-				double value = distances[i][j];
-				if (value < min) {
-					min = value;
-				}
-				if (value > max) {
-					max = value;
-				}
-			}
-		}
-		
+	private double[] initCentroids(int count, double min, double max) {
 		double[] centroids_values = new double[count];
 		for (int i = 0; i < centroids_values.length; i++) {
 			centroids_values[i] = min + (max - min) * (i + 1) / (double) centroids_values.length;
+			//System.out.println("centroids_values=" + centroids_values[i]);
 		}
-		
 		return centroids_values;
 	}
 }

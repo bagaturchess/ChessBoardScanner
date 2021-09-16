@@ -34,7 +34,6 @@ import java.util.Set;
 import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.BoardUtils;
-import bagaturchess.scanner.common.Color;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.KMeansScalar;
 import bagaturchess.scanner.common.MatrixUtils;
@@ -44,28 +43,28 @@ import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 
 
-public class Matcher_Base_RGB extends Matcher_Base {
+public class Matcher_Gray extends Matcher_Base {
 	
 	
 	private static final float SIZE_DELTA_PERCENT_START = 0.65f;
 	private static final float SIZE_DELTA_PERCENT_END = 0.85f;
 
 
-	public Matcher_Base_RGB(BoardProperties _imageProperties, String _displayName) {
+	public Matcher_Gray(BoardProperties _imageProperties, String _displayName) {
 		super(_imageProperties, _displayName);
 	}
 	
 	
 	public ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException {
 		
-		int[][][] rgbBoard = (int[][][]) boardMatrix;
+		int[][] grayBoard = (int[][]) boardMatrix;
 		
-		if (rgbBoard.length != boardProperties.getImageSize()) {
-			throw new IllegalStateException("grayBoard.length=" + rgbBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
+		if (grayBoard.length != boardProperties.getImageSize()) {
+			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
 		}
 		
 		
-		MatchingData matchingData = buildMatchingData(rgbBoard, matchingInfo);
+		MatchingData matchingData = buildMatchingData(grayBoard, matchingInfo);
 		
 		
 		double[] deltas = new double[64];
@@ -76,8 +75,9 @@ public class Matcher_Base_RGB extends Matcher_Base {
 		KMeansScalar deltas_clusters = new KMeansScalar(5, deltas);
 		
 		//Set<Integer> emptySquares = new HashSet<Integer>();
-		Set<Integer> emptySquares = MatrixUtils.getEmptySquares_Heuristic1(rgbBoard, 0.95d);
-		emptySquares.addAll(MatrixUtils.getEmptySquares_Heuristic2(rgbBoard));
+		//Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayBoard, 0.9d);
+		Set<Integer> emptySquares = MatrixUtils.getEmptySquares_Heuristic1(grayBoard, 0.95d);
+		emptySquares.addAll(MatrixUtils.getEmptySquares_Heuristic2(grayBoard));
 		
 		int[] pids = new int[64];
 		
@@ -108,29 +108,29 @@ public class Matcher_Base_RGB extends Matcher_Base {
 	}
 	
 	
-	private MatchingData buildMatchingData(int[][][] rgbBoard, IMatchingInfo matchingInfo) throws IOException {
+	private MatchingData buildMatchingData(int[][] grayBoard, IMatchingInfo matchingInfo) throws IOException {
 		
-		if (rgbBoard.length != boardProperties.getImageSize()) {
-			throw new IllegalStateException("grayBoard.length=" + rgbBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
+		if (grayBoard.length != boardProperties.getImageSize()) {
+			throw new IllegalStateException("grayBoard.length=" + grayBoard.length + ", boardProperties.getImageSize()=" + boardProperties.getImageSize());
 		}
 		
 		MatchingData result = new MatchingData();
 		
 		if (matchingInfo != null) matchingInfo.setPhaseName(getDisplayName());
 		
-		ResultPair<Color, Color> bgcolorsOfSquares = MatrixUtils.getSquaresColor_RGB(rgbBoard);
+		ResultPair<Integer, Integer> bgcolorsOfSquares = MatrixUtils.getSquaresColor_Gray(grayBoard);
 		
 		int countPIDs = 0;
-		for (int i = 0; i < rgbBoard.length; i += rgbBoard.length / 8) {
-			for (int j = 0; j < rgbBoard.length; j += rgbBoard.length / 8) {
+		for (int i = 0; i < grayBoard.length; i += grayBoard.length / 8) {
+			for (int j = 0; j < grayBoard.length; j += grayBoard.length / 8) {
 				
-				int file = i / (rgbBoard.length / 8);
-				int rank = j / (rgbBoard.length / 8);
+				int file = i / (grayBoard.length / 8);
+				int rank = j / (grayBoard.length / 8);
 				int fieldID = 63 - (file + 8 * rank);
 				
 				if (matchingInfo != null) matchingInfo.setSquare(fieldID);
 				
-				int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(rgbBoard, i, j);
+				int[][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(grayBoard, i, j);
 				//int bgcolor_avg = (int) MatrixUtils.calculateColorStats(squareMatrix).getEntropy();
 				
 				/*MatrixUtils.PatternMatchingData bestPatternData = new MatrixUtils.PatternMatchingData();
@@ -140,7 +140,7 @@ public class Matcher_Base_RGB extends Matcher_Base {
 				ImageHandlerSingleton.getInstance().printInfo(squareMatrix, bestPatternData, "" + fieldID + "_square");
 				*/
 				
-				List<Color> bgcolors = new ArrayList<Color>();
+				List<Integer> bgcolors = new ArrayList<Integer>();
 				//bgcolors.add(bgcolor_avg);
 				bgcolors.add((file + rank) % 2 == 0 ? bgcolorsOfSquares.getFirst() : bgcolorsOfSquares.getSecond());
 				
@@ -159,16 +159,16 @@ public class Matcher_Base_RGB extends Matcher_Base {
 	}
 
 
-	private ResultPair<Integer, MatrixUtils.PatternMatchingData> getPID(int[][][] rgbSquareMatrix,
-			List<Color> bgcolors, Set<Integer> pids, int fieldID) throws IOException {
+	private ResultPair<Integer, MatrixUtils.PatternMatchingData> getPID(int[][] graySquareMatrix,
+			List<Integer> bgcolors, Set<Integer> pids, int fieldID) throws IOException {
 		
-		Object rgbSquare = ImageHandlerSingleton.getInstance().createRGBImage(rgbSquareMatrix);
-		Mat rgbSource = ImageHandlerSingleton.getInstance().graphic2Mat(rgbSquare);
+		Object graySquare = ImageHandlerSingleton.getInstance().createGrayImage(graySquareMatrix);
+		Mat graySource = ImageHandlerSingleton.getInstance().graphic2Mat(graySquare);
 		
 		MatrixUtils.PatternMatchingData bestData = null;
 		int bestPID = -1;
 		
-		int maxSize = rgbSquareMatrix.length;
+		int maxSize = graySquareMatrix.length;
 		int startSize = (int) (SIZE_DELTA_PERCENT_START * maxSize);
 		int endSize = (int) (SIZE_DELTA_PERCENT_END * maxSize);
 		
@@ -188,36 +188,30 @@ public class Matcher_Base_RGB extends Matcher_Base {
 					
 			        MatrixUtils.PatternMatchingData curData = new MatrixUtils.PatternMatchingData();
 			        
-					Color bgcolor = bgcolors.get(i);
+					int bgcolor = bgcolors.get(i);
 					
-					Object rgbPattern = null;
-					Mat rgbTemplate = null;
+					Object grayPattern = null;
+					Mat garyTemplate = null;
 					if (pid == Constants.PID_NONE) {
-						
-						int[][][] emptySquare_matrix = createSquareImage(bgcolor, size);
-						
-						rgbPattern = ImageHandlerSingleton.getInstance().createRGBImage(emptySquare_matrix);
-						
-						//ImageHandlerSingleton.getInstance().saveImage("X" + System.nanoTime(), "png", rgbPattern);
-						curData.pattern_rgb = emptySquare_matrix;
-						
-						rgbTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(rgbPattern);	
+						int[][] emptySquare_matrix = createSquareImage(bgcolor, size);
+						grayPattern = ImageHandlerSingleton.getInstance().createGrayImage(emptySquare_matrix);
+						//ImageHandlerSingleton.getInstance().saveImage("X", "png", grayPattern);
+						curData.pattern_gray = emptySquare_matrix;
+						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					} else {
-						
-						rgbPattern = ImageHandlerSingleton.getInstance().createPieceImage_RGB(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
-						
+						grayPattern = ImageHandlerSingleton.getInstance().createPieceImage_Gray(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
 						//int[][] grayMatrix = ImageHandlerSingleton.getInstance().convertToGrayMatrix(grayPattern);
 						//curData.pattern = grayMatrix;
-						rgbTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(rgbPattern);	
+						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					}
 					
 			        Mat outputImage = new Mat();
-			        Imgproc.matchTemplate(rgbSource, rgbTemplate, outputImage, Imgproc.TM_CCOEFF_NORMED);
+			        Imgproc.matchTemplate(graySource, garyTemplate, outputImage, Imgproc.TM_CCOEFF_NORMED);
 			        MinMaxLocResult mmr = Core.minMaxLoc(outputImage);
 			        
-			        rgbTemplate.release();
+			        garyTemplate.release();
 			        
-			        ImageHandlerSingleton.getInstance().releaseGraphic(rgbPattern);
+			        ImageHandlerSingleton.getInstance().releaseGraphic(grayPattern);
 			        
 			        curData.size = size;
 			        curData.delta = 1 - mmr.maxVal;
@@ -237,9 +231,9 @@ public class Matcher_Base_RGB extends Matcher_Base {
 			}
 		}
 		
-		rgbSource.release();
+		graySource.release();
 		
-		ImageHandlerSingleton.getInstance().releaseGraphic(rgbSource);
+		ImageHandlerSingleton.getInstance().releaseGraphic(graySquare);
 		
 		//ImageHandlerSingleton.getInstance().printInfo(graySquareMatrix, bestData, "" + fieldID + "_matching");
 		
@@ -247,22 +241,19 @@ public class Matcher_Base_RGB extends Matcher_Base {
 	}
 	
 	
-	private int[][][] createSquareImage(Color bgcolor, int size) {
+	private int[][] createSquareImage(int bgcolor, int size) {
 		
 		int contourColor = 0;
 		
-		int[][][] result = new int[size][size][3];
+		int[][] result = new int[size][size];
 		for (int i = 0; i < size; i++){
 			for (int j = 0; j < size; j++){
-				
-				result[i][j][0] = bgcolor.red;
-				result[i][j][1] = bgcolor.green;
-				result[i][j][2] = bgcolor.blue;
-				
-				if (i == j || i == size - j - 1) {
-					result[i][j][0] = contourColor;
-					result[i][j][1] = contourColor;
-					result[i][j][2] = contourColor;
+				result[i][j] = bgcolor;
+				if (i == j) {
+					result[i][j] = contourColor;
+				}
+				if (i == size - j - 1) {
+					result[i][j] = contourColor;
 				}
 			}
 		}
