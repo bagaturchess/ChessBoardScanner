@@ -22,8 +22,8 @@ package bagaturchess.scanner.patterns.impl;
 
 import java.awt.image.BufferedImage;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class BGColorTester {

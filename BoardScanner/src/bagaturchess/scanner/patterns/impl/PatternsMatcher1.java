@@ -27,12 +27,12 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 import bagaturchess.scanner.patterns.impl.matchers.Matcher_Base;
 import bagaturchess.scanner.patterns.impl.matchers.Matcher_Composite;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class PatternsMatcher1 {

@@ -32,7 +32,6 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.common.MatchingInfo_BaseImpl;
@@ -42,6 +41,7 @@ import bagaturchess.scanner.patterns.opencv.matchers.*;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 import bagaturchess.scanner.patterns.opencv.preprocess.ImagePreProcessor_OpenCV;
+import bagaturchess.scanner.utils.ScannerUtils;
 import bagaturchess.scanner.patterns.impl1.preprocess.ImagePreProcessor_Base;
 
 

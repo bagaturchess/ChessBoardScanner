@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {

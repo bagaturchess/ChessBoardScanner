@@ -30,8 +30,8 @@ import java.util.Set;
 import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
 
 import bagaturchess.scanner.cnn.model.NetworkModel;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.utils.ScannerUtils;
 import deepnetts.net.ConvolutionalNetwork;
 
 

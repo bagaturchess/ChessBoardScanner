@@ -28,8 +28,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class FileGenerator {

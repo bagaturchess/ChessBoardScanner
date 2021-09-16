@@ -23,8 +23,8 @@ package bagaturchess.scanner.cnn.dataset;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class DataSetInitPair_ByPiecesSetAndSquareColor extends DataSetInitPair {

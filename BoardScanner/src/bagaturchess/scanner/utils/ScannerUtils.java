@@ -17,32 +17,21 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.utils;
+package bagaturchess.scanner.utils;
 
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.bitboard.impl.utils.VarStatistic;
-import bagaturchess.bitboard.impl1.internal.ChessConstants;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.MatrixUtils;
-import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 
 

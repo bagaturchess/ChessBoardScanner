@@ -26,9 +26,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class ColorAdjustmentTester {

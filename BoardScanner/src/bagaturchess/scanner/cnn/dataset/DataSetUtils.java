@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class DataSetUtils {

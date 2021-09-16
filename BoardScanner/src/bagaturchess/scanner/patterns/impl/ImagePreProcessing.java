@@ -30,12 +30,12 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.MatrixUtils.PatternMatchingData;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class ImagePreProcessing {

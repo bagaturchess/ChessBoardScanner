@@ -28,12 +28,12 @@ import java.util.List;
 import java.util.Set;
 
 import bagaturchess.bitboard.impl.Constants;
-import bagaturchess.scanner.cnn.utils.ScannerUtils;
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.BoardUtils;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public abstract class Matcher_Base {
