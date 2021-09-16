@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_deepnetts.learning;
+package bagaturchess.scanner.cnn.learning.impl_deepnetts;
 
 
 import java.util.ArrayList;
@@ -30,14 +30,14 @@ import deepnetts.data.TabularDataSet;
 import deepnetts.util.Tensor;
 
 
-public class ScannerDataSet implements DataSet<MLDataItem> {
+public class DataSet_Scanner implements DataSet<MLDataItem> {
 	
 	
 	private List<MLDataItem> items;
 	private String[] targetNames;
 	
 	
-	public ScannerDataSet() {
+	public DataSet_Scanner() {
 		
 		items = new ArrayList<MLDataItem>();
 		

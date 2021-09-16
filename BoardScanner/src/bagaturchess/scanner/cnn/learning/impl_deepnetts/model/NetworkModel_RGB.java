@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_deepnetts.model;
+package bagaturchess.scanner.cnn.learning.impl_deepnetts.model;
 
 
 import java.io.IOException;
@@ -31,10 +31,10 @@ import deepnetts.net.loss.LossType;
 import deepnetts.util.Tensor;
 
 
-public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
+public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 	
 	
-	public NetworkModel_Gray(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {
+	public NetworkModel_RGB(InputStream networkFileStream, int squareSize) throws ClassNotFoundException, IOException {
 		
 		super();
 		
@@ -46,7 +46,7 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 		} else {
 			System.out.println("Creating network ...");
 			network =  ConvolutionalNetwork.builder()
-	                .addInputLayer(squareSize, squareSize, 1)
+	                .addInputLayer(squareSize, squareSize, 3)
 	                .addConvolutionalLayer(5, 5, 64)
 	                .addMaxPoolingLayer(2, 2)
 	                .addConvolutionalLayer(5, 5, 16)
@@ -63,16 +63,13 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 	
 	@Override
 	public Object createInput(Object image) {
-		
-		float[][] result = convertInt2Float((int[][])image);
-		
-		return result;
+		return convertInt2Float((int[][][])image);
 	}
 	
 	
 	@Override
 	public void setInputs(Object input) {
-		network.setInput(new Tensor((float[][])input));
+		network.setInput(new Tensor((float[][][])input));
 	}
 	
 	
@@ -84,11 +81,13 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 	}
 	
 	
-	private static float[][] convertInt2Float(int[][] array) {
-		float[][] result = new float[array.length][array.length];
+	private static float[][][] convertInt2Float(int[][][] array) {
+		float[][][] result = new float[array.length][array.length][array[0][0].length];
 		for (int i = 0 ; i < array.length; i++) {
-			for (int j = 0 ; j < array.length; j++) {
-				result[i][j] = array[i][j];
+			for (int j = 0 ; j < array[0].length; j++) {
+				for (int k = 0 ; k < array[0][0].length; k++) {
+					result[i][j][k] = array[i][j][k];
+				}
 			}
 		}
 		return result;

@@ -17,7 +17,7 @@
  *  along with BagaturChess. If not, see http://www.eclipse.org/legal/epl-v10.html
  *
  */
-package bagaturchess.scanner.cnn.impl_dl4j.model;
+package bagaturchess.scanner.cnn.learning.impl_dl4j.model;
 
 
 import java.io.IOException;

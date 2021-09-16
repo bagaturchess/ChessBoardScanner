@@ -18,7 +18,7 @@
  *
  */
 
-package bagaturchess.scanner.cnn.impl_dl4j.learning;
+package bagaturchess.scanner.cnn.learning.impl_dl4j;
 
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import org.nd4j.linalg.dataset.api.DataSetPreProcessor;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 
 
-public class DataSetIteratorImpl implements DataSetIterator {
+public class DataSetIterator_Scanner implements DataSetIterator {
 	
 	
 	private static final long serialVersionUID = -3010080072504907088L;
@@ -40,7 +40,7 @@ public class DataSetIteratorImpl implements DataSetIterator {
 	private DataSetPreProcessor dataSetPreProcessor;
 	
 	
-	public DataSetIteratorImpl() {
+	public DataSetIterator_Scanner() {
 		entries = new ArrayList<DataSet>();
 		reset();
 	}

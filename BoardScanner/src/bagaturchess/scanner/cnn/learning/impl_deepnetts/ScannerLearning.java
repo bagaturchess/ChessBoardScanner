@@ -1,4 +1,4 @@
-package bagaturchess.scanner.cnn.impl_deepnetts.learning;
+package bagaturchess.scanner.cnn.learning.impl_deepnetts;
 
 
 import deepnetts.core.DeepNetts;

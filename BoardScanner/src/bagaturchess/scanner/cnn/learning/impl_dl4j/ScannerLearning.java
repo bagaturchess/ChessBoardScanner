@@ -1,4 +1,4 @@
-package bagaturchess.scanner.cnn.impl_dl4j.learning;
+package bagaturchess.scanner.cnn.learning.impl_dl4j;
 
 
 import java.io.File;
@@ -13,7 +13,7 @@ import org.nd4j.linalg.factory.Nd4j;
 
 import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
 import bagaturchess.scanner.cnn.dataset.DataSetUtils;
-import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_Gray;
+import bagaturchess.scanner.cnn.learning.impl_dl4j.model.NetworkModel_Gray;
 import bagaturchess.scanner.cnn.model.NetworkModel;
 import bagaturchess.scanner.common.BoardProperties;
 
@@ -25,7 +25,7 @@ public class ScannerLearning {
 	
 	
 	private static NetworkModel<MultiLayerNetwork> netmodel;
-	private static DataSetIteratorImpl dataset;
+	private static DataSetIterator_Scanner dataset;
 	
 	
 	public static void main(String[] args) {
@@ -100,7 +100,7 @@ public class ScannerLearning {
 			}
 			
 			
-			dataset = new DataSetIteratorImpl();
+			dataset = new DataSetIterator_Scanner();
 			for (int i = 0; i < images.size(); i++) {
 				Object networkInput = netmodel.createInput(images.get(i));
 				float[] networkOutput = new float[13];

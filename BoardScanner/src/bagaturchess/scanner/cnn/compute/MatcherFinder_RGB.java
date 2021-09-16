@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-//import bagaturchess.scanner.cnn.impl_dl4j.model.NetworkModel_RGB;
-import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
+import bagaturchess.scanner.cnn.learning.impl_deepnetts.model.NetworkModel_RGB;
 
 
 public class MatcherFinder_RGB extends MatcherFinder_Base {
