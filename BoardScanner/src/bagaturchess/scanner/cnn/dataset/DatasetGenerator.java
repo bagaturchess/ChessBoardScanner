@@ -1,4 +1,4 @@
-package bagaturchess.scanner.cnn.impl_deepnetts.learning;
+package bagaturchess.scanner.cnn.dataset;
 
 
 import java.io.File;
@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.cnn.dataset.DataSetInitPair;
-import bagaturchess.scanner.cnn.dataset.DataSetUtils;
+import bagaturchess.scanner.cnn.impl_deepnetts.learning.ScannerDataSet;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_Gray;
 import bagaturchess.scanner.cnn.impl_deepnetts.model.NetworkModel_RGB;
 import bagaturchess.scanner.cnn.model.NetworkModel;
