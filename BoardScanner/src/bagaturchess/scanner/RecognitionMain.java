@@ -68,7 +68,7 @@ public class RecognitionMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input1_invert.png");
-			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input1.png");
 			
 			
 			//Preprocessing image
