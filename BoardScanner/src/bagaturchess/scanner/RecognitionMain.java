@@ -154,10 +154,6 @@ public class RecognitionMain {
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_" + matcherBoardProperties.getImageSize(), "png", ScannerUtils.createGrayImage(grayBoard));
 			
-			grayBoard = MatrixUtils.normalizeMatrix(grayBoard);
-			
-			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_normalized", "png", ScannerUtils.createGrayImage(grayBoard));
-			
 			ResultPair<String, MatchingStatistics> result = matcher.scan(grayBoard, matchingInfo);
             System.out.println(result.getFirst() + " " + result.getSecond().totalDelta + " " + (System.currentTimeMillis() - startTime) + "ms");
 			

@@ -26,7 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
+import bagaturchess.scanner.utils.ScannerUtils;
 import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 
 
@@ -61,13 +63,18 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		//if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
-		String cnn_name = finder.findMatcher(boardMatrix, matchingInfo);
-
+		
+		
+		int[][] normalizedGrayBoard = MatrixUtils.normalizeMatrix((int[][])boardMatrix);
+		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_normalized", "png", ScannerUtils.createGrayImage(normalizedGrayBoard));
+		String cnn_name = finder.findMatcher(normalizedGrayBoard, matchingInfo);
+		
+		
 		Matcher_Base matcher = matchers.get(cnn_name);
+		
 		if (matcher == null) {
 			throw new IllegalStateException("Matcher " + cnn_name + " not found.");
 		}
-		
 		
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
