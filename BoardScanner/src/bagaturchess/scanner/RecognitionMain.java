@@ -110,9 +110,6 @@ public class RecognitionMain {
             netsNames.add("cnn_lichessorg_set_1.net");
             netsNames.add("cnn_chesscom_set_1.net");
             netsNames.add("cnn_chess24com_set_1.net");
-            //netsNames.add("cnn_lichessorg_set_2.net");
-            //netsNames.add("cnn_chesscom_set_2.net");
-            //netsNames.add("cnn_chess24com_set_2.net");
             netsNames.add("cnn_books_set_1.net");
             
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
@@ -124,10 +121,7 @@ public class RecognitionMain {
             matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
             matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
             matchers.put("cnn_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
-            //matchers.put("cnn_lichessorg_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_2.net"));
-            //matchers.put("cnn_chesscom_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.net"));
-            //matchers.put("cnn_chess24com_set_2.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.net"));
-            matchers.put("cnn_books_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_books_set_1.net"));
+            matchers.put("cnn_books_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set4"), "cnn_books_set_1.net"));
             
             Matcher_Base matcher = new Matcher_Composite_Gray(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
