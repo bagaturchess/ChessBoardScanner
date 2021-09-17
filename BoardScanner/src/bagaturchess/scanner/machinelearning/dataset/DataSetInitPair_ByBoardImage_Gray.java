@@ -46,6 +46,10 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 		
 		int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix(boardImage);
 		
+		
+		matrixOfInitialBoard = MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
+		
+		
 		Map<Integer, int[][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
 		
 		for (Integer fieldID : result.keySet()) {

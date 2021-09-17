@@ -287,6 +287,48 @@ public class MatrixUtils {
 	}
 	
 	
+	public static int[][] normalizeMatrix(int[][] grayMatrix) {
+		int[][] result = new int[grayMatrix.length][grayMatrix.length];
+		
+		VarStatistic stats = calculateColorStats(grayMatrix, -1);
+		
+		System.out.println("normalizeMatrix: mean=" + stats.getEntropy() + " deviation=" + stats.getDisperse());
+		
+		for (int i = 0; i < grayMatrix.length; i++) {
+			for (int j = 0; j < grayMatrix.length; j++) {
+				
+				int cur = grayMatrix[i][j];
+				
+				//double factor = 256 / (4 * stats.getDisperse());
+				
+				if (cur >= stats.getEntropy()) {
+					
+					result[i][j] = (int) (cur * (127 / stats.getEntropy()));
+					
+					//result[i][j] = (int) (255 * result[i][j] / stats.getDisperse());
+					
+				} else {
+					
+					result[i][j] = (int) (cur * (127 / stats.getEntropy()));
+					
+					//result[i][j] = (int) (255 * result[i][j] / stats.getDisperse());
+				}
+				
+				
+				if (result[i][j] < 0) {
+					result[i][j] = 0;
+				}
+				
+				if (result[i][j] > 255) {
+					result[i][j] = 255;
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	
 	public static Map<Integer, int[][]> splitTo64Squares(int[][] matrix) {
 		
 		int size = matrix.length;

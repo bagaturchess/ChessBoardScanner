@@ -21,7 +21,7 @@ import bagaturchess.scanner.common.BoardProperties;
 public class ScannerLearning {
 	
 	
-	private static final String NET_FILE = "cnn_books_set_1.net";
+	private static final String NET_FILE = "cnn_chesscom_set_1.net";
 	
 	
 	private static NetworkModel<MultiLayerNetwork> netmodel;
@@ -37,58 +37,41 @@ public class ScannerLearning {
 			netmodel = new NetworkModel_Gray((new File(NET_FILE)).exists() ? new FileInputStream(NET_FILE) : null, boardProperties.getSquareSize());
 			
 			String[] inputFiles = new String[] {
-				/*"./res/cnn/chess.com/set1/input1.png",
+				"./res/cnn/chess.com/set1/input1.png",
 				"./res/cnn/chess.com/set1/input2.png",
 				"./res/cnn/chess.com/set1/input3.png",
 				"./res/cnn/chess.com/set1/input4.png",
 				"./res/cnn/chess.com/set1/input5.png",
 				"./res/cnn/chess.com/set1/input6.png",
 				"./res/cnn/chess.com/set1/input7.png",
-				*/
-					
+				"./res/cnn/chess.com/set1/input8.png",
+				"./res/cnn/chess.com/set1/input9.png",
+				"./res/cnn/chess.com/set1/input10.png",
+				
 				/*"./res/cnn/lichess.org/set1/input1.png",
 				"./res/cnn/lichess.org/set1/input2.png",
 				"./res/cnn/lichess.org/set1/input3.png",
 				"./res/cnn/lichess.org/set1/input4.png",
 				"./res/cnn/lichess.org/set1/input5.png",
 				"./res/cnn/lichess.org/set1/input6.png",
-				"./res/cnn/lichess.org/set1/input7.png",*/
+				"./res/cnn/lichess.org/set1/input7.png",
+				"./res/cnn/lichess.org/set1/input8.png",
+				"./res/cnn/lichess.org/set1/input9.png",
+				"./res/cnn/lichess.org/set1/input10.png",*/
 				
-				/*"./res/cnn/chess.com/set2/input1.png",
-				"./res/cnn/chess.com/set2/input2.png",
-				"./res/cnn/chess.com/set2/input3.png",
-				"./res/cnn/chess.com/set2/input4.png",
-				"./res/cnn/chess.com/set2/input5.png",
-				"./res/cnn/chess.com/set2/input6.png",
-				"./res/cnn/chess.com/set2/input7.png",
-				"./res/cnn/chess.com/set2/input8.png",
-				"./res/cnn/chess.com/set2/input9.png",
-				"./res/cnn/chess.com/set2/input10.png",*/
-				
-				/*"./res/cnn/lichess.org/set2/input1.png",
-				"./res/cnn/lichess.org/set2/input2.png",
-				"./res/cnn/lichess.org/set2/input3.png",
-				"./res/cnn/lichess.org/set2/input4.png",
-				"./res/cnn/lichess.org/set2/input5.png",
-				"./res/cnn/lichess.org/set2/input6.png",
-				"./res/cnn/lichess.org/set2/input7.png",
-				"./res/cnn/lichess.org/set2/input8.png",
-				"./res/cnn/lichess.org/set2/input9.png",
-				"./res/cnn/lichess.org/set2/input10.png",*/
-				
-				/*"./res/cnn/chess24.com/set2/input1.png",
-				"./res/cnn/chess24.com/set2/input2.png",
-				"./res/cnn/chess24.com/set2/input3.png",
-				"./res/cnn/chess24.com/set2/input4.png",
-				"./res/cnn/chess24.com/set2/input5.png",
-				"./res/cnn/chess24.com/set2/input6.png",
-				"./res/cnn/chess24.com/set2/input7.png",
-				"./res/cnn/chess24.com/set2/input8.png",
-				"./res/cnn/chess24.com/set2/input9.png",
-				"./res/cnn/chess24.com/set2/input10.png",
-				"./res/cnn/chess24.com/set2/input11.png",*/
+				/*"./res/cnn/chess24.com/set1/input1.png",
+				"./res/cnn/chess24.com/set1/input2.png",
+				"./res/cnn/chess24.com/set1/input3.png",
+				"./res/cnn/chess24.com/set1/input4.png",
+				"./res/cnn/chess24.com/set1/input5.png",
+				"./res/cnn/chess24.com/set1/input6.png",
+				"./res/cnn/chess24.com/set1/input7.png",
+				"./res/cnn/chess24.com/set1/input8.png",
+				"./res/cnn/chess24.com/set1/input9.png",
+				"./res/cnn/chess24.com/set1/input10.png",
+				"./res/cnn/chess24.com/set1/input11.png",*/
 					
-				"./res/cnn/books/set1/input1.png",
+				/*"./res/cnn/books/set1/input1.png",
 				"./res/cnn/books/set1/input2.png",
 				"./res/cnn/books/set1/input3.png",
 				"./res/cnn/books/set1/input4.png",
@@ -98,7 +81,7 @@ public class ScannerLearning {
 				"./res/cnn/books/set1/input8.png",
 				"./res/cnn/books/set1/input9.png",
 				"./res/cnn/books/set1/input10.png",
-				"./res/cnn/books/set1/input11.png",
+				"./res/cnn/books/set1/input11.png",*/
 			};
 			
 			
