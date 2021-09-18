@@ -106,13 +106,53 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 						images.add(matrix);
 						pids.add(Constants.PID_W_PAWN);
 						break;
-					case 16:
+					case 10:
 						images.add(matrix);
-						pids.add(Constants.PID_NONE);
+						pids.add(Constants.PID_W_PAWN);
 						break;
-					case 17:
+					case 11:
 						images.add(matrix);
-						pids.add(Constants.PID_NONE);
+						pids.add(Constants.PID_W_PAWN);
+						break;
+					case 12:
+						images.add(matrix);
+						pids.add(Constants.PID_W_PAWN);
+						break;
+					case 13:
+						images.add(matrix);
+						pids.add(Constants.PID_W_PAWN);
+						break;
+					case 14:
+						images.add(matrix);
+						pids.add(Constants.PID_W_PAWN);
+						break;
+					case 15:
+						images.add(matrix);
+						pids.add(Constants.PID_W_PAWN);
+						break;
+					case 48:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
+						break;
+					case 49:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
+						break;
+					case 50:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
+						break;
+					case 51:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
+						break;
+					case 52:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
+						break;
+					case 53:
+						images.add(matrix);
+						pids.add(Constants.PID_B_PAWN);
 						break;
 					case 54:
 						images.add(matrix);
@@ -153,6 +193,11 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 					case 63:
 						images.add(matrix);
 						pids.add(Constants.PID_B_ROOK);
+						break;
+						
+					default:
+						images.add(matrix);
+						pids.add(Constants.PID_NONE);
 						break;
 				}
 				

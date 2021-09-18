@@ -78,7 +78,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
-		ResultPair<String, MatchingStatistics> result = matcher.scan(boardMatrix, matchingInfo);
+		ResultPair<String, MatchingStatistics> result = matcher.scan(normalizedGrayBoard, matchingInfo);
 		
 		
 		//if (matchingInfo != null) matchingInfo.setCurrentPhase(3);

@@ -39,13 +39,12 @@ import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_Base;
 import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_OpenCV;
-//import bagaturchess.scanner.patterns.own_impl.matchers.*;
-import bagaturchess.scanner.patterns.opencv.matchers.*;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.Matcher_Composite_Gray;
 import bagaturchess.scanner.patterns.api.Matcher_Composite_RGB;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
+import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
@@ -67,24 +66,25 @@ public class RecognitionMain {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
-			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input1_invert.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
+			
+			
+			long startTime = System.currentTimeMillis();
 			
 			
 			//Preprocessing image
 			BoardProperties boardProperties_processor = new BoardProperties(512);
 			
-			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
-			
-			long startTime = System.currentTimeMillis();
-			
 			image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties_processor.getImageSize());
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_input", "png", image);
 			
-			MatOfPoint2f boardCorners = processor_opencv.filter(image);
-			
 			Object forMatching = image;
+			
+			/*
+			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
+			
+			MatOfPoint2f boardCorners = processor_opencv.filter(image);
 			
 			if (boardCorners != null) {
 				
@@ -96,7 +96,7 @@ public class RecognitionMain {
 				System.out.println("Chess board extracted in " + (System.currentTimeMillis() - startTime) + "ms");
 			} else {
 				System.out.println("Cannot extract chess board from image and will use the original image.");
-			}
+			}*/
 			
 			
 			BoardProperties matcherBoardProperties = new BoardProperties(256);
