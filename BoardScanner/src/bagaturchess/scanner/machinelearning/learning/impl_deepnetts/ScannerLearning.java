@@ -26,7 +26,7 @@ public class ScannerLearning {
 
 	
 	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_all/";
-	private String OUTPUT_FILE_NAME = "cnn_all.dnet";
+	private String OUTPUT_FILE_NAME = "cnn_all_gray.dnet";
 	
 	
     // download data set and set these paths
@@ -49,7 +49,7 @@ public class ScannerLearning {
         // create a data set from images and labels
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
         
-        //imageSet.setGrayscale(true);
+        imageSet.setGrayscale(true);
         //imageSet.setInvertImages(true);  
         
         imageSet.loadLabels(new File(labelsFile));
@@ -92,7 +92,7 @@ public class ScannerLearning {
                 .randomSeed(777)
                 .build();
 		
-        LOGGER.info("Training neural network");
+        LOGGER.info("Training neural network ...");
 
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
@@ -126,13 +126,22 @@ public class ScannerLearning {
         ConfusionMatrix cm = evaluator.getConfusionMatrix();
         LOGGER.info(cm.toString());*/
         
+        
         // Save trained network to file
         FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
     }
     
     
-    public static void main(String[] args) throws IOException {
-        (new ScannerLearning()).run();
+    public static void main(String[] args) {
+    	
+        try {
+        	
+			(new ScannerLearning()).run();
+			
+		} catch (Throwable t) {
+			
+			t.printStackTrace();
+		}
     }
 }
 

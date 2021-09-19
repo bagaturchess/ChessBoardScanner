@@ -63,7 +63,8 @@ public class UniformDistributionTest_DeepLearning4J {
             
 			
             
-            VarStatistic stats = new VarStatistic(false);
+            VarStatistic stats_max_output = new VarStatistic(false);
+            VarStatistic stats_all_outputs_sum = new VarStatistic(false);
             
             
             for (int iteration = 0; iteration < 100; iteration++) {
@@ -80,15 +81,20 @@ public class UniformDistributionTest_DeepLearning4J {
 	            	
 	            	float[] output = curModel.feedForward();
 	            	
+	            	float sum = 0;
 	            	for (int j = 0; j < output.length; j++) {
 	            		float prob = 100 * output[j];
-	            		stats.addValue(prob, prob);
+	            		stats_max_output.addValue(prob, prob);
+	            		sum += prob;
 	            	}
+	            	
+	            	stats_all_outputs_sum.addValue(sum, sum);
 	            }
-	            
-	            
-	            System.out.println("Interation " + iteration + ", mean=" + stats.getEntropy() + ", stdev=" + stats.getDisperse());
             }
+            
+            
+            System.out.println("MAX output stats" + " mean=" + stats_max_output.getEntropy() + ", stdev=" + stats_max_output.getDisperse());
+            System.out.println("ALL outputs sum stats" + " mean=" + stats_all_outputs_sum.getEntropy() + ", stdev=" + stats_all_outputs_sum.getDisperse());
             
             
             System.exit(0);

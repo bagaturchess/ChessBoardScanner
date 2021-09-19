@@ -49,7 +49,7 @@ import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
-public class RecognitionMain_DeepNetts {
+public class RecognitionMain_DeepNetts_ManyNets {
 	
 	
 	public static void main(String[] args) {
