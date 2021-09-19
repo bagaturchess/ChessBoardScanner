@@ -25,8 +25,8 @@ import org.apache.logging.log4j.Logger;
 public class ScannerLearning {
 
 	
-	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_books_set_1/";
-	private String OUTPUT_FILE_NAME = "cnn_books_set_1.dnet";
+	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_all/";
+	private String OUTPUT_FILE_NAME = "cnn_all.dnet";
 	
 	
     // download data set and set these paths
