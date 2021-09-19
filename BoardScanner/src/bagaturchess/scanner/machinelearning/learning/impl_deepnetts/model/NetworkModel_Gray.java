@@ -72,7 +72,8 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 	
 	@Override
 	public void setInputs(Object input) {
-		network.setInput(new Tensor((float[][])input));
+		//network.setInput(new Tensor((float[][])input)); //TODO: Fix. See DeepNetts RGB model.
+		throw new UnsupportedOperationException();
 	}
 	
 	
