@@ -46,6 +46,10 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 		
 		int[][][] matrixOfInitialBoard = ScannerUtils.convertToRGBMatrix(boardImage);
 		
+		
+		matrixOfInitialBoard = MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
+		
+		
 		Map<Integer, int[][][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
 		
 		for (Integer fieldID : result.keySet()) {

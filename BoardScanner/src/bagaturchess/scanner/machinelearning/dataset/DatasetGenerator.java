@@ -15,7 +15,7 @@ public class DatasetGenerator {
 		try {
 			
 			String[] inputFiles = new String[] {
-					/*"./res/cnn/chess.com/set1/input1.png",
+					"./res/cnn/chess.com/set1/input1.png",
 					"./res/cnn/chess.com/set1/input2.png",
 					"./res/cnn/chess.com/set1/input3.png",
 					"./res/cnn/chess.com/set1/input4.png",
@@ -24,7 +24,7 @@ public class DatasetGenerator {
 					"./res/cnn/chess.com/set1/input7.png",
 					"./res/cnn/chess.com/set1/input8.png",
 					"./res/cnn/chess.com/set1/input9.png",
-					"./res/cnn/chess.com/set1/input10.png",*/
+					"./res/cnn/chess.com/set1/input10.png",
 					
 					/*"./res/cnn/lichess.org/set1/input1.png",
 					"./res/cnn/lichess.org/set1/input2.png",
@@ -48,8 +48,8 @@ public class DatasetGenerator {
 					"./res/cnn/chess24.com/set1/input9.png",
 					"./res/cnn/chess24.com/set1/input10.png",
 					"./res/cnn/chess24.com/set1/input11.png",*/
-						
-					"./res/cnn/books/set1/input1.png",
+					
+					/*"./res/cnn/books/set1/input1.png",
 					"./res/cnn/books/set1/input2.png",
 					"./res/cnn/books/set1/input3.png",
 					"./res/cnn/books/set1/input4.png",
@@ -59,12 +59,12 @@ public class DatasetGenerator {
 					"./res/cnn/books/set1/input8.png",
 					"./res/cnn/books/set1/input9.png",
 					"./res/cnn/books/set1/input10.png",
-					"./res/cnn/books/set1/input11.png",
+					"./res/cnn/books/set1/input11.png",*/
 				};
 			
 			
 			BoardProperties boardProperties = new BoardProperties(256);
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles, "./datasets_deepnetts/dataset_books_set_1/");
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_RGB(boardProperties, inputFiles, "./datasets_deepnetts/dataset_chesscom_set_1/");
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();
