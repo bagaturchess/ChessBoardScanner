@@ -106,9 +106,9 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
 
-            	float red = pixels[y][x][0];
-            	float green = pixels[y][x][1];
-            	float blue = pixels[y][x][2];
+            	float red = pixels[x][y][0];
+            	float green = pixels[x][y][1];
+            	float blue = pixels[x][y][2];
                 
                 rgbVector[y * size + x] = blue / 255.0f;
                 rgbVector[size * size + y * size + x] = green / 255.0f;
