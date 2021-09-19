@@ -25,8 +25,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
 import bagaturchess.scanner.machinelearning.classification.MatcherFinder_RGB;
+import bagaturchess.scanner.utils.ScannerUtils;
 
 
 public class Matcher_Composite_RGB extends Matcher_Composite_Base {
@@ -42,5 +44,13 @@ public class Matcher_Composite_RGB extends Matcher_Composite_Base {
 	@Override
 	protected MatcherFinder_Base createMatcherFinder(int imageSize) throws ClassNotFoundException, IOException {
 		return new MatcherFinder_RGB(imageSize / 8, netsStreams, netsNames);
+	}
+	
+	
+	@Override
+	protected Object normalizeMatrix(Object boardMatrix) throws IOException {
+		int[][][] normalizedBoardMatrix = MatrixUtils.normalizeMatrix((int[][][])boardMatrix);
+		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_normalized", "png", ScannerUtils.createRGBImage(normalizedBoardMatrix));
+		return normalizedBoardMatrix;
 	}
 }

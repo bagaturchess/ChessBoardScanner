@@ -39,6 +39,7 @@ import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_Base;
 import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_OpenCV;
+import bagaturchess.scanner.machinelearning.model.ProviderSwitch;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.Matcher_Base;
 import bagaturchess.scanner.patterns.api.Matcher_Composite_Gray;
@@ -48,12 +49,13 @@ import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
-public class RecognitionMain {
+public class RecognitionMain_DeepLearning4J {
 	
 	
 	public static void main(String[] args) {
 		
 		try {
+			
 			
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 			
@@ -99,6 +101,9 @@ public class RecognitionMain {
 			}*/
 			
 			
+			ProviderSwitch.MLFrameworkName = "dl4j";
+			
+			
 			BoardProperties matcherBoardProperties = new BoardProperties(256);
 			Object cropedProcessedImage = ImageHandlerSingleton.getInstance().resizeImage(forMatching, matcherBoardProperties.getImageSize());
 			
@@ -126,31 +131,11 @@ public class RecognitionMain {
             Matcher_Base matcher = new Matcher_Composite_Gray(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
 			
-            /*List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_chess24com_set_2.dnet");
-            netsNames.add("cnn_chesscom_set_2.dnet");
-            netsNames.add("cnn_books_set_1.dnet");
-            
-			List<InputStream> netsStreams = new ArrayList<InputStream>();
-			for (int i = 0; i < netsNames.size(); i++) {
-				netsStreams.add(new FileInputStream(netsNames.get(i)));
-			}
-			
-            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_chess24com_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_2.dnet"));
-            matchers.put("cnn_chesscom_set_2.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_2.dnet"));
-            matchers.put("cnn_books_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_books_set_1.dnet"));
-			
-            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
-			*/
-			
-			
 			//Start matching
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
 			
 			int[][] grayBoard = ImageHandlerSingleton.getInstance().convertToGrayMatrix(cropedProcessedImage);
-			//int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_" + matcherBoardProperties.getImageSize(), "png", ScannerUtils.createGrayImage(grayBoard));
 			

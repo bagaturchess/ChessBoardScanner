@@ -26,9 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
-import bagaturchess.scanner.utils.ScannerUtils;
 import bagaturchess.scanner.common.IMatchingInfo;
-import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 
 
@@ -65,9 +63,9 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		
 		
-		int[][] normalizedGrayBoard = MatrixUtils.normalizeMatrix((int[][])boardMatrix);
-		ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_normalized", "png", ScannerUtils.createGrayImage(normalizedGrayBoard));
-		String cnn_name = finder.findMatcher(normalizedGrayBoard, matchingInfo);
+		Object normalizedBoardMatrix = normalizeMatrix(boardMatrix);
+		
+		String cnn_name = finder.findMatcher(normalizedBoardMatrix, matchingInfo);
 		
 		
 		Matcher_Base matcher = matchers.get(cnn_name);
@@ -78,7 +76,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		
 		if (matchingInfo != null) matchingInfo.incCurrentPhase();
 		System.out.println("Matcher_Composite: scan: Selected matcher is " + matcher.getClass().getCanonicalName());
-		ResultPair<String, MatchingStatistics> result = matcher.scan(normalizedGrayBoard, matchingInfo);
+		ResultPair<String, MatchingStatistics> result = matcher.scan(boardMatrix, matchingInfo);
 		
 		
 		//if (matchingInfo != null) matchingInfo.setCurrentPhase(3);
@@ -88,4 +86,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		
 		return result;
 	}
+	
+	
+	protected abstract Object normalizeMatrix(Object boardMatrix) throws IOException;
 }

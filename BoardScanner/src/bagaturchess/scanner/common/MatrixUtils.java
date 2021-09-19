@@ -299,21 +299,7 @@ public class MatrixUtils {
 				
 				int cur = grayMatrix[i][j];
 				
-				//double factor = 256 / (4 * stats.getDisperse());
-				
-				if (cur >= stats.getEntropy()) {
-					
-					result[i][j] = (int) (cur * (127 / stats.getEntropy()));
-					
-					//result[i][j] = (int) (255 * result[i][j] / stats.getDisperse());
-					
-				} else {
-					
-					result[i][j] = (int) (cur * (127 / stats.getEntropy()));
-					
-					//result[i][j] = (int) (255 * result[i][j] / stats.getDisperse());
-				}
-				
+				result[i][j] = (int) (cur * (127 / stats.getEntropy()));
 				
 				if (result[i][j] < 0) {
 					result[i][j] = 0;
@@ -322,6 +308,38 @@ public class MatrixUtils {
 				if (result[i][j] > 255) {
 					result[i][j] = 255;
 				}
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public static int[][][] normalizeMatrix(int[][][] rgbMatrix) {	
+		
+		int[][] rBoard = new int[rgbMatrix.length][rgbMatrix[0].length];
+		int[][] gBoard = new int[rgbMatrix.length][rgbMatrix[0].length];
+		int[][] bBoard = new int[rgbMatrix.length][rgbMatrix[0].length];
+		
+        for (int i = 0; i < rgbMatrix.length; i++ ) {
+            for (int j = 0; j < rgbMatrix[0].length; j++ ) {
+            	rBoard[i][j] = rgbMatrix[i][j][0];
+            	gBoard[i][j] = rgbMatrix[i][j][1];
+            	bBoard[i][j] = rgbMatrix[i][j][2];
+            }
+        }
+		
+        rBoard = normalizeMatrix(rBoard);
+        gBoard = normalizeMatrix(gBoard);
+        bBoard = normalizeMatrix(bBoard);
+        
+		int[][][] result = new int[rgbMatrix.length][rgbMatrix[0].length][rgbMatrix[0][0].length];
+        
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result.length; j++) {
+				result[i][j][0] = rBoard[i][j];
+				result[i][j][1] = gBoard[i][j];
+				result[i][j][2] = bBoard[i][j];
 			}
 		}
 		

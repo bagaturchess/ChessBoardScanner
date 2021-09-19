@@ -55,8 +55,9 @@ public class ScannerLearning {
         imageSet.loadLabels(new File(labelsFile));
         imageSet.loadImages(new File(trainingFile));
 
-        ImageSet[] imageSets = imageSet.split(0.7, 0.3);
         int labelsCount = imageSet.getLabelsCount();
+        
+        //ImageSet[] imageSets = imageSet.split(0.7, 0.3);
 
         LOGGER.info("Creating neural network ...");
 
@@ -96,16 +97,16 @@ public class ScannerLearning {
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
         
-        trainer.setLearningRate(0.01f)
+        trainer.setLearningRate(0.001f)
                 .setMaxError(0.01f)
                 .setMaxEpochs(10000);
         
         
-        trainer.train(imageSets[0]);
+        trainer.train(imageSet);
         
         
         // Test trained network
-        ClassifierEvaluator evaluator = new ClassifierEvaluator();
+        /*ClassifierEvaluator evaluator = new ClassifierEvaluator();
         evaluator.evaluate(neuralNet, imageSets[1]);
         
         LOGGER.info("------------------------------------------------");
@@ -123,12 +124,13 @@ public class ScannerLearning {
         }
 
         ConfusionMatrix cm = evaluator.getConfusionMatrix();
-        LOGGER.info(cm.toString());
+        LOGGER.info(cm.toString());*/
         
         // Save trained network to file
         FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
     }
-
+    
+    
     public static void main(String[] args) throws IOException {
         (new ScannerLearning()).run();
     }

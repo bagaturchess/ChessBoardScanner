@@ -8,8 +8,7 @@ import java.io.InputStream;
 public class ProviderSwitch {
 	
 	
-	private static final String MLFrameworkName = "dl4j";
-	//private static final String MLFrameworkName = "deepnetts";
+	public static String MLFrameworkName = "dl4j";
 	
 	
 	private static ProviderSwitch instance = null;

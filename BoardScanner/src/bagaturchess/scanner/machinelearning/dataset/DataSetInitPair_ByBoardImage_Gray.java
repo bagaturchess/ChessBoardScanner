@@ -201,11 +201,15 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 						break;
 				}
 				
-				if (pids.size() != size_old) {
-					if (dirToSave != null) {
-						BufferedImage image = ScannerUtils.createGrayImage(matrix);
-						ScannerUtils.saveImage("" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
-					}
+				
+				if (pids.size() == size_old) {
+					throw new IllegalStateException("pids.size() == size_old");
+				}
+				
+				
+				if (dirToSave != null) {
+					BufferedImage image = ScannerUtils.createGrayImage(matrix);
+					ScannerUtils.saveImage("" + size_old + "_" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
 				}
 			}
 		}
