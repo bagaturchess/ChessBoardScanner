@@ -111,7 +111,7 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			
 			
             List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_all_rgb.dnet");
+            netsNames.add("cnn_all.dnet");
             
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {
@@ -119,7 +119,7 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			}
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_all_rgb.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), "cnn_all_rgb.dnet"));
+            matchers.put("cnn_all.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), "cnn_all.dnet"));
 			
             Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
