@@ -33,22 +33,21 @@ import bagaturchess.scanner.common.ResultPair;
 public abstract class Matcher_Composite_Base extends Matcher_Base {
 	
 	
+	private int imageSize;
 	protected List<String> netsNames;
 	protected List<InputStream> netsStreams;
 	
 	private Map<String, Matcher_Base> matchers;
-	private MatcherFinder_Base finder;
 	
 	
-	public Matcher_Composite_Base(int imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
+	public Matcher_Composite_Base(int _imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
 		
 		super(null, "Matcher_Composite_Gray");
 		
+		imageSize = _imageSize;
 		netsNames = _netsNames;
 		netsStreams = _netsStreams;
 		matchers = _matchers;
-
-		finder = createMatcherFinder(imageSize);
 	}
 
 
@@ -56,7 +55,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 	
 	
 	@Override
-	public ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException {
+	public ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException, ClassNotFoundException {
 		
 		//if (matchingInfo != null) matchingInfo.setPhasesCount(2);
 
@@ -65,6 +64,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 		
 		Object normalizedBoardMatrix = normalizeMatrix(boardMatrix);
 		
+		MatcherFinder_Base finder = createMatcherFinder(imageSize);
 		String cnn_name = finder.findMatcher(normalizedBoardMatrix, matchingInfo);
 		
 		

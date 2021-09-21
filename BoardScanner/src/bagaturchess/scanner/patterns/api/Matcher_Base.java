@@ -40,7 +40,7 @@ public abstract class Matcher_Base {
 	}
 	
 	
-	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException;
+	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException, ClassNotFoundException;
 	
 	
 	public String getPiecesSetName() {

@@ -32,7 +32,7 @@ import bagaturchess.scanner.common.IMatchingInfo;
 public abstract class MatcherFinder_Base {
 	
 	
-	private List<ProbabilitiesCalculator> scanners;
+	protected List<ProbabilitiesCalculator> scanners;
 	protected List<String> netsNames;
 	
 	protected int squareSize;

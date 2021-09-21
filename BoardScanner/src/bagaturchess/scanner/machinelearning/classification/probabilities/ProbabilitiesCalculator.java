@@ -39,4 +39,11 @@ public abstract class ProbabilitiesCalculator {
 	
 	
 	public abstract double getAccumulatedProbability(Object image);
+	
+	
+	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image) {
+		double[] result = new double[1];
+		result[0] = getAccumulatedProbability(image);
+		return result;
+	}
 }

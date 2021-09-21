@@ -25,8 +25,8 @@ import org.apache.logging.log4j.Logger;
 public class ScannerLearning {
 
 	
-	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_all/";
-	private String OUTPUT_FILE_NAME = "cnn_all_gray.dnet";
+	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_lichessorg_set_1/";
+	private String OUTPUT_FILE_NAME = "cnn_lichessorg_set_1.dnet";
 	
 	
     // download data set and set these paths
@@ -42,13 +42,17 @@ public class ScannerLearning {
     
     
     public void run() throws DeepNettsException, IOException {
-
+    	
+    	LOGGER.info("INPUT DIR: " + INPUT_DIR_NAME);
+    	LOGGER.info("OUTPUT FILE: " + OUTPUT_FILE_NAME);
+    	
         LOGGER.info("Training convolutional network");
         LOGGER.info("Loading images...");
         
         // create a data set from images and labels
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
         
+        //This is important: with gray scale images, the recognition of chess board squares works better!
         imageSet.setGrayscale(true);
         //imageSet.setInvertImages(true);  
         

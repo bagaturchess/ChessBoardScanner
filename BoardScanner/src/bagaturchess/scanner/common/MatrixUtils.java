@@ -347,6 +347,45 @@ public class MatrixUtils {
 	}
 	
 	
+	public static int[][][] convertTo3ChannelsGray(int[][] grayMatrix) {
+		
+		int[][][] result = new int[grayMatrix.length][grayMatrix.length][3];
+		
+		for (int i = 0; i < grayMatrix.length; i++) {
+			for (int j = 0; j < grayMatrix.length; j++) {
+				
+				int gray_color = grayMatrix[i][j];
+				
+				result[i][j][0] = gray_color;
+				result[i][j][1] = gray_color;
+				result[i][j][2] = gray_color;
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public static int[][][] convertTo3ChannelsGray(int[][][] rgbMatrix) {
+		
+		int[][][] result = new int[rgbMatrix.length][rgbMatrix.length][3];
+		
+		for (int i = 0; i < rgbMatrix.length; i++) {
+			for (int j = 0; j < rgbMatrix.length; j++) {
+				
+				//int value = (rgbMatrix[i][j][0] + rgbMatrix[i][j][1] + rgbMatrix[i][j][2]) / 3;
+				int value = (int) (rgbMatrix[i][j][0] * 0.2989d + rgbMatrix[i][j][1] * 0.5870 + rgbMatrix[i][j][2] * 0.1142);
+				
+				result[i][j][0] = value;
+				result[i][j][1] = value;
+				result[i][j][2] = value;
+			}
+		}
+		
+		return result;
+	}
+	
+	
 	public static Map<Integer, int[][]> splitTo64Squares(int[][] matrix) {
 		
 		int size = matrix.length;

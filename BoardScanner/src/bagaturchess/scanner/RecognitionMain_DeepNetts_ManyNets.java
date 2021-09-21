@@ -134,7 +134,9 @@ public class RecognitionMain_DeepNetts_ManyNets {
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
 			
-			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			//int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			int[][] grayBoard = ScannerUtils.convertToGrayMatrix((BufferedImage) cropedProcessedImage);
+			int[][][] rgbBoard = MatrixUtils.convertTo3ChannelsGray(grayBoard);
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_" + matcherBoardProperties.getImageSize(), "png", ScannerUtils.createRGBImage(rgbBoard));
 			

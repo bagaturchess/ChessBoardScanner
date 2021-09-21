@@ -22,6 +22,7 @@ package bagaturchess.scanner.machinelearning.classification.probabilities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class ProbabilitiesCalculator_Gray extends ProbabilitiesCalculator {
 		
 		int[][] grayImage = (int[][]) image;
 		
-		Set<Integer> emptySquares = MatrixUtils.getEmptySquares(grayImage);
+		Set<Integer> emptySquares = new HashSet<Integer>();// MatrixUtils.getEmptySquares(grayImage);
 		
 		double maxProbability = 0;
 		List<Double> probs = new ArrayList<Double>();
