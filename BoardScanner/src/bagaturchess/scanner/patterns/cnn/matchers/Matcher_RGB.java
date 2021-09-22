@@ -41,13 +41,22 @@ public class Matcher_RGB extends Matcher_Base {
 	protected NetworkModel networkModel;
 	protected Object network;
 	
+	private boolean invertInput;
+	
 	
 	public Matcher_RGB(BoardProperties _imageProperties, String _displayName) throws ClassNotFoundException, FileNotFoundException, IOException {
+		this(_imageProperties, _displayName, false);
+	}
+	
+	
+	public Matcher_RGB(BoardProperties _imageProperties, String _displayName, boolean _invertInput) throws ClassNotFoundException, FileNotFoundException, IOException {
 		
 		super(_imageProperties, _displayName);
 		
 		networkModel = ProviderSwitch.getInstance().create(3, new FileInputStream(_displayName), _imageProperties.getImageSize() / 8);
 		network = networkModel.getNetwork();
+		
+		invertInput = _invertInput;
 	}
 	
 	
@@ -122,14 +131,26 @@ public class Matcher_RGB extends Matcher_Base {
 	private ResultPair<Integer, MatrixUtils.PatternMatchingData> getPID(int[][][] rgbSquareMatrix) throws IOException {
 		
 		MatrixUtils.PatternMatchingData bestData = new MatrixUtils.PatternMatchingData();
-		int bestPID = -1;
+		bestData.size = rgbSquareMatrix.length;
+		bestData.delta = 0;
 		
 		float[][][] input = (float[][][]) networkModel.createInput(rgbSquareMatrix);
 		networkModel.setInputs(input);
 		float[] output = networkModel.feedForward();
+        
+		if (invertInput) {
+			
+			float[][][] input_inverted = (float[][][]) networkModel.createInput(MatrixUtils.invertImage(rgbSquareMatrix));
+			networkModel.setInputs(input_inverted);
+			float[] output_inverted = networkModel.feedForward();
+			
+			for (int j = 0; j < output_inverted.length; j++) {
+				//output[j] += output_inverted[j];
+				output[j] = output_inverted[j];
+			}
+		}
 		
-		bestData.size = rgbSquareMatrix.length;
-		bestData.delta = 0;
+		int bestPID = -1;
         for (int j = 0; j < output.length; j++) {
         	if (output[j] >= bestData.delta) {
         		bestData.delta = output[j];

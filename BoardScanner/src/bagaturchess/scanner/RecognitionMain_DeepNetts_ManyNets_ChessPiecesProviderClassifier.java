@@ -48,7 +48,7 @@ import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
-public class RecognitionMain_DeepNetts_ManyNets_ChessPiecesProviderClasifier {
+public class RecognitionMain_DeepNetts_ManyNets_ChessPiecesProviderClassifier {
 	
 	
 	public static void main(String[] args) {
@@ -121,10 +121,11 @@ public class RecognitionMain_DeepNetts_ManyNets_ChessPiecesProviderClasifier {
 			}
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+            matchers.put("cnn_books_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_books_set_1.dnet", false));
+            matchers.put("cnn_chess24com_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.dnet"));
             matchers.put("cnn_chesscom_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.dnet"));
             matchers.put("cnn_lichessorg_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_lichessorg_set_1.dnet"));
-            matchers.put("cnn_chess24com_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.dnet"));
-            matchers.put("cnn_books_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_books_set_1.dnet"));
+            
 			
             Matcher_Base matcher = new Matcher_Composite_RGB_ChessPiecesProviderClasifier(new FileInputStream("cnn_provider_classifier.dnet"), matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			

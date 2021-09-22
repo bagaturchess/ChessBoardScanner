@@ -292,7 +292,7 @@ public class MatrixUtils {
 		
 		VarStatistic stats = calculateColorStats(grayMatrix, -1);
 		
-		System.out.println("normalizeMatrix: mean=" + stats.getEntropy() + " deviation=" + stats.getDisperse());
+		//System.out.println("normalizeMatrix: mean=" + stats.getEntropy() + " deviation=" + stats.getDisperse());
 		
 		for (int i = 0; i < grayMatrix.length; i++) {
 			for (int j = 0; j < grayMatrix.length; j++) {
@@ -379,6 +379,23 @@ public class MatrixUtils {
 				result[i][j][0] = value;
 				result[i][j][1] = value;
 				result[i][j][2] = value;
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public static final int[][][] invertImage(int[][][] rgbMatrix) {
+		
+		int[][][] result = new int[rgbMatrix.length][rgbMatrix.length][3];
+		
+		for (int i = 0; i < rgbMatrix.length; i++) {
+			for (int j = 0; j < rgbMatrix.length; j++) {
+				
+				result[i][j][0] = 255 - rgbMatrix[i][j][0];
+				result[i][j][1] = 255 - rgbMatrix[i][j][1];
+				result[i][j][2] = 255 - rgbMatrix[i][j][2];
 			}
 		}
 		

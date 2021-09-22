@@ -73,7 +73,7 @@ public class ScannerUtils {
 	}
 	
 	
-	public static BufferedImage createPieceImage(BoardProperties boardProperties, int pid, Color squareColour) {
+	public static BufferedImage createPieceImage(BoardProperties boardProperties, int pid, Color squareColour, double imageScale) {
 		BufferedImage image = new BufferedImage(boardProperties.getSquareSize(), boardProperties.getSquareSize(), BufferedImage.TYPE_INT_RGB);
 		
 		Graphics g = image.createGraphics();
@@ -82,7 +82,13 @@ public class ScannerUtils {
 		g.fillRect(0, 0, boardProperties.getSquareSize(), boardProperties.getSquareSize());
 		
 		if (pid != 0) {
-			g.drawImage((Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, boardProperties.getPiecesSetFileNamePrefix(), boardProperties.getSquareSize()), 0, 0, boardProperties.getSquareSize(), boardProperties.getSquareSize(), squareColour, null);
+			
+			double pieceSize_org = boardProperties.getSquareSize();
+			double pieceSize_scaled = pieceSize_org * imageScale;
+			double sizeDelta = pieceSize_org - pieceSize_scaled;
+			
+			Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, boardProperties.getPiecesSetFileNamePrefix(), (int) pieceSize_scaled);
+			g.drawImage(piece, (int) sizeDelta / 2, (int) sizeDelta / 2, (int) (pieceSize_scaled), (int) (pieceSize_scaled), null, null);
 		}
 			
 		return image;

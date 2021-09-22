@@ -25,8 +25,8 @@ import org.apache.logging.log4j.Logger;
 public class ScannerLearning {
 
 	
-	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_lichessorg_set_1/";
-	private String OUTPUT_FILE_NAME = "cnn_lichessorg_set_1.dnet";
+	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_books_set_1_autogen/";
+	private String OUTPUT_FILE_NAME = "cnn_books_set_1_autogen.dnet";
 	
 	
     // download data set and set these paths
@@ -39,6 +39,9 @@ public class ScannerLearning {
     
     
     private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
+    
+    
+    private static boolean finished = false;
     
     
     public void run() throws DeepNettsException, IOException {
@@ -83,7 +86,7 @@ public class ScannerLearning {
                 .randomSeed(123)
                 .build();*/
 
-        ConvolutionalNetwork neuralNet =  ConvolutionalNetwork.builder()
+        final ConvolutionalNetwork neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(imageWidth, imageHeight)
                 .addConvolutionalLayer(5, 5)
                 .addMaxPoolingLayer(2, 2)
@@ -98,6 +101,24 @@ public class ScannerLearning {
 		
         LOGGER.info("Training neural network ...");
 
+        
+        Thread saverThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					while (!finished) {
+				        Thread.currentThread().sleep(10000);
+				        // Save trained network to file
+				        FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
+					}
+				} catch(Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		});
+        saverThread.start();
+        
+        
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
         
@@ -108,6 +129,7 @@ public class ScannerLearning {
         
         trainer.train(imageSet);
         
+        finished = true;
         
         // Test trained network
         /*ClassifierEvaluator evaluator = new ClassifierEvaluator();
@@ -129,10 +151,6 @@ public class ScannerLearning {
 
         ConfusionMatrix cm = evaluator.getConfusionMatrix();
         LOGGER.info(cm.toString());*/
-        
-        
-        // Save trained network to file
-        FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
     }
     
     

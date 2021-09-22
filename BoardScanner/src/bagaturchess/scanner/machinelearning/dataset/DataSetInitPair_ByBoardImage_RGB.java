@@ -57,6 +57,8 @@ public class DataSetInitPair_ByBoardImage_RGB extends DataSetInitPair {
 			List<int[][][]> translations = new ArrayList<int[][][]>();
 			
 			translations.add(result.get(fieldID));
+			//translations.add(MatrixUtils.invertImage(result.get(fieldID)));
+			
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 1));
 			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 2));
 			
