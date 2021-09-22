@@ -134,21 +134,13 @@ public class Matcher_RGB extends Matcher_Base {
 		bestData.size = rgbSquareMatrix.length;
 		bestData.delta = 0;
 		
+		if (invertInput) {
+			rgbSquareMatrix = MatrixUtils.invertImage(rgbSquareMatrix);
+		}
+		
 		float[][][] input = (float[][][]) networkModel.createInput(rgbSquareMatrix);
 		networkModel.setInputs(input);
 		float[] output = networkModel.feedForward();
-        
-		if (invertInput) {
-			
-			float[][][] input_inverted = (float[][][]) networkModel.createInput(MatrixUtils.invertImage(rgbSquareMatrix));
-			networkModel.setInputs(input_inverted);
-			float[] output_inverted = networkModel.feedForward();
-			
-			for (int j = 0; j < output_inverted.length; j++) {
-				//output[j] += output_inverted[j];
-				output[j] = output_inverted[j];
-			}
-		}
 		
 		int bestPID = -1;
         for (int j = 0; j < output.length; j++) {
