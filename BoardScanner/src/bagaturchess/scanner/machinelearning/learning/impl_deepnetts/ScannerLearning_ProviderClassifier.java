@@ -26,7 +26,7 @@ public class ScannerLearning_ProviderClassifier {
 
 	
 	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_provider_classifier/";
-	private String OUTPUT_FILE_NAME = "cnn_provider_classifier.dnet";
+	private String OUTPUT_FILE_NAME = "cnn_deepnetts_provider_classifier.dnet";
 	
 	
     // download data set and set these paths
