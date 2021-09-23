@@ -111,6 +111,7 @@ public class ScannerLearning_ProviderClassifier {
 				        Thread.currentThread().sleep(10000);
 				        // Save trained network to file
 				        FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
+				        LOGGER.info("Network saved as " + OUTPUT_FILE_NAME);
 					}
 				} catch(Throwable t) {
 					t.printStackTrace();
@@ -123,9 +124,9 @@ public class ScannerLearning_ProviderClassifier {
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
         
-        trainer.setLearningRate(0.01f)
+        trainer.setLearningRate(0.001f)
                 .setMaxError(0.01f)
-                .setMaxEpochs(10000);
+                .setMaxEpochs(100);
         
         trainer.train(imageSet);
         
