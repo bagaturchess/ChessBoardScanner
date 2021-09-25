@@ -32,7 +32,7 @@ public class ProviderSwitch {
 
 	public static final String getMLFrameworkDisplayName() {
 		if ("deepnetts".equals(MLFrameworkName)) {
-			return "DeepNetts.1.3";
+			return "DeepNetts";
 		} else if ("dl4j".equals(MLFrameworkName)) {
 			return "DeepLearning4J";
 		}else {
