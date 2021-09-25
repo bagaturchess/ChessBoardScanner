@@ -24,7 +24,7 @@ public class ScannerLearning_ProviderClassifier_Test {
 
 	
 	private String TESTS_DIR_NAME 	= "./datasets_deepnetts/dataset_provider_classifier/";
-	private String NET_FILE_NAME = "cnn_provider_classifier.dnet";
+	private String NET_FILE_NAME = "dnet_provider_classifier.dnet";
 	
     // download data set and set these paths
 	private String labelsFile = TESTS_DIR_NAME + "labels.txt";
@@ -49,8 +49,6 @@ public class ScannerLearning_ProviderClassifier_Test {
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
         
         //This is important: with gray scale images, the recognition of chess board squares works better!
-        imageSet.setGrayscale(true);
-        //imageSet.setInvertImages(true);  
         
         imageSet.loadLabels(new File(labelsFile));
         imageSet.loadImages(new File(trainingFile));
@@ -70,7 +68,7 @@ public class ScannerLearning_ProviderClassifier_Test {
         LOGGER.info("------------------------------------------------");
         LOGGER.info("Classification performance measure" + System.lineSeparator());
         LOGGER.info("TOTAL AVERAGE");
-        LOGGER.info(evaluator.getMacroAverage());
+        //LOGGER.info(evaluator.getMacroAverage());
         LOGGER.info("By Class");
         Map<String, EvaluationMetrics> byClass = evaluator.getPerformanceByClass();
         

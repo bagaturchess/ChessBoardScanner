@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
 
@@ -39,7 +40,7 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 
 
 	@Override
-	public double getAccumulatedProbability(Object image) {
+	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo) {
 		
 		int[][][] rgbImage = (int[][][]) image;
 		

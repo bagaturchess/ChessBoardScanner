@@ -22,6 +22,7 @@ package bagaturchess.scanner.machinelearning.classification.probabilities;
 
 import java.io.IOException;
 
+import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 
 
@@ -38,12 +39,12 @@ public abstract class ProbabilitiesCalculator {
 	}
 	
 	
-	public abstract double getAccumulatedProbability(Object image);
+	public abstract double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo);
 	
 	
-	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image) {
+	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image, IMatchingInfo matchingInfo) {
 		double[] result = new double[1];
-		result[0] = getAccumulatedProbability(image);
+		result[0] = getAccumulatedProbability(image, matchingInfo);
 		return result;
 	}
 }

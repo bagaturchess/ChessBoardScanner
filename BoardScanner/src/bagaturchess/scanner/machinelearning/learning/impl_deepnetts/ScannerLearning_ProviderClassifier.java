@@ -26,7 +26,7 @@ public class ScannerLearning_ProviderClassifier {
 
 	
 	private String INPUT_DIR_NAME 	= "./datasets_deepnetts/dataset_provider_classifier/";
-	private String OUTPUT_FILE_NAME = "cnn_deepnetts_provider_classifier.dnet";
+	private String OUTPUT_FILE_NAME = "dnet_provider_classifier.dnet";
 	
 	
     // download data set and set these paths
@@ -55,8 +55,7 @@ public class ScannerLearning_ProviderClassifier {
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
         
         //This is important: with gray scale images, the recognition of chess board squares works better!
-        imageSet.setGrayscale(true);
-        //imageSet.setInvertImages(true);  
+        //imageSet.setGrayscale(true);
         
         imageSet.loadLabels(new File(labelsFile));
         imageSet.loadImages(new File(trainingFile));

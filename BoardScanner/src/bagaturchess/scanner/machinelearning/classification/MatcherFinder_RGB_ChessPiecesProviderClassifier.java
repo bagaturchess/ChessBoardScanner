@@ -57,7 +57,7 @@ public class MatcherFinder_RGB_ChessPiecesProviderClassifier extends MatcherFind
 		
 		long startTime = System.currentTimeMillis();
 		
-		double[] probs = piecesProviderClassifier.getAccumulatedProbabilitiesByLabelIndex(image);
+		double[] probs = piecesProviderClassifier.getAccumulatedProbabilitiesByLabelIndex(image, matchingInfo);
 		
 		System.out.println("MatcherFinder_Base: probs size is " + probs.length);
 		

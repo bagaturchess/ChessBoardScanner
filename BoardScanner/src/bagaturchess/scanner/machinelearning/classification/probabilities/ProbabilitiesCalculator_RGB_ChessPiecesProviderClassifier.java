@@ -22,6 +22,7 @@ package bagaturchess.scanner.machinelearning.classification.probabilities;
 
 import java.io.IOException;
 
+import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
 
@@ -38,12 +39,13 @@ public class ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier extends P
 
 
 	@Override
-	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image) {
+	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image, IMatchingInfo matchingInfo) {
 		
 		int[][][] rgbImage = (int[][][]) image;
 		
 		double[] result = null;
-		
+
+		int counter = 1;
 		for (int i = 0; i < rgbImage.length; i += rgbImage.length / 8) {
 			for (int j = 0; j < rgbImage.length; j += rgbImage.length / 8) {
 				
@@ -61,6 +63,22 @@ public class ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier extends P
 				for (int k = 0; k < probs.length; k++) {
 					result[k] += (probs[k] / 64.0f);
 				}
+
+				if (matchingInfo != null) {
+					matchingInfo.setCurrentPhaseProgress(counter / 64d);
+					double biggestProb = -1;
+					double biggestProbIndex = -1;
+					for (int k = 0; k < result.length; k++) {
+						double prob = result[k];
+						if (prob >= biggestProb) {
+							biggestProb = prob;
+							biggestProbIndex = k;
+						}
+					}
+					matchingInfo.setMatchingFinderInfo("Chess Set " + biggestProbIndex, biggestProb);
+				}
+
+				counter++;
 			}
 		}
 		
@@ -69,7 +87,7 @@ public class ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier extends P
 	
 	
 	@Override
-	public double getAccumulatedProbability(Object image) {
+	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo) {
 		throw new UnsupportedOperationException();
 	}
 	

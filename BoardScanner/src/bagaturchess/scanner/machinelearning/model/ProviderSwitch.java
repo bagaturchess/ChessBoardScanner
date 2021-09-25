@@ -8,7 +8,7 @@ import java.io.InputStream;
 public class ProviderSwitch {
 	
 	
-	public static String MLFrameworkName = "dl4j";
+	public static String MLFrameworkName = "deepnetts";
 	
 	
 	private static ProviderSwitch instance = null;
@@ -29,7 +29,19 @@ public class ProviderSwitch {
 		return instance;
 	}
 	
-	
+
+	public static final String getMLFrameworkDisplayName() {
+		if ("deepnetts".equals(MLFrameworkName)) {
+			return "DeepNetts.1.3";
+		} else if ("dl4j".equals(MLFrameworkName)) {
+			return "DeepLearning4J";
+		}else {
+			throw new IllegalStateException("Unsupported ML implementation with name " + MLFrameworkName);
+		}
+	}
+
+
+
 	public NetworkModel create(int channelsCount, InputStream networkFileStream, int _squareSize) throws ClassNotFoundException, IOException {
 		if ("deepnetts".equals(MLFrameworkName)) {
 			if (channelsCount == 1) {
@@ -42,6 +54,7 @@ public class ProviderSwitch {
 		} else if ("dl4j".equals(MLFrameworkName)) {
 			if (channelsCount == 1) {
 				return new bagaturchess.scanner.machinelearning.learning.impl_dl4j.model.NetworkModel_Gray(networkFileStream, _squareSize);
+				//throw new IllegalStateException("[dl4j impl] Unsupported channels count " + channelsCount);
 			} else if (channelsCount == 3) {
 				//return new bagaturchess.scanner.machinelearning.learning.impl_dl4j.model.NetworkModel_RGB(networkFileStream, _squareSize);
 				throw new IllegalStateException("[dl4j impl] Unsupported channels count " + channelsCount);

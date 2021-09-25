@@ -49,7 +49,7 @@ import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
-public class RecognitionMain_DeepNetts_SingleNet {
+public class RecognitionMain_DeepNetts {
 	
 	
 	public static void main(String[] args) {
@@ -64,10 +64,10 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
-			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/input1.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
 			
 			
 			long startTime = System.currentTimeMillis();
@@ -111,7 +111,10 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			
 			
             List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_all.dnet");
+            netsNames.add("dnet_chesscom_set_1.dnet");
+            netsNames.add("dnet_lichessorg_set_1.dnet");
+            netsNames.add("dnet_chess24com_set_1.dnet");
+            netsNames.add("dnet_books_set_1.dnet");
             
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {
@@ -119,7 +122,16 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			}
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_all.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), "cnn_all.dnet"));
+            matchers.put("dnet_chesscom_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_chesscom_set_1.dnet", netsStreams.get(0)));
+            matchers.put("dnet_lichessorg_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_lichessorg_set_1.dnet", netsStreams.get(1)));
+            matchers.put("dnet_chess24com_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "dnet_chess24com_set_1.dnet", netsStreams.get(2)));
+            matchers.put("dnet_books_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_books_set_1.dnet", netsStreams.get(3)));
+			
+            //The streams are already readed
+            netsStreams = new ArrayList<InputStream>();
+			for (int i = 0; i < netsNames.size(); i++) {
+				netsStreams.add(new FileInputStream(netsNames.get(i)));
+			}
 			
             Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
@@ -128,7 +140,9 @@ public class RecognitionMain_DeepNetts_SingleNet {
 			IMatchingInfo matchingInfo = new MatchingInfo_BaseImpl();
 			startTime = System.currentTimeMillis();
 			
-			int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			//int[][][] rgbBoard = ScannerUtils.convertToRGBMatrix((BufferedImage) cropedProcessedImage);
+			int[][] grayBoard = ScannerUtils.convertToGrayMatrix((BufferedImage) cropedProcessedImage);
+			int[][][] rgbBoard = MatrixUtils.convertTo3ChannelsGray(grayBoard);
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_" + matcherBoardProperties.getImageSize(), "png", ScannerUtils.createRGBImage(rgbBoard));
 			

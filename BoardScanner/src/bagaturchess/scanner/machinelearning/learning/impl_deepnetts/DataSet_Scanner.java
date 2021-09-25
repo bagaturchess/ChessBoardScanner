@@ -23,6 +23,7 @@ package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
 
 import deepnetts.data.MLDataItem;
@@ -70,21 +71,21 @@ public class DataSet_Scanner implements DataSet<MLDataItem> {
 		throw new UnsupportedOperationException();
 	}
 	
-	
+
 	@Override
-	public String[] getTargetNames() {
-		return targetNames;
-	}
-	
-	
-	@Override
-	public void setColumnNames(String[] columnNames) {
+	public List<Column> getColumns() {
 		throw new UnsupportedOperationException();
 	}
-	
-	
+
+
 	@Override
-	public String[] getColumnNames() {
+	public String[] getTargetColumnsNames() {
+		return targetNames;
+	}
+
+
+	@Override
+	public void setColumns(List<Column> arg0) {
 		throw new UnsupportedOperationException();
 	}
 }

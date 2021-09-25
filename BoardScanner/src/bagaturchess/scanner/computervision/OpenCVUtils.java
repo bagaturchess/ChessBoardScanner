@@ -297,15 +297,19 @@ public class OpenCVUtils {
         if (h_lines.size() < 9 || v_lines.size() < 9) {
         	return null;
         }
-        
+
+
+        int MAX_LINES = 128;
         //Limit lines to max 100, otherwise the algorithm is too slow
-        /*if (h_lines.size() > 100) {
-        	h_lines = genAvgLinesByKMeansClustering(100, h_lines);
+        if (h_lines.size() > MAX_LINES) {
+        	System.out.println("gen9HoughLinesCrossPoints: Reducing h_lines to " + MAX_LINES);
+        	h_lines = genAvgLinesByKMeansClustering(MAX_LINES, h_lines);
         }
         
-        if (v_lines.size() > 100) {
-        	v_lines = genAvgLinesByKMeansClustering(100, v_lines);
-        }*/
+        if (v_lines.size() > MAX_LINES) {
+			System.out.println("gen9HoughLinesCrossPoints: Reducing v_lines to " + MAX_LINES);
+        	v_lines = genAvgLinesByKMeansClustering(MAX_LINES, v_lines);
+        }
         
         
         int x_test1 = 0;

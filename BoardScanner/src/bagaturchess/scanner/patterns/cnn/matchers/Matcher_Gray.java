@@ -23,6 +23,7 @@ package bagaturchess.scanner.patterns.cnn.matchers;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import bagaturchess.scanner.common.BoardProperties;
 import bagaturchess.scanner.common.BoardUtils;
@@ -42,11 +43,11 @@ public class Matcher_Gray extends Matcher_Base {
 	protected Object network;
 	
 	
-	public Matcher_Gray(BoardProperties _imageProperties, String _displayName) throws ClassNotFoundException, FileNotFoundException, IOException {
+	public Matcher_Gray(BoardProperties _imageProperties, String _displayName, InputStream netStream) throws ClassNotFoundException, FileNotFoundException, IOException {
 		
 		super(_imageProperties, _displayName);
 		
-		networkModel = ProviderSwitch.getInstance().create(1, new FileInputStream(_displayName), _imageProperties.getImageSize() / 8);
+		networkModel = ProviderSwitch.getInstance().create(1, netStream, _imageProperties.getImageSize() / 8);
 		network = networkModel.getNetwork();
 	}
 	

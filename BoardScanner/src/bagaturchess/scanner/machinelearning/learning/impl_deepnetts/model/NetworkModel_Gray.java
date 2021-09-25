@@ -28,7 +28,6 @@ import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
-import deepnetts.util.Tensor;
 
 
 public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {

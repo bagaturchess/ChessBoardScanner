@@ -111,10 +111,10 @@ public class RecognitionMain_DeepLearning4J {
 			
 			
             List<String> netsNames = new ArrayList<String>();
-            netsNames.add("cnn_lichessorg_set_1.net");
-            netsNames.add("cnn_chesscom_set_1.net");
-            netsNames.add("cnn_chess24com_set_1.net");
-            netsNames.add("cnn_books_set_1.net");
+            netsNames.add("dl4j_lichessorg_set_1.net");
+            netsNames.add("dl4j_chesscom_set_1.net");
+            netsNames.add("dl4j_chess24com_set_1.net");
+            netsNames.add("dl4j_books_set_1.net");
             
 			List<InputStream> netsStreams = new ArrayList<InputStream>();
 			for (int i = 0; i < netsNames.size(); i++) {
@@ -122,11 +122,17 @@ public class RecognitionMain_DeepLearning4J {
 			}
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("cnn_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "cnn_lichessorg_set_1.net"));
-            matchers.put("cnn_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "cnn_chesscom_set_1.net"));
-            matchers.put("cnn_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "cnn_chess24com_set_1.net"));
-            matchers.put("cnn_books_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set4"), "cnn_books_set_1.net"));
+            matchers.put("dl4j_lichessorg_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set1"), "dl4j_lichessorg_set_1.net", netsStreams.get(0)));
+            matchers.put("dl4j_chesscom_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dl4j_chesscom_set_1.net", netsStreams.get(1)));
+            matchers.put("dl4j_chess24com_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "dl4j_chess24com_set_1.net", netsStreams.get(2)));
+            matchers.put("dl4j_books_set_1.net", new Matcher_Gray(new BoardProperties(matcherBoardProperties.getImageSize(), "set4"), "dl4j_books_set_1.net", netsStreams.get(3)));
             
+            //The streams are already readed
+            netsStreams = new ArrayList<InputStream>();
+			for (int i = 0; i < netsNames.size(); i++) {
+				netsStreams.add(new FileInputStream(netsNames.get(i)));
+			}
+			
             Matcher_Base matcher = new Matcher_Composite_Gray(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
 			
