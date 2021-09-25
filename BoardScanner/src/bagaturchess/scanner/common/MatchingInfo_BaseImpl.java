@@ -82,7 +82,7 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 		squareIDSet = true;
 		currentSquareID = squareID;
 		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + (int) (100 * currentPhaseProgress) + "%";
-		latestMessage2 = "" + ProviderSwitch.getMLFrameworkDisplayName() + " " +  phaseName.substring(0, phaseName.lastIndexOf('.'));
+		latestMessage2 = "" + ProviderSwitch.getMLFrameworkDisplayName() + ": " +  phaseName.substring(0, phaseName.lastIndexOf('.'));
 		;// + " working on " + ALL_FIELD_NAMES[squareID];
 		
 		System.out.println(latestMessage1 + " " + latestMessage2);
@@ -115,7 +115,7 @@ public class MatchingInfo_BaseImpl implements IMatchingInfo {
 	@Override
 	public void setMatchingFinderInfo(String netName, double probability) {
 		latestMessage1 = "Phase [" + currentPhase + "/" + phasesCount + "] " + (int) (100 * currentPhaseProgress) + "%";
-		latestMessage2 = "" + ProviderSwitch.getMLFrameworkDisplayName() + " " + (netName.substring(0, netName.lastIndexOf('.')) + " match " + (int) (100 * probability) + "%");
+		latestMessage2 = "" + ProviderSwitch.getMLFrameworkDisplayName() + ": " + (netName.substring(0, netName.lastIndexOf('.')) + " match " + (int) (100 * probability) + "%");
 		
 		System.out.println(latestMessage1 + " " + latestMessage2);
 	}
