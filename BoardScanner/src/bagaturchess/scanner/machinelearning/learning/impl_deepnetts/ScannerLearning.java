@@ -70,7 +70,7 @@ public class ScannerLearning implements Runnable {
         	
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
-        	/*learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_books_set_1/",
+        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_books_set_1/",
 													"dnet_books_set_1.dnet",
 													0.001f
 								)
@@ -80,7 +80,7 @@ public class ScannerLearning implements Runnable {
 													"dnet_chess24com_set_1.dnet",
 													0.001f
 								)
-					);*/
+					);
         	
         	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_chesscom_set_1/",
 													"dnet_chesscom_set_1.dnet",
@@ -88,11 +88,11 @@ public class ScannerLearning implements Runnable {
 								)
 					);
         	
-        	/*learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_lichessorg_set_1/",
+        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_lichessorg_set_1/",
 													"dnet_lichessorg_set_1.dnet",
 													0.001f
 								)
-					);*/
+					);
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
