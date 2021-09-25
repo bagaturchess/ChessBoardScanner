@@ -42,7 +42,7 @@ import bagaturchess.scanner.computervision.preprocessing.ImagePreProcessor_OpenC
 import bagaturchess.scanner.machinelearning.model.ProviderSwitch;
 import bagaturchess.scanner.patterns.api.ImageHandlerSingleton;
 import bagaturchess.scanner.patterns.api.Matcher_Base;
-import bagaturchess.scanner.patterns.api.Matcher_Composite_RGB_ChessPiecesProviderClasifier;
+import bagaturchess.scanner.patterns.api.Matcher_Composite_RGB_ChessPiecesProviderClassifier;
 import bagaturchess.scanner.patterns.api.MatchingStatistics;
 import bagaturchess.scanner.patterns.cnn.matchers.*;
 import bagaturchess.scanner.utils.ScannerUtils;
@@ -132,7 +132,7 @@ public class RecognitionMain_DeepNetts_ChessPiecesProviderClassifier {
 				netsStreams.add(new FileInputStream(netsNames.get(i)));
 			}
 			
-            Matcher_Base matcher = new Matcher_Composite_RGB_ChessPiecesProviderClasifier(new FileInputStream("dnet_provider_classifier.dnet"), matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
+            Matcher_Base matcher = new Matcher_Composite_RGB_ChessPiecesProviderClassifier(new FileInputStream("dnet_provider_classifier.dnet"), matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
 			
 			
 			//Start matching
