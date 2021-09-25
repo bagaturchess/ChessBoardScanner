@@ -123,7 +123,7 @@ public class ScannerLearning_ProviderClassifier {
         // create a trainer and train network
         BackpropagationTrainer trainer = neuralNet.getTrainer();
         
-        trainer.setLearningRate(0.001f)
+        trainer.setLearningRate(0.01f)
                 .setMaxError(0.01f)
                 .setMaxEpochs(100);
         
