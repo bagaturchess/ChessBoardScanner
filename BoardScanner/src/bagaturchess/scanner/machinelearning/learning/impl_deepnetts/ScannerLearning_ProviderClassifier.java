@@ -107,7 +107,7 @@ public class ScannerLearning_ProviderClassifier {
 			public void run() {
 				try {
 					while (!finished) {
-				        Thread.currentThread().sleep(10000);
+				        Thread.currentThread().sleep(60000);
 				        // Save trained network to file
 				        FileIO.writeToFile(neuralNet, OUTPUT_FILE_NAME);
 				        LOGGER.info("Network saved as " + OUTPUT_FILE_NAME);

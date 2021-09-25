@@ -45,13 +45,19 @@ public class ScannerUtils {
 		for (int r = 0; r < 256; r++) {
 			for (int g = 0; g < 256; g++) {
 				for (int b = 0; b < 256; b++) {
-					int gray = (int) (r * 0.2989d + g * 0.5870 + b * 0.1142);
+					int gray = createColor(r, g, b);
 					//if (GRAY_COLORS[gray] == null) {
-						GRAY_COLORS[gray] = new Color(r, g, b);
+						GRAY_COLORS[gray] = new Color(gray, gray, gray);
 					//}
 				}
 			}
 		}
+	}
+
+
+	private static int createColor(int r, int g, int b) {
+		//return (int) (r * 0.2989d + g * 0.5870 + b * 0.1142);
+		return (int) ((r + g + b) / 3d);
 	}
 	
 	
@@ -314,8 +320,7 @@ public class ScannerUtils {
 					throw new IllegalStateException();
 				}
 				
-				//inputs[count] = (red + green + blue) / 3;
-			    //inputs[count++] = red * 0.299 + green * 0.587 + blue * 0.114;
+			    //inputs[count++] = createColor(red, green, blue);
 				inputs[count++] = green;
 			}
 		}
@@ -345,7 +350,7 @@ public class ScannerUtils {
 					//throw new IllegalStateException();
 				}
 				
-				inputs[i][j] = (int) (red * 0.2989d + green * 0.5870 + blue * 0.1140);
+				inputs[i][j] = createColor(red, green, blue);
 			}
 		}
 		

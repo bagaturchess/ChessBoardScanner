@@ -64,13 +64,16 @@ public class MatcherFinder_RGB_ChessPiecesProviderClassifier extends MatcherFind
 		String bestName = null;
 		double bestProb = 0;
 		for (int i = 0; i < probs.length; i++) {
-			double currentProb = probs[i];
-			String currentName = netsNames.get(i);
-			if (currentProb >= bestProb) {
-				bestProb = currentProb;
-				bestName = currentName;
+			//When testing it is possible to have only a few of the nets available.
+			if (i < netsNames.size()) {
+				double currentProb = probs[i];
+				String currentName = netsNames.get(i);
+				if (currentProb >= bestProb) {
+					bestProb = currentProb;
+					bestName = currentName;
+				}
+				System.out.println("MatcherFinder_Base: " + currentName + " " + currentProb);
 			}
-			System.out.println("MatcherFinder_Base: " + currentName + " " + currentProb);
 		}
 		
 		
