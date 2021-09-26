@@ -8,8 +8,8 @@ This project aims to demonstrate how to extract the chess position in a machine 
 At the moment it supports 4 chess sets: default chess sets from chess.com, lichess.org and chess24.com as well as one set from paper chess book. Of course, the architecture is extensible and different chess sets could be added additionally.
 
 # Advanced technologies solve complex problems
- - Computer Vision (CV) subdomain of Artificial intelligence: It uses OpenCV as a computer vision library or framework, which helps in extracting the chess board from the image and transforming it to ideal square.
- - Machine Learning (ML) subdomain of Artificial intelligence: Both libraries or frameworks Deep Netts Community Edition and Deeplearning4j frameworks as a basis for convolutional nueral networks for chess board classification and chess pieces recognition. It uses both ML frameworks in order to demonstrate how to integrate your code with both, but the code works well with them separately as well.
+ - Computer Vision (CV) subdomain of Artificial Intelligence: It uses OpenCV as a computer vision library or framework, which helps in extracting the chess board from the image and transforming it to ideal square.
+ - Machine Learning (ML) subdomain of Artificial Intelligence: Both libraries or frameworks Deep Netts Community Edition and Deeplearning4j frameworks as a basis for convolutional nueral networks for chess board classification and chess pieces recognition. It uses both ML frameworks in order to demonstrate how to integrate your code with both, but the code works well with them separately as well.
 
 # Credits
 
