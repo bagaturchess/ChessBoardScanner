@@ -84,7 +84,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
-													0.01f
+													0.005f
 								)
 					);
         	
