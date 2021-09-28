@@ -27,6 +27,7 @@ import java.util.Map;
 
 import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.MatrixUtils;
+import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.utils.ScannerUtils;
 
 
@@ -46,6 +47,7 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 		
 		int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix(boardImage);
 		
+		ResultPair<Integer, Integer> lightAndDarkSquaresColors = MatrixUtils.getSquaresColor_Gray(matrixOfInitialBoard);
 		
 		matrixOfInitialBoard = MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
 		
@@ -54,10 +56,19 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 		
 		for (Integer fieldID : result.keySet()) {
 			
+			int[][] graySquare = result.get(fieldID);
+			
 			List<int[][]> translations = new ArrayList<int[][]>();
-			translations.add(result.get(fieldID));
-			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 1));
-			//translations.addAll(MatrixUtils.generateTranslations(result.get(fieldID), 2));
+			
+			translations.add(graySquare);
+			
+			int avg_color = MatrixUtils.getAVG(graySquare);
+			int fillColour = lightAndDarkSquaresColors.getSecond().intValue();
+			if (Math.abs(avg_color - lightAndDarkSquaresColors.getFirst().intValue()) <=  Math.abs(avg_color - lightAndDarkSquaresColors.getSecond().intValue())) {
+				fillColour = lightAndDarkSquaresColors.getFirst().intValue();
+			}
+			
+			translations.addAll(MatrixUtils.generateShifts(graySquare, 0.05, (int) (256d * Math.random())));
 			
 			//System.out.println(translations.size());
 			
@@ -209,6 +220,7 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 				
 				if (dirToSave != null) {
 					BufferedImage image = ScannerUtils.createGrayImage(matrix);
+					System.out.println("Saving " + "" + size_old + "_" + System.nanoTime() + " in " + dirToSave + pids.get(size_old) + "/");
 					ScannerUtils.saveImage("" + size_old + "_" + System.nanoTime(), image, "png", dirToSave + pids.get(size_old) + "/");
 				}
 			}

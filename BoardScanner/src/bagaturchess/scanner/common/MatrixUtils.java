@@ -507,11 +507,57 @@ public class MatrixUtils {
 		
 		for (Translation translation : translations) {
 			if (translation.x != 0 || translation.y != 0) {
-				result.add(moveWithXY(matrix, translation.x, translation.y));
+				result.add(moveWithXY(matrix, translation.x, translation.y, -1));
 			}
 		}
 		
 		return result;
+	}
+	
+	
+	private static Set<Translation> generateCirclePixels(int radius) {
+		
+		Set<Translation> result = new HashSet<Translation>();
+		
+	    double PI = 3.1415926535;
+	    for (double angle = 0; angle < 360; angle++) {
+	        double x = radius * Math.cos(angle * PI / 180);
+	        double y = radius * Math.sin(angle * PI / 180);
+
+	        result.add(new Translation((int)x, (int)y));
+	    }
+	    
+	    return result;
+	}
+	
+	
+	public static List<int[][]> generateShifts(int[][] matrix, double ratio, int fillColor) {
+		
+		List<int[][]> result = new ArrayList<int[][]>();
+		
+		Set<Translation> translations = generateShifts(ratio, matrix.length, matrix.length);
+		
+		for (Translation translation : translations) {
+			if (translation.x != 0 || translation.y != 0) {
+				result.add(moveWithXY(matrix, translation.x, translation.y, fillColor));
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	private static Set<Translation> generateShifts(double ratio, int width_org, int height_org) {
+		
+		Set<Translation> result = new HashSet<Translation>();
+		
+		for (int x = - (int) (ratio * width_org); x <= (int) (ratio * width_org); x++) {
+			for (int y = - (int) (ratio * height_org); y <= (int) (ratio * height_org); y++) {
+				result.add(new Translation((int)x, (int)y));
+			}
+		}
+	    
+	    return result;
 	}
 	
 	
@@ -630,7 +676,7 @@ public class MatrixUtils {
 	}
 	
 	
-	private static int[][] moveWithXY(int[][] matrix, int X, int Y) {
+	private static int[][] moveWithXY(int[][] matrix, int X, int Y, int fillColour) {
 		
 		if (X == 0 && Y == 0) {
 			throw new IllegalStateException("X=" + X + ", Y=" + Y);
@@ -640,19 +686,19 @@ public class MatrixUtils {
 		
 		if (X > 0) {
 			if (Y > 0) {
-				result = moveRightWithN(result, X);
-				result = moveDownWithN(result, Y);
+				result = moveRightWithN(result, X, fillColour);
+				result = moveDownWithN(result, Y, fillColour);
 			} else {
-				result = moveRightWithN(result, X);
-				result = moveUpWithN(result, Y);
+				result = moveRightWithN(result, X, fillColour);
+				result = moveUpWithN(result, Y, fillColour);
 			}
 		} else {
 			if (Y > 0) {
-				result = moveLeftWithN(result, X);
-				result = moveDownWithN(result, Y);
+				result = moveLeftWithN(result, X, fillColour);
+				result = moveDownWithN(result, Y, fillColour);
 			} else {
-				result = moveLeftWithN(result, X);
-				result = moveUpWithN(result, Y);
+				result = moveLeftWithN(result, X, fillColour);
+				result = moveUpWithN(result, Y, fillColour);
 			}
 		}
 		
@@ -660,43 +706,43 @@ public class MatrixUtils {
 	}
 	
 	
-	private static int[][] moveLeftWithN(int[][] matrix, int N) {
+	private static int[][] moveLeftWithN(int[][] matrix, int N, int fillColour) {
 		int[][] result = matrix;
 		for (int i = 0; i < N; i++) {
-			result = moveLeftWith1(result);
+			result = moveLeftWith1(result, fillColour);
 		}
 		return result;
 	}
 	
 	
-	private static int[][] moveRightWithN(int[][] matrix, int N) {
+	private static int[][] moveRightWithN(int[][] matrix, int N, int fillColour) {
 		int[][] result = matrix;
 		for (int i = 0; i < N; i++) {
-			result = moveRightWith1(result);
+			result = moveRightWith1(result, fillColour);
 		}
 		return result;
 	}
 	
 	
-	private static int[][] moveUpWithN(int[][] matrix, int N) {
+	private static int[][] moveUpWithN(int[][] matrix, int N, int fillColour) {
 		int[][] result = matrix;
 		for (int i = 0; i < N; i++) {
-			result = moveUpWith1(result);
+			result = moveUpWith1(result, fillColour);
 		}
 		return result;
 	}
 	
 	
-	private static int[][] moveDownWithN(int[][] matrix, int N) {
+	private static int[][] moveDownWithN(int[][] matrix, int N, int fillColour) {
 		int[][] result = matrix;
 		for (int i = 0; i < N; i++) {
-			result = moveDownWith1(result);
+			result = moveDownWith1(result, fillColour);
 		}
 		return result;
 	}
 	
 	
-	private static int[][] moveLeftWith1(int[][] matrix) {
+	private static int[][] moveLeftWith1(int[][] matrix, int fillColour) {
 		
 		int[][] result = new int[matrix.length][matrix.length];
 		
@@ -705,14 +751,14 @@ public class MatrixUtils {
 			for(int j = 1;j < matrix.length; j++) {
 				result[j - 1][i] = matrix[j][i];
 			}
-			result[matrix.length-1][i] = first;
+			result[matrix.length-1][i] = (fillColour == -1) ? first : fillColour;
 		}
 		
 		return result;
 	}
 	
 	
-	private static int[][] moveRightWith1(int[][] matrix) {
+	private static int[][] moveRightWith1(int[][] matrix, int fillColour) {
 		
 		int[][] result = new int[matrix.length][matrix.length];
 		
@@ -721,14 +767,14 @@ public class MatrixUtils {
 			for(int j = 0;j < matrix.length - 1; j++) {
 				result[j + 1][i] = matrix[j][i];
 			}
-			result[0][i] = last;
+			result[0][i] = (fillColour == -1) ? last : fillColour;
 		}
 		
 		return result;
 	}
 	
 	
-	private static int[][] moveUpWith1(int[][] matrix) {
+	private static int[][] moveUpWith1(int[][] matrix, int fillColour) {
 		
 		int[][] result = new int[matrix.length][matrix.length];
 		
@@ -737,14 +783,14 @@ public class MatrixUtils {
 			for(int j = 1;j < matrix.length; j++) {
 				result[i][j-1] = matrix[i][j];
 			}
-			result[i][matrix.length-1] = first;
+			result[i][matrix.length-1] = (fillColour == -1) ? first : fillColour;
 		}
 		
 		return result;
 	}
 	
 	
-	private static int[][] moveDownWith1(int[][] matrix) {
+	private static int[][] moveDownWith1(int[][] matrix, int fillColour) {
 		
 		int[][] result = new int[matrix.length][matrix.length];
 		
@@ -753,26 +799,10 @@ public class MatrixUtils {
 			for(int j = 0;j < matrix.length - 1; j++) {
 				result[i][j+1] = matrix[i][j];
 			}
-			result[i][0] = last;
+			result[i][0] = (fillColour == -1) ? last : fillColour;
 		}
 		
 		return result;
-	}
-	
-	
-	private static Set<Translation> generateCirclePixels(int radius) {
-		
-		Set<Translation> result = new HashSet<Translation>();
-		
-	    double PI = 3.1415926535;
-	    for (double angle = 0; angle < 360; angle++) {
-	        double x = radius * Math.cos(angle * PI / 180);
-	        double y = radius * Math.sin(angle * PI / 180);
-
-	        result.add(new Translation((int)x, (int)y));
-	    }
-	    
-	    return result;
 	}
 	
 	
