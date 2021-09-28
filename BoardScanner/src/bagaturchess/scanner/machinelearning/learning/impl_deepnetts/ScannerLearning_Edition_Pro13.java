@@ -76,23 +76,23 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								)
         			);
 			
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
 													0.01f
 								)
-					);*/
+					);
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
 													0.001f
 								)
-					);*/
+					);
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													0.01f
 								)
-					);*/
+					);
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
