@@ -30,7 +30,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class ScannerLearning implements Runnable {
+public class ScannerLearning_Edition_Community12 implements Runnable {
 	
 	
 	private String INPUT_DIR_NAME;
@@ -53,7 +53,7 @@ public class ScannerLearning implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
     
     
-    private ScannerLearning(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE) {
+    private ScannerLearning_Edition_Community12(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE) {
     	
     	INPUT_DIR_NAME = _INPUT_DIR_NAME;
     	OUTPUT_FILE_NAME = _OUTPUT_FILE_NAME;
@@ -70,25 +70,25 @@ public class ScannerLearning implements Runnable {
         	
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
-        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_books_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
 													0.01f
 								)
         			);
 			
-        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
 													0.01f
 								)
 					);
         	
-        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
 													0.01f
 								)
 					);
         	
-        	learningTasks.add(new ScannerLearning("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													0.01f
 								)

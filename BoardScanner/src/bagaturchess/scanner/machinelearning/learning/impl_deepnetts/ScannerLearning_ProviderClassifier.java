@@ -125,7 +125,7 @@ public class ScannerLearning_ProviderClassifier {
         
         trainer.setLearningRate(0.01f)
                 .setMaxError(0.01f)
-                .setMaxEpochs(100);
+                .setMaxEpochs(1000);
         
         trainer.train(imageSet);
         

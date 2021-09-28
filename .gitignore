@@ -2,4 +2,4 @@
 *.bin
 BoardScanner/data/*
 JarsShrinker/data*
-
+BoardScanner/libs/deepnetts_pro13/*
