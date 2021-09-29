@@ -35,10 +35,10 @@
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/openblas-0.3.3-1.4.3-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="libs/dl4j-1.0.0-beta3-short/native/nd4j-native-1.0.0-beta3.jar"/>
 	<classpathentry kind="lib" path="libs/BagaturBoard.jar"/>
-	<classpathentry kind="lib" path="libs/deepnetts/log4j-api-2.14.1.jar"/>
-	<classpathentry kind="lib" path="libs/deepnetts/log4j-core-2.14.1.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/deepnetts-core-1.12.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/visrec-api-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/visrec-ri-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/log4j-api-2.7.jar"/>
+	<classpathentry kind="lib" path="libs/deepnetts/log4j-core-2.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
