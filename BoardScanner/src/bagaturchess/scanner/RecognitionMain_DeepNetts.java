@@ -52,6 +52,9 @@ import bagaturchess.scanner.utils.ScannerUtils;
 public class RecognitionMain_DeepNetts {
 	
 	
+	private static final boolean CROP_BOARD_FROM_IMAGE = false;
+	
+	
 	public static void main(String[] args) {
 		
 		try {
@@ -83,22 +86,24 @@ public class RecognitionMain_DeepNetts {
 			
 			Object forMatching = image;
 			
-			/*
-			ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
-			
-			MatOfPoint2f boardCorners = processor_opencv.filter(image);
-			
-			if (boardCorners != null) {
+			if (CROP_BOARD_FROM_IMAGE) {
 				
-				Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
+				ImagePreProcessor_Base processor_opencv = new ImagePreProcessor_OpenCV(boardProperties_processor);
 				
-				forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
-				ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
+				MatOfPoint2f boardCorners = processor_opencv.filter(image);
 				
-				System.out.println("Chess board extracted in " + (System.currentTimeMillis() - startTime) + "ms");
-			} else {
-				System.out.println("Cannot extract chess board from image and will use the original image.");
-			}*/
+				if (boardCorners != null) {
+					
+					Mat extractedBoard = (Mat) processor_opencv.extractBoard(image, boardCorners);
+					
+					forMatching = (BufferedImage) ImageHandlerSingleton.getInstance().mat2Graphic(extractedBoard);
+					ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_croped", "png", forMatching);
+					
+					System.out.println("Chess board extracted in " + (System.currentTimeMillis() - startTime) + "ms");
+				} else {
+					System.out.println("Cannot extract chess board from image and will use the original image.");
+				}
+			}
 			
 			
 			ProviderSwitch.MLFrameworkName = "deepnetts";
