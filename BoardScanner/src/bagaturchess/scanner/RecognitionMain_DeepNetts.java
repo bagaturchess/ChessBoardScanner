@@ -23,6 +23,7 @@ package bagaturchess.scanner;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,17 +123,13 @@ public class RecognitionMain_DeepNetts {
             netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_chesscom_set_1_extended.dnet");
             netsNames.add("dnet_lichessorg_set_1_extended.dnet");
-            
-            
-			Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
 			
-			List<InputStream> netsStreams = createStreams(netsNames);
-			for (int i = 0; i < netsNames.size(); i++) {
-				String net_name = netsNames.get(i);
-				matchers.put(net_name, new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), net_name, netsStreams.get(i)));
-			}
-			
-            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, createStreams(netsNames), matchers);
+            Matcher_Base matcher = new Matcher_Composite_RGB(
+            		matcherBoardProperties.getImageSize(),
+            		netsNames,
+            		createStreams(netsNames),
+            		createMatchers(matcherBoardProperties, netsNames)
+            	);
 			
 			
 			//Start matching
@@ -155,6 +152,27 @@ public class RecognitionMain_DeepNetts {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	private static Map<String, Matcher_Base> createMatchers(
+			BoardProperties matcherBoardProperties,
+			List<String> netsNames)
+					throws FileNotFoundException, ClassNotFoundException, IOException {
+		
+		Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+		
+		List<InputStream> netsStreams = createStreams(netsNames);
+		
+		for (int i = 0; i < netsNames.size(); i++) {
+			
+			String net_name = netsNames.get(i);
+			
+			matchers.put(net_name, new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), net_name, netsStreams.get(i)));
+			
+		}
+		
+		return matchers;
 	}
 
 
