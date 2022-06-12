@@ -43,7 +43,8 @@ The basic main classes are in bagaturchess.scanner root package:
  - RecognitionMain_DeepLearning4J, runs chess position recognition for specified image using DeepLearning4J framework. 
  - RecognitionMain_DeepNetts_ChessPiecesProviderClassifier, runs chess position recognition for specified image using Deep Netts framework. 
 
-# How to create a Dataset for CNN training by the image of the initial board, which contains all chess pieces for both sides/colors
+# How to create a Dataset for CNN training
+ - Obtain an image of the initial board, which contains all chess pieces for both sides/colors.
  - Add raw image of the initial board, containing all pieces to input directory of your choise. let's say".\res\books_set_2_input1.png".
  - Than crop the image (transform the chess board to ideal square) by using bagaturchess.scanner.RecognitionMain_DeepNetts main class. First, set CROP_BOARD_FROM_IMAGE to true and start main function. Than checked if the cropped board "./data/OpenCV_board_croped.png" is correctly cropped. If yes, than go to next step, otherwise try with another image.
  - Copy cropped board image inside ".\res\cnn\books\setXYZ\input2.png"
@@ -52,6 +53,14 @@ The basic main classes are in bagaturchess.scanner root package:
  - Add labels.txt file in the output directory with this content: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12. Separate the numbers by new lines instead of by comma.
  - Run deepnettsplatform64.exe and import output directory. DeepNettsPlatform UI will create index.txt file in the same directory.
  - Now you have a DataSet and we are ready for training CNN for this chess pieces set with DeepNetts.
+
+# How to Train the CNN and give it a try
+ - You could train the CNN by using the bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Edition_Community12 class.
+ - Run it and wait the training to achieve accuracy equal to 1 or max 50 iterations (which happens first). Stop the training and now we have the CNN file, Let’s say dnet_books_set_2_extended.dnet. Normally this takes up to 5 minutes on laptop/computer.
+ - Now let’s try it.
+ - You could run it by using the main function inside the bagaturchess.scanner.RecognitionMain_DeepNetts class.
+ - First we add in the code our new CNN file, like netsNames.add("dnet_books_set_2_extended.dnet"); and then run it ...
+ - Good luck!
 
 
 # Do you like the project?
