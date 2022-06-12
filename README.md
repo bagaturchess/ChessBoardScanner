@@ -44,14 +44,14 @@ The basic main classes are in bagaturchess.scanner root package:
  - RecognitionMain_DeepNetts_ChessPiecesProviderClassifier, runs chess position recognition for specified image using Deep Netts framework. 
 
 # How to create a Dataset for CNN training by the image of the initial board, which contains all chess pieces for both sides/colors
-1.	Add raw image of the initial board, containing all pieces to input directory of your choise. let's say".\res\books_set_2_input1.png".
-2. 	Than crop the image (transform the chess board to ideal square) by using bagaturchess.scanner.RecognitionMain_DeepNetts main class. First, set CROP_BOARD_FROM_IMAGE to true and start main function. Than checked if the cropped board "./data/OpenCV_board_croped.png" is correctly cropped. If yes, than go to next step, otherwise try with another image.
-3.	Copy cropped board image inside ".\res\cnn\books\setXYZ\input2.png"
-4.	In bagaturchess.scanner.machinelearning.dataset.DatasetGenerator_ByBoardImage, add the input png (example: ".\res\cnn\books\setXYZ\input1.png") to the INPUT_FILES array.
-5.	Set OUTPUT_DIR to the directory, where the pieces’ images will be generated (let’s say "./datasets_deepnetts/dataset_books_set_2_extended/") and run the main function in this class for the generation process itself. It will take around 10 seconds.
-6.	Add labels.txt file in the output directory with this content: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12. Separate the numbers by new lines instead of by comma.
-7.	Run deepnettsplatform64.exe and import output directory. DeepNettsPlatform UI will create index.txt file in the same directory.
-8.	Now you have a DataSet and we are ready for training CNN for this chess pieces set with DeepNetts.
+ - Add raw image of the initial board, containing all pieces to input directory of your choise. let's say".\res\books_set_2_input1.png".
+ - Than crop the image (transform the chess board to ideal square) by using bagaturchess.scanner.RecognitionMain_DeepNetts main class. First, set CROP_BOARD_FROM_IMAGE to true and start main function. Than checked if the cropped board "./data/OpenCV_board_croped.png" is correctly cropped. If yes, than go to next step, otherwise try with another image.
+ - Copy cropped board image inside ".\res\cnn\books\setXYZ\input2.png"
+ - In bagaturchess.scanner.machinelearning.dataset.DatasetGenerator_ByBoardImage, add the input png (example: ".\res\cnn\books\setXYZ\input1.png") to the INPUT_FILES array.
+ - Set OUTPUT_DIR to the directory, where the pieces’ images will be generated (let’s say "./datasets_deepnetts/dataset_books_set_2_extended/") and run the main function in this class for the generation process itself. It will take around 10 seconds.
+ - Add labels.txt file in the output directory with this content: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12. Separate the numbers by new lines instead of by comma.
+ - Run deepnettsplatform64.exe and import output directory. DeepNettsPlatform UI will create index.txt file in the same directory.
+ - Now you have a DataSet and we are ready for training CNN for this chess pieces set with DeepNetts.
 
 
 # Do you like the project?
