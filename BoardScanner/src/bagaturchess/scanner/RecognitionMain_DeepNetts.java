@@ -22,6 +22,7 @@ package bagaturchess.scanner;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,31 +116,23 @@ public class RecognitionMain_DeepNetts {
 			
 			//Create composite matcher
 			
-			
             List<String> netsNames = new ArrayList<String>();
-            netsNames.add("dnet_chesscom_set_1.dnet");
-            netsNames.add("dnet_lichessorg_set_1.dnet");
-            netsNames.add("dnet_chess24com_set_1.dnet");
-            netsNames.add("dnet_books_set_1.dnet");
+            netsNames.add("dnet_books_set_1_extended.dnet");
+            netsNames.add("dnet_books_set_2_extended.dnet");
+            netsNames.add("dnet_chess24com_set_1_extended.dnet");
+            netsNames.add("dnet_chesscom_set_1_extended.dnet");
+            netsNames.add("dnet_lichessorg_set_1_extended.dnet");
             
-			List<InputStream> netsStreams = new ArrayList<InputStream>();
+            
+			Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
+			
+			List<InputStream> netsStreams = createStreams(netsNames);
 			for (int i = 0; i < netsNames.size(); i++) {
-				netsStreams.add(new FileInputStream(netsNames.get(i)));
+				String net_name = netsNames.get(i);
+				matchers.put(net_name, new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), null), net_name, netsStreams.get(i)));
 			}
 			
-            Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
-            matchers.put("dnet_chesscom_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_chesscom_set_1.dnet", netsStreams.get(0)));
-            matchers.put("dnet_lichessorg_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_lichessorg_set_1.dnet", netsStreams.get(1)));
-            matchers.put("dnet_chess24com_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "dnet_chess24com_set_1.dnet", netsStreams.get(2)));
-            matchers.put("dnet_books_set_1.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_books_set_1.dnet", netsStreams.get(3)));
-			
-            //The streams are already readed
-            netsStreams = new ArrayList<InputStream>();
-			for (int i = 0; i < netsNames.size(); i++) {
-				netsStreams.add(new FileInputStream(netsNames.get(i)));
-			}
-			
-            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, netsStreams, matchers);
+            Matcher_Base matcher = new Matcher_Composite_RGB(matcherBoardProperties.getImageSize(), netsNames, createStreams(netsNames), matchers);
 			
 			
 			//Start matching
@@ -162,5 +155,14 @@ public class RecognitionMain_DeepNetts {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	private static List<InputStream> createStreams(List<String> netsNames) throws FileNotFoundException {
+		List<InputStream> netsStreams = new ArrayList<InputStream>();
+		for (int i = 0; i < netsNames.size(); i++) {
+			netsStreams.add(new FileInputStream(netsNames.get(i)));
+		}
+		return netsStreams;
 	}
 }

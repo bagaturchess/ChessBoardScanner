@@ -26,8 +26,6 @@ public class BoardProperties {
 	private int imageSize;
 	private int squareSize;
 	
-	private String piecesSetFileNamePrefix;
-	
 	
 	public BoardProperties(int _imageSize) {
 		this(_imageSize, "set1");
@@ -38,8 +36,6 @@ public class BoardProperties {
 		
 		imageSize = _imageSize;
 		squareSize = getImageSize() / 8;
-		
-		piecesSetFileNamePrefix = _piecesSetFileNamePrefix;
 	}
 	
 	
@@ -50,10 +46,5 @@ public class BoardProperties {
 	
 	public int getSquareSize() {
 		return squareSize;
-	}
-	
-	
-	public String getPiecesSetFileNamePrefix() {
-		return piecesSetFileNamePrefix;
 	}
 }

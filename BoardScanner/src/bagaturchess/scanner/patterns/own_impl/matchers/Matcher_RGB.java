@@ -168,7 +168,7 @@ public class Matcher_RGB extends Matcher_Base {
 					
 					int[][][] rgbPattern = (int[][][]) (pid == Constants.PID_NONE ?
 							createSquareImage(bgcolor, size)
-							: ImageHandlerSingleton.getInstance().convertToRGBMatrix(ImageHandlerSingleton.getInstance().createPieceImage_RGB(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size)));
+							: ImageHandlerSingleton.getInstance().convertToRGBMatrix(ImageHandlerSingleton.getInstance().createPieceImage_RGB(pid, bgcolor, size)));
 					
 							MatrixUtils.PatternMatchingData curData = MatrixUtils.matchImages(rgbSquareMatrix, rgbPattern);
 					

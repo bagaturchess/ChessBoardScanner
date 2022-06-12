@@ -42,12 +42,12 @@ public interface ImageHandler {
 	public int[][][] convertToRGBMatrix(Object image);
 	public Object createGrayImage(int[][] matrix);
 	public Object createRGBImage(int[][][] matrix);
-	public Object loadPieceImageFromMemory(int pid, String piecesSetName, int size);
+	public Object loadPieceImageFromMemory(int pid, int size);
 	public void printInfo(int[][] source, MatrixUtils.PatternMatchingData matcherData, String fileName);
 	public void printInfo(MatrixUtils.PatternMatchingData matcherData, String fileName);
 	public int[][] createSquareImage(int bgcolor, int size);
-	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size);
-	public Object createPieceImage_RGB(String pieceSetName, int pid, Color bgcolor, int size);
+	public Object createPieceImage_Gray(int pid, int bgcolor, int size);
+	public Object createPieceImage_RGB(int pid, Color bgcolor, int size);
 	public Object createBoardImage(BoardProperties boardProperties, String fen, Object whiteSquareColor, Object blackSquareColor);
 	public Object getColor(int grayColor);
 	public Object enlarge(Object image, double scale, Object bgcolor);

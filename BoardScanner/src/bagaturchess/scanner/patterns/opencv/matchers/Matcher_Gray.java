@@ -199,7 +199,7 @@ public class Matcher_Gray extends Matcher_Base {
 						curData.pattern_gray = emptySquare_matrix;
 						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	
 					} else {
-						grayPattern = ImageHandlerSingleton.getInstance().createPieceImage_Gray(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
+						grayPattern = ImageHandlerSingleton.getInstance().createPieceImage_Gray(pid, bgcolor, size);
 						//int[][] grayMatrix = ImageHandlerSingleton.getInstance().convertToGrayMatrix(grayPattern);
 						//curData.pattern = grayMatrix;
 						garyTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(grayPattern);	

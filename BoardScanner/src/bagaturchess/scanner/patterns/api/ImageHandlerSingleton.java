@@ -95,8 +95,8 @@ public class ImageHandlerSingleton implements ImageHandler {
 	
 
 	@Override
-	public Object loadPieceImageFromMemory(int pid, String piecesSetName, int size) {
-		return instance.loadPieceImageFromMemory(pid, piecesSetName, size);
+	public Object loadPieceImageFromMemory(int pid, int size) {
+		return instance.loadPieceImageFromMemory(pid, size);
 	}
 
 
@@ -119,14 +119,14 @@ public class ImageHandlerSingleton implements ImageHandler {
 
 
 	@Override
-	public Object createPieceImage_Gray(String pieceSetName, int pid, int bgcolor, int size) {
-		return instance.createPieceImage_Gray(pieceSetName, pid, bgcolor, size);
+	public Object createPieceImage_Gray(int pid, int bgcolor, int size) {
+		return instance.createPieceImage_Gray(pid, bgcolor, size);
 	}
 
 	
 	@Override
-	public Object createPieceImage_RGB(String pieceSetName, int pid, Color bgcolor, int size) {
-		return instance.createPieceImage_RGB(pieceSetName, pid, bgcolor, size);
+	public Object createPieceImage_RGB(int pid, Color bgcolor, int size) {
+		return instance.createPieceImage_RGB(pid, bgcolor, size);
 	}
 
 

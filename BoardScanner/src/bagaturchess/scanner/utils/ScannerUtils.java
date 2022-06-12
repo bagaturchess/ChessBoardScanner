@@ -93,7 +93,7 @@ public class ScannerUtils {
 			double pieceSize_scaled = pieceSize_org * imageScale;
 			double sizeDelta = pieceSize_org - pieceSize_scaled;
 			
-			Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, boardProperties.getPiecesSetFileNamePrefix(), (int) pieceSize_scaled);
+			Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, (int) pieceSize_scaled);
 			g.drawImage(piece, (int) sizeDelta / 2, (int) sizeDelta / 2, (int) (pieceSize_scaled), (int) (pieceSize_scaled), null, null);
 		}
 			
@@ -146,7 +146,7 @@ public class ScannerUtils {
 	
 	private static final int[][] createPieceImageWithPieceColorAdjustment(BoardProperties boardProperties, int pid, int bgcolor, int size, int colorAdjustment) {
 		
-		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, boardProperties.getPiecesSetFileNamePrefix(), size);
+		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, size);
 		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 		Graphics g = imagePiece.getGraphics();
 		g.setColor(GRAY_COLORS[bgcolor]);
@@ -199,7 +199,7 @@ public class ScannerUtils {
 	
 	
 	public static final int[][][] createPieceImage(BoardProperties boardProperties, int pid, Color bgcolor, int size) {
-		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, boardProperties.getPiecesSetFileNamePrefix(), size);
+		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, size);
 		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 		Graphics g = imagePiece.getGraphics();
 		g.setColor(bgcolor);
@@ -210,8 +210,8 @@ public class ScannerUtils {
 	}
 	
 	
-	public static final int[][] createPieceImage(String pieceSetName, int pid, int bgcolor, int size) {
-		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, pieceSetName, size);
+	public static final int[][] createPieceImage(int pid, int bgcolor, int size) {
+		Image piece = (Image) ImageHandlerSingleton.getInstance().loadPieceImageFromMemory(pid, size);
 		BufferedImage imagePiece = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 		Graphics g = imagePiece.getGraphics();
 		g.setColor(GRAY_COLORS[bgcolor]);

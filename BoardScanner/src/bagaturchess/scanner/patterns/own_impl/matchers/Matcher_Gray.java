@@ -163,7 +163,7 @@ public class Matcher_Gray extends Matcher_Base {
 					
 					int[][] grayPattern = pid == Constants.PID_NONE ?
 							ImageHandlerSingleton.getInstance().createSquareImage(bgcolor, size)
-							: ImageHandlerSingleton.getInstance().convertToGrayMatrix(ImageHandlerSingleton.getInstance().createPieceImage_Gray(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size));
+							: ImageHandlerSingleton.getInstance().convertToGrayMatrix(ImageHandlerSingleton.getInstance().createPieceImage_Gray(pid, bgcolor, size));
 					
 							MatrixUtils.PatternMatchingData curData = MatrixUtils.matchImages(graySquareMatrix, grayPattern);
 					

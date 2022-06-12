@@ -67,8 +67,8 @@ public class DatasetGenerator_ByBoardImage {
 	
 	public static void main(String[] args) {
 		
+		
 		try {
-			
 			
 			BoardProperties boardProperties = new BoardProperties(256);
 			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, INPUT_FILES, OUTPUT_DIR);

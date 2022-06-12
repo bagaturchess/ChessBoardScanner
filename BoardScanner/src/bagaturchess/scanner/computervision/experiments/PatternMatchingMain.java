@@ -73,7 +73,7 @@ public class PatternMatchingMain {
 		        for (int size = startSize; size <= endSize; size++) {
 			        
 		        	//ImageHandlerSingleton.getInstance().
-		        	Object template_obj = ImageHandlerSingleton.getInstance().createPieceImage_Gray("set3", pid, bgcolor, size);
+		        	Object template_obj = ImageHandlerSingleton.getInstance().createPieceImage_Gray(pid, bgcolor, size);
 			        Mat template = ImageHandlerSingleton.getInstance().graphic2Mat(template_obj);
 			        
 			        Mat template_gray = new Mat(template.height(),template.width(),CvType.CV_8UC4);

@@ -111,6 +111,7 @@ public class RecognitionMain_DeepNetts_ChessPiecesProviderClassifier {
 			
             List<String> netsNames = new ArrayList<String>();
             netsNames.add("dnet_books_set_1_extended.dnet");
+            netsNames.add("dnet_books_set_2_extended.dnet");
             netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_chesscom_set_1_extended.dnet");
             netsNames.add("dnet_lichessorg_set_1_extended.dnet");
@@ -122,9 +123,10 @@ public class RecognitionMain_DeepNetts_ChessPiecesProviderClassifier {
 			
             Map<String, Matcher_Base> matchers = new HashMap<String, Matcher_Base>();
             matchers.put("dnet_books_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_books_set_1_extended.dnet", netsStreams.get(0)));
-            matchers.put("dnet_chess24com_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "dnet_chess24com_set_1_extended.dnet", netsStreams.get(1)));
-            matchers.put("dnet_chesscom_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_chesscom_set_1_extended.dnet", netsStreams.get(2)));
-            matchers.put("dnet_lichessorg_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_lichessorg_set_1_extended.dnet", netsStreams.get(3)));
+            matchers.put("dnet_books_set_2_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_books_set_2_extended.dnet", netsStreams.get(1)));
+            matchers.put("dnet_chess24com_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set3"), "dnet_chess24com_set_1_extended.dnet", netsStreams.get(2)));
+            matchers.put("dnet_chesscom_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_chesscom_set_1_extended.dnet", netsStreams.get(3)));
+            matchers.put("dnet_lichessorg_set_1_extended.dnet", new Matcher_RGB(new BoardProperties(matcherBoardProperties.getImageSize(), "set2"), "dnet_lichessorg_set_1_extended.dnet", netsStreams.get(4)));
             
             //The streams are already readed
             netsStreams = new ArrayList<InputStream>();

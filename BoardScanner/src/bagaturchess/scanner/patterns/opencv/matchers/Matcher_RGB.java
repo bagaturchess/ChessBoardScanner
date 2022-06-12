@@ -204,7 +204,7 @@ public class Matcher_RGB extends Matcher_Base {
 						rgbTemplate = ImageHandlerSingleton.getInstance().graphic2Mat(rgbPattern);	
 					} else {
 						
-						rgbPattern = ImageHandlerSingleton.getInstance().createPieceImage_RGB(boardProperties.getPiecesSetFileNamePrefix(), pid, bgcolor, size);
+						rgbPattern = ImageHandlerSingleton.getInstance().createPieceImage_RGB(pid, bgcolor, size);
 						
 						//int[][] grayMatrix = ImageHandlerSingleton.getInstance().convertToGrayMatrix(grayPattern);
 						//curData.pattern = grayMatrix;

@@ -52,6 +52,9 @@ The basic main classes are in bagaturchess.scanner root package:
 6.	Add labels.txt file in the output directory with this content: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12. Separate the numbers by new lines instead of by comma.
 7.	Run deepnettsplatform64.exe and import output directory. DeepNettsPlatform UI will create index.txt file in the same directory.
 8.	Now you have a DataSet and we are ready for training CNN for this chess pieces set with DeepNetts.
+8.	Train the CNN using bagaturchess.scanner.machinelearning.learning.impl_deepnetts. ScannerLearning_Edition_Community12 class. Wait the training to achieve accuracy equal to 1 or max 50 iterations (which happens first). Stop the training and now we have the CNN file, Let’s say dnet_books_set_2_extended.dnet
+9.	Now let’s try it. Use the main function inside bagaturchess.scanner.RecognitionMain_DeepNetts. First let’s and add our new CNN file, like netsNames.add("dnet_books_set_2_extended.dnet"); and then run the code.
+10.	Good luck!
 
 
 # Do you like the project?
