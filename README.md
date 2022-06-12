@@ -43,7 +43,7 @@ The basic main classes are in bagaturchess.scanner root package:
  - RecognitionMain_DeepLearning4J, runs chess position recognition for specified image using DeepLearning4J framework. 
  - RecognitionMain_DeepNetts_ChessPiecesProviderClassifier, runs chess position recognition for specified image using Deep Netts framework. 
 
-# How to create a Dataset for CNN training
+# How to create a Dataset for the CNN training
  - Obtain an image of the initial board, which contains all chess pieces for both sides/colors.
  - Add raw image of the initial board, containing all pieces to input directory of your choise. let's say".\res\books_set_2_input1.png".
  - Than crop the image (transform the chess board to ideal square) by using bagaturchess.scanner.RecognitionMain_DeepNetts main class. First, set CROP_BOARD_FROM_IMAGE to true and start main function. Than checked if the cropped board "./data/OpenCV_board_croped.png" is correctly cropped. If yes, than go to next step, otherwise try with another image.
