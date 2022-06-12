@@ -10,61 +10,68 @@ import bagaturchess.scanner.common.BoardProperties;
 public class DatasetGenerator_ByBoardImage {
 	
 	
+	private static final String OUTPUT_DIR 				= "./datasets_deepnetts/dataset_books_set_2_extended/";
+	
+	private static final String[] INPUT_FILES 			= new String[] {
+			
+			/*"./res/cnn/chess.com/set1/input1.png",
+			"./res/cnn/chess.com/set1/input2.png",
+			"./res/cnn/chess.com/set1/input3.png",
+			"./res/cnn/chess.com/set1/input4.png",
+			"./res/cnn/chess.com/set1/input5.png",
+			"./res/cnn/chess.com/set1/input6.png",
+			"./res/cnn/chess.com/set1/input7.png",
+			"./res/cnn/chess.com/set1/input8.png",
+			"./res/cnn/chess.com/set1/input9.png",
+			"./res/cnn/chess.com/set1/input10.png",*/
+			
+			/*"./res/cnn/lichess.org/set1/input1.png",
+			"./res/cnn/lichess.org/set1/input2.png",
+			"./res/cnn/lichess.org/set1/input3.png",
+			"./res/cnn/lichess.org/set1/input4.png",
+			"./res/cnn/lichess.org/set1/input5.png",
+			"./res/cnn/lichess.org/set1/input6.png",
+			"./res/cnn/lichess.org/set1/input7.png",
+			"./res/cnn/lichess.org/set1/input8.png",
+			"./res/cnn/lichess.org/set1/input9.png",
+			"./res/cnn/lichess.org/set1/input10.png",*/
+			
+			/*"./res/cnn/chess24.com/set1/input1.png",
+			"./res/cnn/chess24.com/set1/input2.png",
+			"./res/cnn/chess24.com/set1/input3.png",
+			"./res/cnn/chess24.com/set1/input4.png",
+			"./res/cnn/chess24.com/set1/input5.png",
+			"./res/cnn/chess24.com/set1/input6.png",
+			"./res/cnn/chess24.com/set1/input7.png",
+			"./res/cnn/chess24.com/set1/input8.png",
+			"./res/cnn/chess24.com/set1/input9.png",
+			"./res/cnn/chess24.com/set1/input10.png",
+			"./res/cnn/chess24.com/set1/input11.png",*/
+			
+			/*"./res/cnn/books/set1/input1.png",
+			"./res/cnn/books/set1/input2.png",
+			"./res/cnn/books/set1/input3.png",
+			"./res/cnn/books/set1/input4.png",
+			"./res/cnn/books/set1/input5.png",
+			"./res/cnn/books/set1/input6.png",
+			"./res/cnn/books/set1/input7.png",
+			"./res/cnn/books/set1/input8.png",
+			"./res/cnn/books/set1/input9.png",
+			"./res/cnn/books/set1/input10.png",
+			"./res/cnn/books/set1/input11.png",
+			*/
+			
+			"./res/cnn/books/set2/input1.png",
+		};
+	
+	
 	public static void main(String[] args) {
 		
 		try {
 			
-			String[] inputFiles = new String[] {
-					/*"./res/cnn/chess.com/set1/input1.png",
-					"./res/cnn/chess.com/set1/input2.png",
-					"./res/cnn/chess.com/set1/input3.png",
-					"./res/cnn/chess.com/set1/input4.png",
-					"./res/cnn/chess.com/set1/input5.png",
-					"./res/cnn/chess.com/set1/input6.png",
-					"./res/cnn/chess.com/set1/input7.png",
-					"./res/cnn/chess.com/set1/input8.png",
-					"./res/cnn/chess.com/set1/input9.png",
-					"./res/cnn/chess.com/set1/input10.png",*/
-					
-					/*"./res/cnn/lichess.org/set1/input1.png",
-					"./res/cnn/lichess.org/set1/input2.png",
-					"./res/cnn/lichess.org/set1/input3.png",
-					"./res/cnn/lichess.org/set1/input4.png",
-					"./res/cnn/lichess.org/set1/input5.png",
-					"./res/cnn/lichess.org/set1/input6.png",
-					"./res/cnn/lichess.org/set1/input7.png",
-					"./res/cnn/lichess.org/set1/input8.png",
-					"./res/cnn/lichess.org/set1/input9.png",
-					"./res/cnn/lichess.org/set1/input10.png",*/
-					
-					/*"./res/cnn/chess24.com/set1/input1.png",
-					"./res/cnn/chess24.com/set1/input2.png",
-					"./res/cnn/chess24.com/set1/input3.png",
-					"./res/cnn/chess24.com/set1/input4.png",
-					"./res/cnn/chess24.com/set1/input5.png",
-					"./res/cnn/chess24.com/set1/input6.png",
-					"./res/cnn/chess24.com/set1/input7.png",
-					"./res/cnn/chess24.com/set1/input8.png",
-					"./res/cnn/chess24.com/set1/input9.png",
-					"./res/cnn/chess24.com/set1/input10.png",
-					"./res/cnn/chess24.com/set1/input11.png",*/
-					
-					"./res/cnn/books/set1/input1.png",
-					"./res/cnn/books/set1/input2.png",
-					"./res/cnn/books/set1/input3.png",
-					"./res/cnn/books/set1/input4.png",
-					"./res/cnn/books/set1/input5.png",
-					"./res/cnn/books/set1/input6.png",
-					"./res/cnn/books/set1/input7.png",
-					"./res/cnn/books/set1/input8.png",
-					"./res/cnn/books/set1/input9.png",
-					"./res/cnn/books/set1/input10.png",
-					"./res/cnn/books/set1/input11.png",
-				};
-			
 			
 			BoardProperties boardProperties = new BoardProperties(256);
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles, "./datasets_deepnetts/dataset_books_set_1_extended/");
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, INPUT_FILES, OUTPUT_DIR);
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();
