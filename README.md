@@ -5,7 +5,7 @@ The license is GPL-2.0-only
 # Overview
 
 This project aims to demonstrate how to extract the chess position in a machine readable format called Forsyth–Edwards Notation (FEN) having the 2D picture of the board.
-At the moment it supports 4 chess sets: default chess sets from chess.com, lichess.org and chess24.com as well as one set from paper chess book. Of course, the architecture is extensible and different chess sets could be added additionally.
+At the moment it supports 4 chess sets: default chess sets from chess.com, lichess.org and chess24.com as well as a few sets from paper chess book. Of course, the architecture is extensible and different chess sets could be added additionally.
 
 # Advanced technologies solve complex problems
  - Computer Vision (CV) subdomain of Artificial Intelligence: It uses OpenCV as a computer vision library or framework, which helps in extracting the chess board from the image and transforming it to ideal square.
@@ -38,10 +38,7 @@ If you need technical explanation of the algorithms used, please check this [You
 
 The project structure is an eclipse based project, which can be directly imported into the Eclipse IDE.
 All necessary libraries for Deep Netts and Deeplearning4j are included into the libs folder, but you need to add the OpenCV library version 4.5.1 (java and native parts) and refer them from the project as described here: https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
-
-The basic main classes are in bagaturchess.scanner root package:
- - RecognitionMain_DeepLearning4J, runs chess position recognition for specified image using DeepLearning4J framework. 
- - RecognitionMain_DeepNetts_ChessPiecesProviderClassifier, runs chess position recognition for specified image using Deep Netts framework. 
+The basic main classes are in bagaturchess.scanner root package.
 
 # How to create a Dataset for the CNN training
  - Obtain an image of the initial board, which contains all chess pieces for both sides/colors.
