@@ -70,7 +70,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
 													0.01f
 								)
@@ -93,6 +93,15 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 													0.01f
 								)
 					);
+        	*/
+        	
+        	learningTasks.add(
+        			
+        			new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+															"dnet_books_set_2_extended.dnet",
+															0.01f
+													    )
+			);
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
