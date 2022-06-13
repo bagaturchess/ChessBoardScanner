@@ -43,11 +43,6 @@ public abstract class Matcher_Base {
 	public abstract ResultPair<String, MatchingStatistics> scan(Object boardMatrix, IMatchingInfo matchingInfo) throws IOException, ClassNotFoundException;
 	
 	
-	/*public String getPiecesSetName() {
-		return boardProperties.getPiecesSetFileNamePrefix();
-	}
-	*/
-	
 	
 	protected String getDisplayName() {
 		return displayName;
