@@ -47,16 +47,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_10K 				= 0.000125f;
 	private static final float LEARNING_RATE_16K 				= 0.0000625f;
 	
-	private static final float LEARNING_RATE_NN_UNIVERSAL 		= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_NN_UNIVERSAL 		= LEARNING_RATE_200;
 	private static final float LEARNING_RATE_NN_BOOK_SET1 		= LEARNING_RATE_400;
 	private static final float LEARNING_RATE_NN_BOOK_SET2 		= LEARNING_RATE_200;
-	private static final float LEARNING_RATE_NN_BOOK_SET3 		= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_NN_BOOK_SET3 		= LEARNING_RATE_200;
 	private static final float LEARNING_RATE_NN_CHESSCOM_SET1 	= LEARNING_RATE_400;
 	private static final float LEARNING_RATE_NN_CHESSCOM_SET2 	= LEARNING_RATE_100;
 	private static final float LEARNING_RATE_NN_CHESS24COM_SET1 = LEARNING_RATE_10;
-	private static final float LEARNING_RATE_NN_LICHESSORG_SET1 = LEARNING_RATE_200;
+	private static final float LEARNING_RATE_NN_LICHESSORG_SET1 = LEARNING_RATE_400;
 	
-	private static final float LEARNING_RATE_MAX_DECREASE_RATE 	= 0.333f;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.333f;
+	
+	private static final boolean EXIT_ON_BIG_DEVIATION 			= true;
 	
 	
 	private String INPUT_DIR_NAME;
@@ -253,11 +255,11 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								
 								float prev_accuracy = train_accuracies.get(train_accuracies.size() - 2);
 								
-								if (current_accuracy == 0 || current_accuracy < prev_accuracy - LEARNING_RATE_MAX_DECREASE_RATE * prev_accuracy) {
+								if (current_accuracy == 0 || current_accuracy < prev_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_accuracy) {
 									
 									LOGGER.error(OUTPUT_FILE_NAME + " current_accuracy < prev_accuracy - 0.05f * prev_accuracy, current_accuracy=" + current_accuracy + " prev_accuracy=" + prev_accuracy);
 									
-									LEARNING_RATE = LEARNING_RATE / 2f;
+									LEARNING_RATE *= (1 + LEARNING_RATE_MAX_TOLERANCE);
 									
 									LOGGER.error("Decreasing LEARNING_RATE to " + LEARNING_RATE);
 									
@@ -265,8 +267,10 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 									
 									trainer.stop();
 									
-									
-									System.exit(0);
+									if (EXIT_ON_BIG_DEVIATION) {
+										
+										System.exit(0);
+									}
 								}
 							}
 							
