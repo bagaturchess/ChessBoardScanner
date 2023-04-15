@@ -66,15 +66,19 @@ public class RecognitionMain_DeepNetts {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/preprocess/test38.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/test3.jpg");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/test2.png");
-			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/chess.com/set1/pictures/test7.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/legendary_games/demo1.png");
+			
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/lichess.org/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess24.com/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/Ismail/initial_board_cropped.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/Ismail/initial_board_cropped.png");
 			
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set1/test7.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set2/test2.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set3/test1.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test5.png");
 			
 			long startTime = System.currentTimeMillis();
 			
@@ -120,9 +124,12 @@ public class RecognitionMain_DeepNetts {
             List<String> netsNames = new ArrayList<String>();
             netsNames.add("dnet_books_set_1_extended.dnet");
             netsNames.add("dnet_books_set_2_extended.dnet");
+            netsNames.add("dnet_books_set_3_extended.dnet");
             netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_chesscom_set_1_extended.dnet");
+            netsNames.add("dnet_chesscom_set_2_extended.dnet");
             netsNames.add("dnet_lichessorg_set_1_extended.dnet");
+            netsNames.add("dnet_universal_extended.dnet");
 			
             Matcher_Base matcher = new Matcher_Composite_RGB(
             		matcherBoardProperties.getImageSize(),

@@ -43,13 +43,19 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 			network = (ConvolutionalNetwork) ois.readObject();
 			System.out.println("Network loaded.");
 		} else {
+			
+			if (true) {
+				
+				throw new IllegalStateException();
+			}
+			
 			System.out.println("Creating network ...");
 			network =  ConvolutionalNetwork.builder()
 	                .addInputLayer(squareSize, squareSize, 1)
-	                .addConvolutionalLayer(5, 5, 64)
-	                .addMaxPoolingLayer(2, 2)
-	                .addConvolutionalLayer(5, 5, 16)
-	                .addMaxPoolingLayer(2, 2)
+	                .addConvolutionalLayer(1, 5, 5)
+	                .addMaxPoolingLayer(2, 1)
+	                .addConvolutionalLayer(1, 5, 5)
+	                .addMaxPoolingLayer(2, 1)
 	                .addOutputLayer(13, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)
 	                .lossFunction(LossType.CROSS_ENTROPY)

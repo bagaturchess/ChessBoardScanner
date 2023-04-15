@@ -84,8 +84,10 @@ public class ScannerLearning {
 				"./res/cnn/books/set1/input11.png",*/
 			};
 			
+
+			String[] FEN = new String[] {"POSITION-FEN-1"};
 			
-			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles, "./data/tmp/");
+			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, inputFiles, FEN, "./data/tmp/", false);
 			
 			final List<Object> images = new ArrayList<Object>();
 			final List<Integer> pids = new ArrayList<Integer>();

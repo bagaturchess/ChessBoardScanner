@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import bagaturchess.bitboard.impl.utils.VarStatistic;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier;
@@ -57,7 +58,7 @@ public class MatcherFinder_RGB_ChessPiecesProviderClassifier extends MatcherFind
 		
 		long startTime = System.currentTimeMillis();
 		
-		double[] probs = piecesProviderClassifier.getAccumulatedProbabilitiesByLabelIndex(image, matchingInfo);
+		double[] probs = piecesProviderClassifier.getAccumulatedProbabilitiesByLabelIndex(image, matchingInfo, null);
 		
 		System.out.println("MatcherFinder_Base: probs size is " + probs.length);
 		

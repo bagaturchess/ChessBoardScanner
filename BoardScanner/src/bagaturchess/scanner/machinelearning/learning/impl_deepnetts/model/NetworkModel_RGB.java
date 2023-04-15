@@ -39,17 +39,25 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 		super();
 		
 		if (networkFileStream != null) {
+			
 			System.out.println("Loading network ...");
 			ObjectInputStream ois = new ObjectInputStream(networkFileStream);
 			network = (ConvolutionalNetwork) ois.readObject();
 			System.out.println("Network loaded.");
+			
 		} else {
+			
+			if (true) {
+				
+				throw new IllegalStateException();
+			}
+			
 			System.out.println("Creating network ...");
 			network =  ConvolutionalNetwork.builder()
 	                .addInputLayer(squareSize, squareSize, 3)
 	                .addConvolutionalLayer(5, 5, 64)
 	                .addMaxPoolingLayer(2, 2)
-	                .addConvolutionalLayer(5, 5, 16)
+	                .addConvolutionalLayer(3, 3, 16)
 	                .addMaxPoolingLayer(2, 2)
 	                .addOutputLayer(13, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)

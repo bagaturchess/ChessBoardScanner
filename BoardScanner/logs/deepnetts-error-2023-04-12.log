@@ -1,0 +1,11 @@
+[ERROR] 2023-04-12 18:32:00.319 [pool-2-thread-1] DeepNetts - Could not find labels file: C:\Users\I027638\OneDrive - SAP SE\DATA\OWN\BAGATUR\GIT_REPOS\ChessBoardScanner\BoardScanner\.\datasets_deepnetts\dataset_universal\labels.txt
+java.io.FileNotFoundException: .\datasets_deepnetts\dataset_universal\labels.txt (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_45]
+	at java.io.FileInputStream.open(Unknown Source) ~[?:1.8.0_45]
+	at java.io.FileInputStream.<init>(Unknown Source) ~[?:1.8.0_45]
+	at java.io.FileReader.<init>(Unknown Source) ~[?:1.8.0_45]
+	at deepnetts.data.ImageSet.loadLabels(ImageSet.java:515) [deepnetts-core-pro-1.3.jar:?]
+	at bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Edition_Pro13.run(ScannerLearning_Edition_Pro13.java:157) [bin/:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_45]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_45]

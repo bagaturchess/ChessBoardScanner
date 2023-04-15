@@ -144,7 +144,8 @@ public class Matcher_RGB extends Matcher_Base {
 		float[] output = networkModel.feedForward();
 		
 		int bestPID = -1;
-        for (int j = 0; j < output.length; j++) {
+		int SKIP_EMPTY_FIELD = 0; //1
+        for (int j = SKIP_EMPTY_FIELD; j < output.length; j++) {
         	if (output[j] >= bestData.delta) {
         		bestData.delta = output[j];
         		bestPID = j;

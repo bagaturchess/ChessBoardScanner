@@ -15,21 +15,21 @@ import bagaturchess.scanner.utils.ScannerUtils;
 public class DataSetUtils {
 	
 	
-	public static DataSetInitPair[] getInitPairs_Gray(BoardProperties boardProperties, String[] fileNames, String genDir) throws IOException {
+	public static DataSetInitPair[] getInitPairs_Gray(BoardProperties boardProperties, String[] fileNames, String[] FENs, String genDir, boolean extend_set) throws IOException {
 		DataSetInitPair[] result = new DataSetInitPair[fileNames.length];
 		for (int i = 0; i < result.length; i++) {			
-			result[i] = getInitPair_Gray(boardProperties, fileNames[i], genDir);
+			result[i] = getInitPair_Gray(boardProperties, fileNames[i], FENs[i], genDir, extend_set);
 		}
 		return result;
 	}
 	
 	
-	private static DataSetInitPair getInitPair_Gray(BoardProperties boardProperties, String fileName, String genDir) throws IOException {
+	private static DataSetInitPair getInitPair_Gray(BoardProperties boardProperties, String fileName, String FEN, String genDir, boolean extend_set) throws IOException {
 		
 		BufferedImage boardImage = ImageIO.read(new File(fileName));
 		boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
 		
-		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage, genDir);
+		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage, FEN, genDir, extend_set);
 		
 		return pair;
 	}

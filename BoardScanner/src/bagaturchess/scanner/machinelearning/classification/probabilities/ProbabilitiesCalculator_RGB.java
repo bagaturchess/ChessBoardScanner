@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import bagaturchess.bitboard.impl.utils.VarStatistic;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
@@ -40,27 +41,33 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 
 
 	@Override
-	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo) {
+	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo, VarStatistic stats) {
 		
 		int[][][] rgbImage = (int[][][]) image;
 		
-		Set<Integer> emptySquares = new HashSet<Integer>(); //MatrixUtils.getEmptySquares(rgbImage);
-		
+		Set<Integer> emptySquares = new HashSet<Integer>();
+		//Set<Integer> emptySquares = MatrixUtils.getEmptySquares_Heuristic2(rgbImage);
+				
 		double maxProbability = 0;
+		
 		List<Double> probs = new ArrayList<Double>();
+		
 		for (int i = 0; i < rgbImage.length; i += rgbImage.length / 8) {
 			for (int j = 0; j < rgbImage.length; j += rgbImage.length / 8) {
+				
 				int file = i / (rgbImage.length / 8);
 				int rank = j / (rgbImage.length / 8);
 				int fieldID = 63 - (file + 8 * rank);
+				
 				if (!emptySquares.contains(fieldID)) {
 					
-					double prob = getMaxProbability(rgbImage, i, j, fieldID);
+					double max_prob = getMaxProbability(rgbImage, i, j, fieldID, stats);
 					//System.out.println("prob=" + prob);
 					
-					probs.add(prob);
-					if (maxProbability < prob) {
-						maxProbability = prob;
+					probs.add(max_prob);
+					
+					if (maxProbability < max_prob) {
+						maxProbability = max_prob;
 					}
 				}
 			}
@@ -69,7 +76,8 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 		double probability = 0;
 		
 		for (Double prob: probs) {
-			probability += prob;// / maxProbability;
+			probability += prob;
+			//probability += maxProbability;
 		}
 		
 		probability = probability / (double) (65 - emptySquares.size());
@@ -78,7 +86,7 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 	}
 	
 	
-	private double getMaxProbability(int[][][] matrix, int i1, int j1, int filedID) {
+	private double getMaxProbability(int[][][] matrix, int i1, int j1, int filedID, VarStatistic stats) {
 		
 		int[][][] squareMatrix = MatrixUtils.getSquarePixelsMatrix(matrix, i1, j1);
 		
@@ -87,12 +95,21 @@ public class ProbabilitiesCalculator_RGB extends ProbabilitiesCalculator {
 		float[] output = networkModel.feedForward();
 		
 		double maxValue = 0;
+		
 		for (int j = 0; j < output.length; j++) {
+			
 			if (j == 0 || j == 13) {//empty square
+				
 				continue;
 			}
-			if (maxValue < output[j]) {
-				maxValue = output[j];
+			
+			float cur_val = output[j];
+			
+			stats.addValue(cur_val, cur_val);
+			
+			if (maxValue < cur_val) {
+				
+				maxValue = cur_val;
 			}
 		}
 		

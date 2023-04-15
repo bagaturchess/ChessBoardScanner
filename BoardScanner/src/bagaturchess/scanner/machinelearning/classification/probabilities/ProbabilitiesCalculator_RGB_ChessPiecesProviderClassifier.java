@@ -22,6 +22,7 @@ package bagaturchess.scanner.machinelearning.classification.probabilities;
 
 import java.io.IOException;
 
+import bagaturchess.bitboard.impl.utils.VarStatistic;
 import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.model.NetworkModel;
 import bagaturchess.scanner.common.MatrixUtils;
@@ -39,7 +40,7 @@ public class ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier extends P
 
 
 	@Override
-	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image, IMatchingInfo matchingInfo) {
+	public double[] getAccumulatedProbabilitiesByLabelIndex(Object image, IMatchingInfo matchingInfo, VarStatistic stats) {
 		
 		int[][][] rgbImage = (int[][][]) image;
 		
@@ -87,7 +88,7 @@ public class ProbabilitiesCalculator_RGB_ChessPiecesProviderClassifier extends P
 	
 	
 	@Override
-	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo) {
+	public double getAccumulatedProbability(Object image, IMatchingInfo matchingInfo, VarStatistic stats) {
 		throw new UnsupportedOperationException();
 	}
 	

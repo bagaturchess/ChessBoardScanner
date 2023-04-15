@@ -25,10 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import bagaturchess.bitboard.api.BoardUtils;
+import bagaturchess.bitboard.api.IBitBoard;
+import bagaturchess.bitboard.api.IBoardConfig;
 import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
 import bagaturchess.scanner.utils.ScannerUtils;
+
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.BISHOP;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.EMPTY;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.KING;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.NIGHT;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.PAWN;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.QUEEN;
+import static bagaturchess.bitboard.impl1.internal.ChessConstants.ROOK;
 
 
 public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
@@ -37,7 +48,7 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 	private String dirToSave;
 	
 	
-	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage, String _dirToSave) {
+	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage, String FEN, String _dirToSave, boolean extend) {
 		
 		super();
 		
@@ -51,12 +62,13 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 		
 		matrixOfInitialBoard = MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
 		
+		IBitBoard board = BoardUtils.createBoard_WithPawnsCache(FEN);
 		
 		Map<Integer, int[][]> result = MatrixUtils.splitTo64Squares(matrixOfInitialBoard);
 		
-		for (Integer fieldID : result.keySet()) {
+		for (Integer square_id : result.keySet()) {
 			
-			int[][] graySquare = result.get(fieldID);
+			int[][] graySquare = result.get(square_id);
 			
 			List<int[][]> translations = new ArrayList<int[][]>();
 			
@@ -68,7 +80,7 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 				fillColour = lightAndDarkSquaresColors.getFirst().intValue();
 			}
 			
-			translations.addAll(MatrixUtils.generateShifts(graySquare, 0.05, (int) (256d * Math.random())));
+			if (extend) translations.addAll(MatrixUtils.generateShifts(graySquare, 0.05, fillColour));
 			
 			//System.out.println(translations.size());
 			
@@ -76,140 +88,40 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 				
 				int size_old = pids.size();
 				
-				switch (fieldID) {
-					case 0:
+				int piece_type = board.getFigureType(square_id);
+				int piece_color = board.getFigureColour(square_id);
+				
+				switch (piece_type) {
+					case PAWN:
 						images.add(matrix);
-						pids.add(Constants.PID_W_ROOK);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_PAWN : Constants.PID_B_PAWN);
 						break;
-					case 1:
+					case NIGHT:
 						images.add(matrix);
-						pids.add(Constants.PID_W_KNIGHT);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_KNIGHT : Constants.PID_B_KNIGHT);
 						break;
-					case 2:
+					case BISHOP:
 						images.add(matrix);
-						pids.add(Constants.PID_W_BISHOP);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_BISHOP : Constants.PID_B_BISHOP);
 						break;
-					case 3:
+					case ROOK:
 						images.add(matrix);
-						pids.add(Constants.PID_W_KING);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_ROOK : Constants.PID_B_ROOK);
 						break;
-					case 4:
+					case QUEEN:
 						images.add(matrix);
-						pids.add(Constants.PID_W_QUEEN);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_QUEEN : Constants.PID_B_QUEEN);
 						break;
-					case 5:
+					case KING:
 						images.add(matrix);
-						pids.add(Constants.PID_W_BISHOP);
+						pids.add(piece_color == Constants.COLOUR_WHITE ? Constants.PID_W_KING : Constants.PID_B_KING);
 						break;
-					case 6:
-						images.add(matrix);
-						pids.add(Constants.PID_W_KNIGHT);
-						break;
-					case 7:
-						images.add(matrix);
-						pids.add(Constants.PID_W_ROOK);
-						break;
-					case 8:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 9:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 10:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 11:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 12:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 13:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 14:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 15:
-						images.add(matrix);
-						pids.add(Constants.PID_W_PAWN);
-						break;
-					case 48:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 49:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 50:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 51:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 52:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 53:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 54:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 55:
-						images.add(matrix);
-						pids.add(Constants.PID_B_PAWN);
-						break;
-					case 56:
-						images.add(matrix);
-						pids.add(Constants.PID_B_ROOK);
-						break;
-					case 57:
-						images.add(matrix);
-						pids.add(Constants.PID_B_KNIGHT);
-						break;
-					case 58:
-						images.add(matrix);
-						pids.add(Constants.PID_B_BISHOP);
-						break;
-					case 59:
-						images.add(matrix);
-						pids.add(Constants.PID_B_KING);
-						break;
-					case 60:
-						images.add(matrix);
-						pids.add(Constants.PID_B_QUEEN);
-						break;
-					case 61:
-						images.add(matrix);
-						pids.add(Constants.PID_B_BISHOP);
-						break;
-					case 62:
-						images.add(matrix);
-						pids.add(Constants.PID_B_KNIGHT);
-						break;
-					case 63:
-						images.add(matrix);
-						pids.add(Constants.PID_B_ROOK);
-						break;
-						
-					default:
+					case EMPTY:
 						images.add(matrix);
 						pids.add(Constants.PID_NONE);
 						break;
+					default:
+						throw new IllegalStateException("piece_type=" + piece_type);
 				}
 				
 				
