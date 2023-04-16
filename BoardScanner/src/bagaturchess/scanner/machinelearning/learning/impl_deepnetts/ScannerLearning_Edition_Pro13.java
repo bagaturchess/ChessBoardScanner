@@ -47,18 +47,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_10K 				= 0.000125f;
 	private static final float LEARNING_RATE_16K 				= 0.0000625f;
 	
-	private static final float LEARNING_RATE_NN_UNIVERSAL 		= LEARNING_RATE_200;
-	private static final float LEARNING_RATE_NN_BOOK_SET1 		= LEARNING_RATE_400;
-	private static final float LEARNING_RATE_NN_BOOK_SET2 		= LEARNING_RATE_200;
-	private static final float LEARNING_RATE_NN_BOOK_SET3 		= LEARNING_RATE_200;
-	private static final float LEARNING_RATE_NN_CHESSCOM_SET1 	= LEARNING_RATE_400;
-	private static final float LEARNING_RATE_NN_CHESSCOM_SET2 	= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_NN_CHESS24COM_SET1 = LEARNING_RATE_10;
-	private static final float LEARNING_RATE_NN_LICHESSORG_SET1 = LEARNING_RATE_400;
+	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_1;
 	
-	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.333f;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.49f;
 	
-	private static final boolean EXIT_ON_BIG_DEVIATION 			= true;
+	private static final boolean EXIT_ON_BIG_DEVIATION 			= false;
 	
 	
 	private String INPUT_DIR_NAME;
@@ -103,49 +103,49 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
-													LEARNING_RATE_NN_UNIVERSAL
+													LEARNING_RATE_INIT_NN_UNIVERSAL
 								)
 			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
-													LEARNING_RATE_NN_BOOK_SET1
+													LEARNING_RATE_INIT_NN_BOOK_SET1
 								)
         			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
-													LEARNING_RATE_NN_BOOK_SET2
+													LEARNING_RATE_INIT_NN_BOOK_SET2
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
-													LEARNING_RATE_NN_BOOK_SET3
+													LEARNING_RATE_INIT_NN_BOOK_SET3
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
-													LEARNING_RATE_NN_CHESSCOM_SET1
+													LEARNING_RATE_INIT_NN_CHESSCOM_SET1
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
-													LEARNING_RATE_NN_CHESSCOM_SET2
+													LEARNING_RATE_INIT_NN_CHESSCOM_SET2
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
-													LEARNING_RATE_NN_CHESS24COM_SET1
+													LEARNING_RATE_INIT_NN_CHESS24COM_SET1
 								)
         			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
-													LEARNING_RATE_NN_LICHESSORG_SET1
+													LEARNING_RATE_INIT_NN_LICHESSORG_SET1
 								)
 					);
         	
@@ -247,37 +247,73 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 							
 							//LOGGER.error("Event EPOCH_FINISHED");
 							
-							float current_accuracy = event.getSource().getTrainingAccuracy();
+							//float current_accuracy = event.getSource().getTrainingAccuracy();
 							
-							train_accuracies.add(current_accuracy);
+							train_accuracies.add(event.getSource().getTrainingAccuracy());
+							
+							boolean restart_training = false;
 							
 							if (train_accuracies.size() >= 2) {
 								
-								float prev_accuracy = train_accuracies.get(train_accuracies.size() - 2);
+								/*if (trainer.getMaxError() == Float.NaN) {
+									
+									LOGGER.error(OUTPUT_FILE_NAME + " trainer.getMaxError() == Float.NaN");
+									
+									restart_training = true;
+								}
+								*/
 								
-								if (current_accuracy == 0 || current_accuracy < prev_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_accuracy) {
+								float last_accuracy = train_accuracies.get(train_accuracies.size() - 1);
+								float prev_last_accuracy = train_accuracies.get(train_accuracies.size() - 2);
+								
+								if (train_accuracies.size() >= 3) {
 									
-									LOGGER.error(OUTPUT_FILE_NAME + " current_accuracy < prev_accuracy - 0.05f * prev_accuracy, current_accuracy=" + current_accuracy + " prev_accuracy=" + prev_accuracy);
-									
-									LEARNING_RATE *= (1 + LEARNING_RATE_MAX_TOLERANCE);
-									
-									LOGGER.error("Decreasing LEARNING_RATE to " + LEARNING_RATE);
-									
-									train_accuracies.clear();
-									
-									trainer.stop();
-									
-									if (EXIT_ON_BIG_DEVIATION) {
+									float prev_prev_last_accuracy = train_accuracies.get(train_accuracies.size() - 3);
+								
+									if (last_accuracy < 0.051f) {
 										
-										System.exit(0);
+										float EPSILON = 0.000000001f;
+										
+										if (Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON) {
+									
+											LOGGER.error(OUTPUT_FILE_NAME + " Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON, EPSILON=" + EPSILON);
+											
+											restart_training = true;
+										}
 									}
+									
+									//last_accuracy == 0 || 
+									
+								}
+								
+								if (last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy) {
+									
+									LOGGER.error(OUTPUT_FILE_NAME + " last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy, last_accuracy=" + last_accuracy + " prev_last_accuracy=" + prev_last_accuracy);
+									
+									restart_training = true;
 								}
 							}
 							
-						} /*else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
+							if (restart_training) {
+								
+								train_accuracies.clear();
+								
+								trainer.stop();
+								
+								if (EXIT_ON_BIG_DEVIATION) {
+									
+									System.exit(0);
+								}
+							}
+							
+						} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
 						
-							//LOGGER.error("event STOPPED");
-						}*/
+							train_accuracies.clear();
+							
+							LEARNING_RATE *= (1 - LEARNING_RATE_MAX_TOLERANCE);
+							
+							LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
+						}
 					}
 				});
 	            		
@@ -340,10 +376,10 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 			
 			neuralNet =  ConvolutionalNetwork.builder()
 	                .addInputLayer(imageWidth, imageHeight, 3)
-	                .addConvolutionalLayer(3, 3, 3)
-	                //.addMaxPoolingLayer(4, 4, 1)
-	                //.addConvolutionalLayer(3)
-	                //.addMaxPoolingLayer(4, 1)
+	                .addConvolutionalLayer(3, 5, 5)
+	                .addMaxPoolingLayer(2, 2)
+	                .addConvolutionalLayer(3, 5, 5)
+	                .addMaxPoolingLayer(2, 2)
 	                .addFullyConnectedLayer(4 * labelsCount)
 	                .addOutputLayer(labelsCount, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)

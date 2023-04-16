@@ -51,13 +51,19 @@ public class Test {
             netsNames.add("dnet_books_set_1_extended.dnet");
             netsNames.add("dnet_books_set_2_extended.dnet");
             netsNames.add("dnet_books_set_3_extended.dnet");
-            netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_chesscom_set_1_extended.dnet");
             netsNames.add("dnet_chesscom_set_2_extended.dnet");
+            netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_lichessorg_set_1_extended.dnet");
-            //netsNames.add("dnet_universal_extended.dnet");
+            netsNames.add("dnet_universal_extended.dnet");
             
-            		
+            
+            /*netsNames.add("dnet_books_set_1.dnet");
+            netsNames.add("dnet_chesscom_set_1.dnet");
+            netsNames.add("dnet_chess24com_set_1.dnet");
+            netsNames.add("dnet_lichessorg_set_1.dnet");
+            */
+            
             //Create NNs variations
             List<List<String>> nets_variations = new ArrayList<List<String>>();
             
@@ -142,7 +148,7 @@ public class Test {
     				}
     			}
     			
-    			text_result += "variation" + variation + " count_all=" + count_all + " count_successful=" + count_successful + "\r\n";
+    			text_result += net_names + " variation" + variation + " count_all=" + count_all + " count_successful=" + count_successful + "\r\n";
             }
 			
         	System.out.println(text_result);
