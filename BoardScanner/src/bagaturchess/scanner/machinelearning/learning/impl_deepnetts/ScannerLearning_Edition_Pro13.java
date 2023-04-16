@@ -308,11 +308,19 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 							
 						} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
 						
-							train_accuracies.clear();
-							
-							LEARNING_RATE *= (1 - LEARNING_RATE_MAX_TOLERANCE);
-							
-							LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
+							if (train_accuracies.size() >= 1) {
+								
+								float last_accuracy = train_accuracies.get(train_accuracies.size() - 1);
+								
+								if (last_accuracy != 1f) {
+								
+									train_accuracies.clear();
+									
+									LEARNING_RATE *= (1 - LEARNING_RATE_MAX_TOLERANCE);
+									
+									LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
+								}
+							}
 						}
 					}
 				});
