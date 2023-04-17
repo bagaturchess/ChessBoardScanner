@@ -48,7 +48,7 @@ public class DatasetGenerator_ByBoardImage {
 		
 		//boolean extend = gen_data.flag1;
 		
-		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.output_dir, extend_set);
+		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.dataset_dir, extend_set);
 		
 		final List<Object> images = new ArrayList<Object>();
 		final List<Integer> pids = new ArrayList<Integer>();
@@ -58,7 +58,7 @@ public class DatasetGenerator_ByBoardImage {
 			pids.addAll(pairs[i].getPIDs());
 		}
 		
-		createIndex(gen_data.output_dir);
+		createIndex(gen_data.dataset_dir);
 	}
 	
 	

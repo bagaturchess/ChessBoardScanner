@@ -341,7 +341,7 @@ public class SupervisedData {
 	};
 	
 	
-	public String output_dir;
+	public String dataset_dir;
 	
 	public String[] input_files;
 	
@@ -358,7 +358,7 @@ public class SupervisedData {
 	}
 	
 	public SupervisedData(String _output_dir, String[] _input_files, String[] _fens, Object[] _props, boolean _flag1) {
-		output_dir = _output_dir;
+		dataset_dir = _output_dir;
 		input_files = _input_files;
 		fens = _fens;
 		props = _props;
