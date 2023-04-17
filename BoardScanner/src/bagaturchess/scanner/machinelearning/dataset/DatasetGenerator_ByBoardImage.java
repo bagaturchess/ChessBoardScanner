@@ -15,6 +15,9 @@ import bagaturchess.scanner.machinelearning.SupervisedData;
 public class DatasetGenerator_ByBoardImage {
 	
 	
+	private static final boolean EXTEND_SETS = true;
+	
+	
 	public static void main(String[] args) {
 		
 		try {
@@ -26,11 +29,11 @@ public class DatasetGenerator_ByBoardImage {
 			
 			for (int i = 0; i < all_source_sets.length; i++) {
 				
-				gen1Set_In1Dir(all_source_sets[i]);
+				gen1Set_In1Dir(all_source_sets[i], EXTEND_SETS);
 			}
 
 			
-			genAllSets_In1Dir(all_source_sets, "./datasets_deepnetts/dataset_universal_extended/", false);
+			genAllSets_In1Dir(all_source_sets, "./datasets_deepnetts/dataset_universal_extended/", EXTEND_SETS);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,13 +42,13 @@ public class DatasetGenerator_ByBoardImage {
 	}
 
 	
-	private static void gen1Set_In1Dir(SupervisedData gen_data) throws IOException {
+	private static void gen1Set_In1Dir(SupervisedData gen_data, boolean extend_set) throws IOException {
 			
 		BoardProperties boardProperties = new BoardProperties(256);
 		
-		boolean extend = gen_data.flag1;
+		//boolean extend = gen_data.flag1;
 		
-		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.output_dir, extend);
+		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.output_dir, extend_set);
 		
 		final List<Object> images = new ArrayList<Object>();
 		final List<Integer> pids = new ArrayList<Integer>();
