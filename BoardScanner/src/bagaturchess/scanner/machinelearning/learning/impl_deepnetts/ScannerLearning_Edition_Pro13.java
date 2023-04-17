@@ -47,18 +47,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_10K 				= 0.000125f;
 	private static final float LEARNING_RATE_16K 				= 0.0000625f;
 	
-	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_1;
-	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_50;
 	
-	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.49f;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.333f;
 	
-	private static final boolean EXIT_ON_BIG_DEVIATION 			= false;
+	private static final boolean EXIT_ON_BIG_DEVIATION 			= true;
 	
 	
 	private String INPUT_DIR_NAME;
@@ -245,6 +245,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 						
 						if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
 							
+							LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
+							
 							//LOGGER.error("Event EPOCH_FINISHED");
 							
 							//float current_accuracy = event.getSource().getTrainingAccuracy();
@@ -270,23 +272,21 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 									
 									float prev_prev_last_accuracy = train_accuracies.get(train_accuracies.size() - 3);
 								
-									if (last_accuracy < 0.051f) {
+									if (last_accuracy < 0.975f) {
 										
-										float EPSILON = 0.000000001f;
+										float EPSILON = 0.00001f;
 										
 										if (Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON) {
 									
-											LOGGER.error(OUTPUT_FILE_NAME + " Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON, EPSILON=" + EPSILON);
+											//LOGGER.error(OUTPUT_FILE_NAME + " Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON, EPSILON=" + EPSILON);
 											
-											restart_training = true;
+											//restart_training = true;
 										}
 									}
 									
-									//last_accuracy == 0 || 
-									
 								}
 								
-								if (last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy) {
+								if (last_accuracy == 0 || last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy) {
 									
 									LOGGER.error(OUTPUT_FILE_NAME + " last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy, last_accuracy=" + last_accuracy + " prev_last_accuracy=" + prev_last_accuracy);
 									
@@ -307,20 +307,20 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 							}
 							
 						} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
-						
-							if (train_accuracies.size() >= 1) {
+							
+							if (train_accuracies.size() >= 1) { //Stopped by the Deepnetts framework, otherwise in EPOCH_FINISHED the train_accuracies will be cleaned.
 								
 								float last_accuracy = train_accuracies.get(train_accuracies.size() - 1);
 								
 								if (last_accuracy != 1f) {
 								
 									train_accuracies.clear();
-									
-									LEARNING_RATE *= (1 - LEARNING_RATE_MAX_TOLERANCE);
-									
-									LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
 								}
 							}
+							
+							LEARNING_RATE *= 0.5f;
+							
+							LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
 						}
 					}
 				});

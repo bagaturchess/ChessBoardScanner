@@ -20,7 +20,7 @@ public class DatasetGenerator_ByBoardImage {
 		try {
 			
 			
-			//genSingle(gen_data_chesscom_set1);
+			//gen1Set_In1Dir(SupervisedData.gen_data_book_set2);
 			
 			SupervisedData[] all_source_sets = SupervisedData.source_set_all;
 			
@@ -31,7 +31,6 @@ public class DatasetGenerator_ByBoardImage {
 
 			
 			genAllSets_In1Dir(all_source_sets, "./datasets_deepnetts/dnet_universal_extended/", true);
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -30,10 +30,12 @@ public class SupervisedData {
 			new String[] {
 					"./res/cnn/books/set2/input1.png",
 					"./res/cnn/books/set2/input2.png",
+					"./res/cnn/books/set2/input3.png",
 			},
 			new String[] {
 					Test.INITIAL_FEN,
-					"r5k1/1b3N2/8/8/6n1/1R4B1/6K1/8 w - - 0 1"
+					"r5k1/1b3N2/8/8/6n1/1R4B1/6K1/8 w - - 0 1",
+					"3Q2nr/5qpp/2k5/8/8/8/2B3PP/6K1 w - - 0 1"
 			},
 			true);
 	
@@ -154,8 +156,11 @@ public class SupervisedData {
 	
 	
 	public static final SupervisedData[] source_set_all = new SupervisedData[] {
-			gen_data_book_set1, gen_data_book_set2, gen_data_book_set3,
-			gen_data_chesscom_set1, gen_data_chesscom_set2,
+			gen_data_book_set1,
+			gen_data_book_set2,
+			gen_data_book_set3,
+			gen_data_chesscom_set1,
+			gen_data_chesscom_set2,
 			gen_data_chess24com_set1,
 			gen_data_lichessorg_set1
 			};
