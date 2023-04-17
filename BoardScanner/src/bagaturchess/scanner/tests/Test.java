@@ -148,7 +148,7 @@ public class Test {
     				}
     			}
     			
-    			text_result += net_names + " variation" + variation + " count_all=" + count_all + " count_successful=" + count_successful + "\r\n";
+    			text_result += ((variation == nets_variations.size() - 1) ? "ALL" : net_names) + " variation" + variation + " count_all=" + count_all + " count_successful=" + count_successful + "\r\n";
             }
 			
         	System.out.println(text_result);

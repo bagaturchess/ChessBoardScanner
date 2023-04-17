@@ -101,7 +101,7 @@ public class ProbabilitiesCalculator_Gray extends ProbabilitiesCalculator {
 			
 			if (j == 0 || j == 13) {//empty square
 				
-				continue;
+				//continue;
 			}
 			
 			float cur_val = output[j];

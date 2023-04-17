@@ -133,8 +133,8 @@ public abstract class MatcherFinder_Base {
 				throw new IllegalStateException("currentProb=" + currentProb);
 			}
 			
-				
 			//currentProb += (max_mean - scanners_stats.get(i).getEntropy());
+			
 			//currentProb /= max_amount / scanners_stats.get(i).getTotalAmount();
 		
 			if (currentProb > 1) {
