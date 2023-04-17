@@ -55,10 +55,11 @@ public class NetworkModel_RGB extends NetworkModel<ConvolutionalNetwork> {
 			System.out.println("Creating network ...");
 			network =  ConvolutionalNetwork.builder()
 	                .addInputLayer(squareSize, squareSize, 3)
-	                .addConvolutionalLayer(5, 5, 64)
+	                .addConvolutionalLayer(3, 3, 3)
 	                .addMaxPoolingLayer(2, 2)
-	                .addConvolutionalLayer(3, 3, 16)
+	                .addConvolutionalLayer(3, 3, 3)
 	                .addMaxPoolingLayer(2, 2)
+	                .addFullyConnectedLayer(8 * 13)
 	                .addOutputLayer(13, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)
 	                .lossFunction(LossType.CROSS_ENTROPY)

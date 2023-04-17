@@ -45,6 +45,9 @@ import static bagaturchess.bitboard.impl1.internal.ChessConstants.ROOK;
 public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 	
 	
+	private static final double TRANSLATIONS_RATIO = 0.01;
+	
+	
 	private String dirToSave;
 	
 	
@@ -74,13 +77,17 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 			
 			translations.add(graySquare);
 			
+			int fillColour = (int) (256d * Math.random());
+			
+			/*int fillColour = lightAndDarkSquaresColors.getSecond().intValue();
 			int avg_color = MatrixUtils.getAVG(graySquare);
-			int fillColour = lightAndDarkSquaresColors.getSecond().intValue();
 			if (Math.abs(avg_color - lightAndDarkSquaresColors.getFirst().intValue()) <=  Math.abs(avg_color - lightAndDarkSquaresColors.getSecond().intValue())) {
 				fillColour = lightAndDarkSquaresColors.getFirst().intValue();
+				
 			}
+			*/
 			
-			if (extend) translations.addAll(MatrixUtils.generateShifts(graySquare, 0.05, fillColour));
+			if (extend) translations.addAll(MatrixUtils.generateShifts(graySquare, TRANSLATIONS_RATIO, fillColour));
 			
 			//System.out.println(translations.size());
 			

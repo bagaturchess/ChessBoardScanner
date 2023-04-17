@@ -76,8 +76,8 @@ public class Test {
             
             
             //Run the tests
-			//SupervisedData[] all_sets = SupervisedData.source_set_all;
-			SupervisedData[] all_sets = SupervisedData.test_set_all;
+			SupervisedData[] all_sets = SupervisedData.source_set_all;
+			//SupervisedData[] all_sets = SupervisedData.test_set_all;
 			
             String text_result = "";
             

@@ -27,38 +27,42 @@ import org.apache.logging.log4j.Logger;
 
 public class ScannerLearning_Edition_Pro13 implements Runnable {
 	
-
-	private static final float MAX_ERROR_MEAN_CROSS_ENTROPY 	= 0.0001f;
 	
-	private static final float MAX_ERROR_MEAN_SQUARED_ERROR 	= MAX_ERROR_MEAN_CROSS_ENTROPY / 1000f;
+	private static final long SAVE_NET_FILE_INTERVAL 					= 3 * 60 * 1000;
 	
-	private static final float LEARNING_RATE_1 					= 1f;
-	private static final float LEARNING_RATE_10 				= 0.1f;
-	private static final float LEARNING_RATE_50 				= 0.02f;
-	private static final float LEARNING_RATE_100 				= 0.01f;
-	private static final float LEARNING_RATE_200 				= 0.005f;
-	private static final float LEARNING_RATE_400 				= 0.0025f;
-	private static final float LEARNING_RATE_800 				= 0.00125f;
+	private static final float MAX_ERROR_MEAN_CROSS_ENTROPY 			= 0.0001f;
 	
-	private static final float LEARNING_RATE_1K 				= 0.001f;
-	private static final float LEARNING_RATE_2K 				= 0.0005f;
-	private static final float LEARNING_RATE_4K 				= 0.00025f;
-	private static final float LEARNING_RATE_8K 				= 0.000125f;
-	private static final float LEARNING_RATE_10K 				= 0.000125f;
-	private static final float LEARNING_RATE_16K 				= 0.0000625f;
+	private static final float MAX_ERROR_MEAN_SQUARED_ERROR 			= MAX_ERROR_MEAN_CROSS_ENTROPY / 1000f;
+	
+	private static final float LEARNING_RATE_1 							= 1f;
+	private static final float LEARNING_RATE_10 						= 0.1f;
+	private static final float LEARNING_RATE_20 						= 0.05f;
+	private static final float LEARNING_RATE_50 						= 0.02f;
+	private static final float LEARNING_RATE_100 						= 0.01f;
+	private static final float LEARNING_RATE_200 						= 0.005f;
+	private static final float LEARNING_RATE_400 						= 0.0025f;
+	private static final float LEARNING_RATE_800 						= 0.00125f;
+	
+	private static final float LEARNING_RATE_1K 						= 0.001f;
+	private static final float LEARNING_RATE_2K 						= 0.0005f;
+	private static final float LEARNING_RATE_4K 						= 0.00025f;
+	private static final float LEARNING_RATE_8K 						= 0.000125f;
+	private static final float LEARNING_RATE_10K 						= 0.000125f;
+	private static final float LEARNING_RATE_16K 						= 0.0000625f;
 	
 	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_50;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_50;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_100;
 	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_50;
-	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_50;
-	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_100;
 	
-	private static final float LEARNING_RATE_MAX_TOLERANCE 		= 0.333f;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.333f;
 	
-	private static final boolean EXIT_ON_BIG_DEVIATION 			= true;
+	private static final boolean AUTO_LEARNING_RATE 					= false;
+	private static final boolean EXIT_ON_BIG_DEVIATION 					= true;
 	
 	
 	private String INPUT_DIR_NAME;
@@ -199,7 +203,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     					
     					while (!finished) {
     						
-    				        Thread.currentThread().sleep(60000);
+    				        Thread.sleep(SAVE_NET_FILE_INTERVAL);
     				        
     				        if (neural_net[0] != null) {
     				        	
@@ -227,7 +231,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
             
             final List<Float> train_accuracies = new ArrayList<Float>();
             
-            while (train_accuracies.size() == 0) {
+            do {
             	
             	loop_counter++;
             	
@@ -243,6 +247,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 					@Override
 					public void handleEvent(TrainingEvent event) {
 						
+						train_accuracies.add(event.getSource().getTrainingAccuracy());
+						
+						if (event.getSource().getTrainingAccuracy() == 1f) {
+							
+							return;
+						}
+						
 						if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
 							
 							LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
@@ -251,7 +262,6 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 							
 							//float current_accuracy = event.getSource().getTrainingAccuracy();
 							
-							train_accuracies.add(event.getSource().getTrainingAccuracy());
 							
 							boolean restart_training = false;
 							
@@ -310,12 +320,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 							
 							if (train_accuracies.size() >= 1) { //Stopped by the Deepnetts framework, otherwise in EPOCH_FINISHED the train_accuracies will be cleaned.
 								
-								float last_accuracy = train_accuracies.get(train_accuracies.size() - 1);
-								
-								if (last_accuracy != 1f) {
-								
-									train_accuracies.clear();
-								}
+								train_accuracies.clear();
 							}
 							
 							LEARNING_RATE *= 0.5f;
@@ -352,9 +357,12 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	
 	            ConfusionMatrix cm = evaluator.getConfusionMatrix();
 	            LOGGER.info(cm.toString());*/
-            }
+            	
+            } while (AUTO_LEARNING_RATE && train_accuracies.size() == 0);
+            
             
             finished = true;
+            
             
         } catch (Throwable t) {
         	
@@ -384,11 +392,14 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 			
 			neuralNet =  ConvolutionalNetwork.builder()
 	                .addInputLayer(imageWidth, imageHeight, 3)
-	                .addConvolutionalLayer(3, 5, 5)
+	                .addConvolutionalLayer(3, 2, 2)
 	                .addMaxPoolingLayer(2, 2)
-	                .addConvolutionalLayer(3, 5, 5)
+	                .addConvolutionalLayer(3, 2, 2)
 	                .addMaxPoolingLayer(2, 2)
-	                .addFullyConnectedLayer(4 * labelsCount)
+	                //TODO: test with 3 Convolutional Layers
+	                //.addConvolutionalLayer(3, 2, 2)
+	                //.addMaxPoolingLayer(2, 2)
+	                .addFullyConnectedLayer(8 * labelsCount)
 	                .addOutputLayer(labelsCount, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)
 	                .lossFunction(LossType.CROSS_ENTROPY)

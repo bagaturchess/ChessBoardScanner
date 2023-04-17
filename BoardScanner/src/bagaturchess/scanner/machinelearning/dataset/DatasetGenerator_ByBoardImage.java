@@ -30,7 +30,7 @@ public class DatasetGenerator_ByBoardImage {
 			}
 
 			
-			genAllSets_In1Dir(all_source_sets, "./datasets_deepnetts/dnet_universal_extended/", true);
+			genAllSets_In1Dir(all_source_sets, "./datasets_deepnetts/dataset_universal_extended/", false);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,7 +42,10 @@ public class DatasetGenerator_ByBoardImage {
 	private static void gen1Set_In1Dir(SupervisedData gen_data) throws IOException {
 			
 		BoardProperties boardProperties = new BoardProperties(256);
-		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.output_dir, gen_data.flag1);
+		
+		boolean extend = gen_data.flag1;
+		
+		DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(boardProperties, gen_data.input_files, gen_data.fens, gen_data.output_dir, extend);
 		
 		final List<Object> images = new ArrayList<Object>();
 		final List<Integer> pids = new ArrayList<Integer>();
