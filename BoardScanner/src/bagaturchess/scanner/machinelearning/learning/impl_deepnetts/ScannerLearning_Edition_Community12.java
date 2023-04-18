@@ -53,27 +53,27 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 	private static final float LEARNING_RATE_8K 						= 0.000125f;
 	private static final float LEARNING_RATE_10K 						= 0.000125f;
 	private static final float LEARNING_RATE_16K 						= 0.0000625f;
+
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_1;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_1;
 	
-	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_100; // / 8f;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_2K; //  / 4f;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_100; //  / 4f;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_100; //  / 8f;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_200; //  / 4f;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_100; //  / 4f;
-	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_100; //  / 4f;
-	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_10; //  / 8f;
-	
-	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.05f;
+	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 		= 0.157f;
 	
 	private static final boolean AUTO_LEARNING_RATE 					= true;
 	
-	private static final int INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT 	= 5;
+	private static final int INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT 	= 7;
 
 	private static final Map<String, Float> global_accuracies 			= new Hashtable<String, Float>();
 	private static final Map<String, Integer> global_epochs 			= new Hashtable<String, Integer>();
 	private static final Map<String, Long> global_times 				= new Hashtable<String, Long>();
 	
-    private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
+    private static final Logger LOGGER 									= LogManager.getLogger(DeepNetts.class.getName());
     
     
 	private String INPUT_DIR_NAME;
@@ -86,20 +86,29 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 	private String trainingFile;
     
     
-	private int imageWidth = 32;
-	private int imageHeight = 32;
+	private int imageWidth 												= 32;
+	private int imageHeight 											= 32;
     
 	
-	private boolean finished = false;
+	private boolean finished 											= false;
 	
 	private int AUTO_LEARNING_RATE_EPOCHS_COUNT 						= INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT;
 	
-    
-    private ScannerLearning_Edition_Community12(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE) {
+	private float LEARNING_RATE_MAX_TOLERANCE 							= INITIAL_LEARNING_RATE_MAX_TOLERANCE;
+	
+	
+	private ScannerLearning_Edition_Community12(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE) {
+		
+		this(_INPUT_DIR_NAME, _OUTPUT_FILE_NAME, _LEARNING_RATE, INITIAL_LEARNING_RATE_MAX_TOLERANCE);
+	}
+	
+	
+    private ScannerLearning_Edition_Community12(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE, float _LEARNING_RATE_MAX_TOLERANCE) {
     	
     	INPUT_DIR_NAME = _INPUT_DIR_NAME;
     	OUTPUT_FILE_NAME = _OUTPUT_FILE_NAME;
     	LEARNING_RATE = _LEARNING_RATE;
+    	LEARNING_RATE_MAX_TOLERANCE = _LEARNING_RATE_MAX_TOLERANCE;
     	
     	labelsFile = INPUT_DIR_NAME + "labels.txt";
     	trainingFile = INPUT_DIR_NAME + "index.txt";
@@ -114,12 +123,6 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
         	
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
-        	
-        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
-													"dnet_universal_extended.dnet",
-													LEARNING_RATE_INIT_NN_UNIVERSAL
-								)
-			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
@@ -163,6 +166,13 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 								)
 					);
 
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
+													"dnet_universal_extended.dnet",
+													LEARNING_RATE_INIT_NN_UNIVERSAL,
+													0.49f
+								)
+			);
+        	
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
@@ -241,10 +251,8 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
             
             if (AUTO_LEARNING_RATE) {
             
-	            float LEARNING_RATE_MIN = LEARNING_RATE_1K;
-	            float LEARNING_RATE_MAX = LEARNING_RATE_10;
-	            
-	            LEARNING_RATE = LEARNING_RATE_MAX;
+	            float LEARNING_RATE_MIN = LEARNING_RATE_10K;
+	            float LEARNING_RATE_MAX = LEARNING_RATE;
 	            
 	            int loop_counter = 0;
 	            

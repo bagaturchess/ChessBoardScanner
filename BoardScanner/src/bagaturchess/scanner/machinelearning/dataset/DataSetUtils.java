@@ -26,7 +26,15 @@ public class DataSetUtils {
 	
 	private static DataSetInitPair getInitPair_Gray(BoardProperties boardProperties, String fileName, String FEN, String genDir, boolean extend_set) throws IOException {
 		
-		BufferedImage boardImage = ImageIO.read(new File(fileName));
+		File file = new File(fileName);
+		
+		if (!file.exists()) {
+			
+			throw new IllegalStateException("File not found: " + fileName);
+		}
+		
+		BufferedImage boardImage = ImageIO.read(file);
+		
 		boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
 		
 		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage, FEN, genDir, extend_set);
