@@ -17,7 +17,9 @@ import deepnetts.util.FileIO;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,6 +37,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float MAX_ERROR_MEAN_SQUARED_ERROR 			= MAX_ERROR_MEAN_CROSS_ENTROPY / 1000f;
 	
 	private static final float LEARNING_RATE_1 							= 1f;
+	private static final float LEARNING_RATE_2 							= 0.5f;
+	private static final float LEARNING_RATE_4 							= 0.25f;
 	private static final float LEARNING_RATE_10 						= 0.1f;
 	private static final float LEARNING_RATE_20 						= 0.05f;
 	private static final float LEARNING_RATE_50 						= 0.02f;
@@ -50,21 +54,28 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_10K 						= 0.000125f;
 	private static final float LEARNING_RATE_16K 						= 0.0000625f;
 	
-	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_100;
-	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_100; // / 8f;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_2K; //  / 4f;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_100; //  / 4f;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_100; //  / 8f;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_200; //  / 4f;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_100; //  / 4f;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_100; //  / 4f;
+	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_10; //  / 8f;
 	
-	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.333f;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.05f;
 	
-	private static final boolean AUTO_LEARNING_RATE 					= false;
-	private static final boolean EXIT_ON_BIG_DEVIATION 					= true;
+	private static final boolean AUTO_LEARNING_RATE 					= true;
 	
+	private static final int INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT 	= 5;
+
+	private static final Map<String, Float> global_accuracies 			= new Hashtable<String, Float>();
+	private static final Map<String, Integer> global_epochs 			= new Hashtable<String, Integer>();
+	private static final Map<String, Long> global_times 				= new Hashtable<String, Long>();
 	
+    private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
+    
+    
 	private String INPUT_DIR_NAME;
 	private String OUTPUT_FILE_NAME;
 	private float LEARNING_RATE;
@@ -81,9 +92,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	
 	private boolean finished = false;
 	
+	private int AUTO_LEARNING_RATE_EPOCHS_COUNT 						= INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT;
 	
-    private static final Logger LOGGER = LogManager.getLogger(DeepNetts.class.getName());
-    
     
     private ScannerLearning_Edition_Pro13(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, float _LEARNING_RATE) {
     	
@@ -152,15 +162,16 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 													LEARNING_RATE_INIT_NN_LICHESSORG_SET1
 								)
 					);
-        	
+
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
 			for (Runnable learning: learningTasks) {
+				
 				executor.execute(learning);
 			}
 			
-
+			
 		} catch (Throwable t) {
 			
 			t.printStackTrace();
@@ -180,6 +191,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight);
         
         //This is important: with gray scale images, the recognition of chess board squares works better!
+        //Available only in Pro version of Deep Netts
         imageSet.setGrayscale(true);
         
         imageSet.loadLabels(new File(labelsFile));
@@ -225,148 +237,202 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
             saverThread.start();
             
             
-            int loop_counter = 0;
-            
             int labelsCount = imageSet.getLabelsCount();
             
-            final List<Float> train_accuracies = new ArrayList<Float>();
+            if (AUTO_LEARNING_RATE) {
             
-            do {
-            	
-            	loop_counter++;
-            	
-            	LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " LEARNING_RATE=" + LEARNING_RATE + " try " + loop_counter);
-            	
-            	neural_net[0] = getNewOrLoadNetwork(new File(OUTPUT_FILE_NAME), labelsCount);
-            	
-	            // create a trainer and train network
-	            final BackpropagationTrainer trainer = neural_net[0].getTrainer();
+	            float LEARNING_RATE_MIN = LEARNING_RATE_1K;
+	            float LEARNING_RATE_MAX = LEARNING_RATE_10;
 	            
-	            trainer.addListener(new TrainingListener() {
-					
-					@Override
-					public void handleEvent(TrainingEvent event) {
+	            LEARNING_RATE = LEARNING_RATE_MAX;
+	            
+	            int loop_counter = 0;
+	            
+	            final List<Float> training_learning_rates = new ArrayList<Float>();
+	            final List<Float> training_accuracies = new ArrayList<Float>();
+	            
+	            while (LEARNING_RATE >= LEARNING_RATE_MIN) {
+	            	
+	            	training_learning_rates.add(0f);
+	            	
+	            	training_accuracies.add(0f);
+	            	
+	            	loop_counter++;
+	            	
+	            	LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " LEARNING_RATE=" + LEARNING_RATE + " test " + loop_counter);
+	            	
+	            	neural_net[0] = getNewOrLoadNetwork(new File(OUTPUT_FILE_NAME), labelsCount);
+	            	
+	            	// create a trainer and train network
+		            final BackpropagationTrainer trainer = neural_net[0].getTrainer();
+		            
+	            	trainer.addListener(new TrainingListener() {
 						
-						train_accuracies.add(event.getSource().getTrainingAccuracy());
-						
-						if (event.getSource().getTrainingAccuracy() == 1f) {
+						@Override
+						public void handleEvent(TrainingEvent event) {
 							
-							return;
+							float accuracy = event.getSource().getTrainingAccuracy();
+							
+							if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
+								
+								LOGGER.info("TEST EPOCH_FINISHED for " + OUTPUT_FILE_NAME + " and learning rate " + LEARNING_RATE + " accuracy is " + accuracy);
+								
+								AUTO_LEARNING_RATE_EPOCHS_COUNT--;
+								
+								float prev_accuracy =  training_accuracies.get(training_accuracies.size() - 1);
+								
+								if (accuracy < prev_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_accuracy) {
+									
+									accuracy = 0;
+								}
+								
+				            	training_learning_rates.set(training_learning_rates.size() - 1, LEARNING_RATE);
+				            	
+				            	training_accuracies.set(training_accuracies.size() - 1, accuracy);
+				            	
+				            	
+								if (AUTO_LEARNING_RATE_EPOCHS_COUNT == 0
+										|| accuracy == 0
+									) {
+									
+									trainer.stop();
+								}
+								
+							} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
+								
+								AUTO_LEARNING_RATE_EPOCHS_COUNT = INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT;
+								
+								LEARNING_RATE *= 0.5f;
+								
+								LOGGER.error(OUTPUT_FILE_NAME + " decreasing LEARNING_RATE to " + LEARNING_RATE);
+							}
 						}
-						
-						if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
-							
-							LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
-							
-							//LOGGER.error("Event EPOCH_FINISHED");
-							
-							//float current_accuracy = event.getSource().getTrainingAccuracy();
-							
-							
-							boolean restart_training = false;
-							
-							if (train_accuracies.size() >= 2) {
-								
-								/*if (trainer.getMaxError() == Float.NaN) {
-									
-									LOGGER.error(OUTPUT_FILE_NAME + " trainer.getMaxError() == Float.NaN");
-									
-									restart_training = true;
-								}
-								*/
-								
-								float last_accuracy = train_accuracies.get(train_accuracies.size() - 1);
-								float prev_last_accuracy = train_accuracies.get(train_accuracies.size() - 2);
-								
-								if (train_accuracies.size() >= 3) {
-									
-									float prev_prev_last_accuracy = train_accuracies.get(train_accuracies.size() - 3);
-								
-									if (last_accuracy < 0.975f) {
-										
-										float EPSILON = 0.00001f;
-										
-										if (Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON) {
-									
-											//LOGGER.error(OUTPUT_FILE_NAME + " Math.abs(last_accuracy - prev_last_accuracy) < EPSILON && Math.abs(prev_last_accuracy - prev_prev_last_accuracy) < EPSILON, EPSILON=" + EPSILON);
-											
-											//restart_training = true;
-										}
-									}
-									
-								}
-								
-								if (last_accuracy == 0 || last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy) {
-									
-									LOGGER.error(OUTPUT_FILE_NAME + " last_accuracy < prev_last_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_last_accuracy, last_accuracy=" + last_accuracy + " prev_last_accuracy=" + prev_last_accuracy);
-									
-									restart_training = true;
-								}
-							}
-							
-							if (restart_training) {
-								
-								train_accuracies.clear();
-								
-								trainer.stop();
-								
-								if (EXIT_ON_BIG_DEVIATION) {
-									
-									System.exit(0);
-								}
-							}
-							
-						} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
-							
-							if (train_accuracies.size() >= 1) { //Stopped by the Deepnetts framework, otherwise in EPOCH_FINISHED the train_accuracies will be cleaned.
-								
-								train_accuracies.clear();
-							}
-							
-							LEARNING_RATE *= 0.5f;
-							
-							LOGGER.error(OUTPUT_FILE_NAME + " Decreasing LEARNING_RATE to " + LEARNING_RATE);
-						}
-					}
-				});
-	            		
-	            trainer.setLearningRate(LEARNING_RATE)
-	                    .setMaxError(MAX_ERROR_MEAN_CROSS_ENTROPY)
-	                    .setMaxEpochs(10000);
-	            
-	            
-	            trainer.train(imageSet);
-	            
-	            // Test trained network
-	            /*ClassifierEvaluator evaluator = new ClassifierEvaluator();
-	            evaluator.evaluate(neuralNet, imageSets[1]);
-	            
-	            LOGGER.info("------------------------------------------------");
-	            LOGGER.info("Classification performance measure" + System.lineSeparator());
-	            LOGGER.info("TOTAL AVERAGE");
-	            LOGGER.info(evaluator.getMacroAverage());
-	            LOGGER.info("By Class");
-	            Map<String, EvaluationMetrics> byClass = evaluator.getPerformanceByClass();
-	            
-	            Set<Map.Entry<String, EvaluationMetrics>> entrySet = byClass.entrySet();
-	            for (Map.Entry<String, EvaluationMetrics> curEntry : entrySet) {
-	                LOGGER.info("Class " + curEntry.getKey() + ":");
-	                LOGGER.info(curEntry.getValue());
-	                LOGGER.info("----------------");
+					});
+		            		
+		            trainer.setLearningRate(LEARNING_RATE)
+		                    .setMaxError(MAX_ERROR_MEAN_CROSS_ENTROPY)
+		                    .setMaxEpochs(10000);
+		            
+		            
+		            while (true) {
+		            	
+			            try {
+			            	
+			            	trainer.train(imageSet);
+			            	
+			            	break;
+			            	
+			            } catch (java.util.concurrent.RejectedExecutionException ree) {
+			            	
+			            	ree.printStackTrace();
+			            	
+				            Thread.sleep(1000);
+			            }
+		            }
 	            }
-	
-	            ConfusionMatrix cm = evaluator.getConfusionMatrix();
-	            LOGGER.info(cm.toString());*/
+	            
+	            float best_learning_rate 	= Float.MIN_VALUE;
+	            float best_accuracy 		= Float.MIN_VALUE;
+	            
+	            for (int i = 0; i < training_learning_rates.size(); i++) {
+	            	
+	            	float learning_rate = training_learning_rates.get(i);
+	            	float accuracy 		= training_accuracies.get(i);
+	            	
+	            	if (accuracy > best_accuracy) {
+	            		
+	            		best_accuracy = accuracy;
+	            		best_learning_rate = learning_rate;
+	            	}
+	            }
+	            
+	            LEARNING_RATE = best_learning_rate;
+            }
+            
+            
+            LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with best LEARNING_RATE=" + LEARNING_RATE);
+            
+            neural_net[0] = getNewOrLoadNetwork(new File(OUTPUT_FILE_NAME), labelsCount);
+        	
+            final Integer[] epochs_count = new Integer[1];
+            final long start_time = System.currentTimeMillis();
+            
+            // create a trainer and train network
+            final BackpropagationTrainer trainer = neural_net[0].getTrainer();
+            
+            trainer.addListener(new TrainingListener() {
+				
+				@Override
+				public void handleEvent(TrainingEvent event) {
+					
+					if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
+						
+						if (epochs_count[0] == null) {
+							epochs_count[0] = new Integer(0);
+						}
+						epochs_count[0]++;
+						
+						global_accuracies.put(OUTPUT_FILE_NAME, event.getSource().getTrainingAccuracy());
+						global_epochs.put(OUTPUT_FILE_NAME, epochs_count[0]);
+						global_times.put(OUTPUT_FILE_NAME, System.currentTimeMillis() - start_time);
+						
+						dumpGlobalAccuracies();
+						
+						LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
+					}
+				}
+			});
+            		
+            trainer.setLearningRate(LEARNING_RATE)
+                    .setMaxError(MAX_ERROR_MEAN_CROSS_ENTROPY)
+                    .setMaxEpochs(10000);
+            
+            
+            while (true) {
             	
-            } while (AUTO_LEARNING_RATE && train_accuracies.size() == 0);
+	            try {
+	            	
+	            	trainer.train(imageSet);
+	            	
+	            	break;
+	            	
+	            } catch (java.util.concurrent.RejectedExecutionException ree) {
+	            	
+	            	ree.printStackTrace();
+	            	
+		            Thread.sleep(1000);
+	            }
+            }
+
+	            
+            // Test trained network
+            /*ClassifierEvaluator evaluator = new ClassifierEvaluator();
+            evaluator.evaluate(neuralNet, imageSets[1]);
             
+            LOGGER.info("------------------------------------------------");
+            LOGGER.info("Classification performance measure" + System.lineSeparator());
+            LOGGER.info("TOTAL AVERAGE");
+            LOGGER.info(evaluator.getMacroAverage());
+            LOGGER.info("By Class");
+            Map<String, EvaluationMetrics> byClass = evaluator.getPerformanceByClass();
             
-            finished = true;
-            
+            Set<Map.Entry<String, EvaluationMetrics>> entrySet = byClass.entrySet();
+            for (Map.Entry<String, EvaluationMetrics> curEntry : entrySet) {
+                LOGGER.info("Class " + curEntry.getKey() + ":");
+                LOGGER.info(curEntry.getValue());
+                LOGGER.info("----------------");
+            }
+
+            ConfusionMatrix cm = evaluator.getConfusionMatrix();
+            LOGGER.info(cm.toString());*/
             
         } catch (Throwable t) {
         	
         	t.printStackTrace();
+        	
+        } finally {
+        	
+        	finished = true;
         }
     }
 
@@ -397,8 +463,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	                .addConvolutionalLayer(3, 2, 2)
 	                .addMaxPoolingLayer(2, 2)
 	                //TODO: test with 3 Convolutional Layers
-	                //.addConvolutionalLayer(3, 2, 2)
-	                //.addMaxPoolingLayer(2, 2)
+	                .addConvolutionalLayer(3, 2, 2)
+	                .addMaxPoolingLayer(2, 2)
 	                .addFullyConnectedLayer(8 * labelsCount)
 	                .addOutputLayer(labelsCount, ActivationType.SOFTMAX)
 	                .hiddenActivationFunction(ActivationType.TANH)
@@ -411,6 +477,31 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 		}
 		
 		return neuralNet;
+	}
+	
+	
+	private static final void dumpGlobalAccuracies() {
+		
+		for (String net_name: global_accuracies.keySet()) {
+			
+			float accuracy = global_accuracies.get(net_name);
+			int epochs = global_epochs.get(net_name);
+			long time = global_times.get(net_name);
+			
+			System.out.println(net_name + " accuracy is " + accuracy + " epochs are " + epochs + " training time is " + time / 1000 + " seconds");
+		}
+		
+	}
+	
+	
+	private static final class TrainingListener_AutoLearningRate implements TrainingListener {
+
+		@Override
+		public void handleEvent(TrainingEvent event) {
+			
+
+		}
+		
 	}
 }
 
