@@ -59,7 +59,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_10;
 	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_10;
 	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_50;
 	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_10;
 	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_50;
 	

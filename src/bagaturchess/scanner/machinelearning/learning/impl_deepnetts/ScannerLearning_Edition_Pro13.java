@@ -124,14 +124,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
 													LEARNING_RATE_INIT_NN_BOOK_SET1
 								)
         			);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													LEARNING_RATE_INIT_NN_BOOK_SET2
 								)
@@ -142,21 +141,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 													LEARNING_RATE_INIT_NN_BOOK_SET3
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
 													LEARNING_RATE_INIT_NN_CHESSCOM_SET1
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													LEARNING_RATE_INIT_NN_CHESSCOM_SET2
 								)
 					);
-        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
@@ -164,19 +160,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								)
         			);
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													LEARNING_RATE_INIT_NN_LICHESSORG_SET1
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
 													LEARNING_RATE_INIT_NN_UNIVERSAL
 								)
 			);
-        	*/
+        	
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
 			
@@ -206,7 +201,11 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         
         //This is important: with gray scale images, the recognition of chess board squares works better!
         //Available only in Pro version of Deep Netts
-        imageSet.setGrayscale(true);
+        if (true) {
+        	
+        	throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
+        	//imageSet.setGrayscale(true);
+        }
         
         imageSet.loadLabels(new File(labelsFile));
         
