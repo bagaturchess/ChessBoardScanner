@@ -1,7 +1,7 @@
 *.class
 *.bin
-BoardScanner/data/*
-JarsShrinker/data*
-BoardScanner/libs/deepnetts_pro13/*
-BoardScanner/datasets_deepnetts/*
-BoardScanner/logs/*
+bin/*
+data/*
+libs/deepnetts_pro13/*
+datasets_deepnetts/*
+logs/*
