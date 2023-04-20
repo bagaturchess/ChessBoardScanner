@@ -156,7 +156,7 @@ class ImageHandlerImpl_AWT implements ImageHandler {
 		
 		String suffix = getSuffix(pid);
 		
-		String fileName = "./res/" + piecesSetName + suffix;
+		String fileName = "./res/sets/" + piecesSetName + suffix;
 		
 		return ImageIO.read(new File(fileName));
 	}

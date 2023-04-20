@@ -40,6 +40,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_2 							= 0.5f;
 	private static final float LEARNING_RATE_4 							= 0.25f;
 	private static final float LEARNING_RATE_10 						= 0.1f;
+	private static final float LEARNING_RATE_15 						= 0.067f;
 	private static final float LEARNING_RATE_20 						= 0.05f;
 	private static final float LEARNING_RATE_50 						= 0.02f;
 	private static final float LEARNING_RATE_100 						= 0.01f;
@@ -54,18 +55,19 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 	private static final float LEARNING_RATE_10K 						= 0.000125f;
 	private static final float LEARNING_RATE_16K 						= 0.0000625f;
 
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_10;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET1 			= LEARNING_RATE_15;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET2 			= LEARNING_RATE_20;
+	private static final float LEARNING_RATE_INIT_NN_BOOK_SET3 			= LEARNING_RATE_100;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET1 		= LEARNING_RATE_15;
+	private static final float LEARNING_RATE_INIT_NN_CHESSCOM_SET2 		= LEARNING_RATE_1K;
 	private static final float LEARNING_RATE_INIT_NN_CHESS24COM_SET1 	= LEARNING_RATE_50;
 	private static final float LEARNING_RATE_INIT_NN_LICHESSORG_SET1 	= LEARNING_RATE_10;
-	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_50;
+	private static final float LEARNING_RATE_INIT_NN_UNIVERSAL 			= LEARNING_RATE_20;
 	
-	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 		= 0.05f;
 	
-	private static final boolean AUTO_LEARNING_RATE 					= true;
+	private static final boolean AUTO_LEARNING_RATE 					= false;
+	
+	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 		= 0.0125f;
 	
 	private static final int INITIAL_AUTO_LEARNING_RATE_EPOCHS_COUNT 	= 10;
 
