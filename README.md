@@ -1,7 +1,3 @@
-# License
-
-The license is GPL-2.0-only
-
 # Overview
 
 This project aims to demonstrate how to extract the chess position in a machine readable format called Forsyth–Edwards Notation (FEN) having the 2D picture of the board.
@@ -27,23 +23,33 @@ The project structure is an eclipse based project, which can be directly importe
 All necessary libraries for Deep Netts and Deeplearning4j are included into the libs folder, but you need to add the OpenCV library version 4.5.1 (java and native parts) and refer them from the project as described here: https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
 The basic main classes could be found in the description below.
 
-# How to Create and Train convolutional neural networks (CNNs)?
+# How to Create and Train convolutional neural networks (CNNs) from given datasets with images of chess boards faving different chess pieces?
 
- - You could create and train CNNs by using the main function of <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Edition_Community12.java/">ScannerLearning_Edition_Community12</a> class.
+ - You could create and train CNNs by using the main function of <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Edition_Community12.java/">bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Edition_Community12</a> class.
  - There are 2 options for the source/input datasets, which contain images as examples of chess pieces in chess board suqare. This is the source of the learning/training:
-   - Datasets option 1: Generate the datasets by Yourself and by running the <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/dataset/DatasetGenerator_ByBoardImage.java/">DatasetGenerator_ByBoardImage</a> main function. More details could be found in the next chapter - "How to create the Datasets by Yourself?".
+   - Datasets option 1: Generate the datasets by Yourself and by running the <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/dataset/DatasetGenerator_ByBoardImage.java/">bagaturchess.scanner.machinelearning.dataset.DatasetGenerator_ByBoardImage</a> main function. More details could be found in the next chapter - "How to create the Datasets by Yourself?".
    - Datasets option 2: Extract the datasates from the uploaded archives files. Select <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/datasets_deepnetts_2023.04.20_T1p.zip">datasets_deepnetts_2023.04.20_T1p.zip</a> or both <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/datasets_deepnetts_2023.04.20_T5p_part1.zip">datasets_deepnetts_2023.04.20_T5p_part1.zip</a> and <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/datasets_deepnetts_2023.04.20_T5p_part2.zip">datasets_deepnetts_2023.04.20_T5p_part2.zip</a>, so after the extraction of the archives, the datasets_deepnetts directory is existing into the current folder /datasets_deepnetts/*
  - After running ScannerLearning_Edition_Community12, we are waiting the training to complete. We wait for all and each CNN training, to achieve accuracy equal to 1 (or close to it e.g. 99.9). In the console logs you could observe the count of epochs and current accuracy level as well as many other information, so you could monitor and supervise (if necessary) the training(s) in order to complete them successuflly and for a minimal amount of time. There is an exemplary log file in ./console.log file.
  - Also, the training may take more or less time on laptop/computer, some trainings need minutes and some hours or even days.
  - One additional aspect is the trainings are using multi-threaded executor in order to train all CNNs in parallel.
- - The learning rate is of key importance for the results and it may vary by datasets although the CNNs architecture is the same, so pay attention in case you plan changes of learning rate or auto learning rate logic. The default values are set to working in a stable way for the given datasets. After mentioning all this, the code should work well automatically most of the time. Last days, this is especially true, after the adjustments of learning rates per each chess pieces set as well as after the implementation/enablement of an automatic optimal learning rate auto-selection.
- - After the training has finished, there are CNN files saving the learned experience, so it can be open by the program later again from a file (e.g. dnet_books_set_1_extended.dnet). 
- - And last but not least, we could validate the newly created CNNs by running all the tests inside the main function of bagaturchess.scanner.tests.Test. It can use as test source, the same datasets as the training process as well as different datasets specified programmatically via a string path.
+ - The learning rate is of key importance for the results and it may vary by datasets although the CNNs architecture is the same, so pay attention in case you plan changes of learning rate or auto learning rate logic. The default values are set to working in a stable way for the given datasets.
+ - After the training has finished, there are CNN files saving the learned experience, so it can be open by the program later again from a file (e.g. dnet_books_set_1_extended.dnet).
+ - You may need to run a few runs in order to achieve high accuracy (>= 99.9%) for all neural networks and trainings. If you achieve high accuracy for some of the trainings, than you could exclude them from the code and run only the one which is needed in order to save CPU time and resources.
+ - And last but not least, we could validate the newly created CNNs by running all the tests inside the main function of <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/tests/Test.java/">bagaturchess.scanner.tests.Test</a>. It can use as test source, the same datasets as the training process as well as different datasets specified programmatically via a string path (in different SupervisedData objects).
+ - And last, after mentioning all of this, the code should work well most of the time. It is especially true, after the adjustments of learning rates and other parameters related with the convolutional layers count (part of CNN architecture) as described in the next chapter.
+
+# How to find the best tparameters for a CNN to be trained and achive high accuracy (>= 99.9%) as well as the training to complete for the less possible time?
+
+ - There are one main challenge when you want to find out why the CNN is not working for a given dataset. This is when the training finishes with Zero or NaN as an output on one extreme and on the other the extreme, having long time strongly fluctoating accuracy level between the ephos, which cannot get stable and grow, so you are not able to produce ntrained network file (*.dnet).
+ - The code and main function of <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Tuning_Edition_Community12.java/">bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Tuning_Edition_Community12</a> class has the purpuse to find out the best parameters which leads to faster training, which on first place completes with high accuracy (>= 99.9%) as well as takes as less as possible time. It varies all possible learning rates and convolutional layers (from 1 to 3), as well as it was tried with different size of the last fully connected layer.
+ - The code runs and generates logs in the console as well as report files on the file system with statistical data for each CNN. Examples could be found under <a href="https://github.com/bagaturchess/ChessBoardScanner/tree/main/tuning/">./tuning/*.dnet.txt</a> directory.
+ - The algorithm uses iterative deepening over the epochs count, starting from 2 and increasing with 2 each iteration, to 4, 6 and etc. We start with 2 epochs, because we need at least 2 sequential accuracies from the training process of 2 epochs, so we could compare them. We don't need trainings wich deviate too much epoch after epoch, as well  as trainings where the accuracy is growing too slow. The first one (which deviate too much) we remove by using the setting INITIAL_LEARNING_RATE_MAX_TOLERANCE, which could be found inside the <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Tuning_Edition_Community12.java/">bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Tuning_Edition_Community12</a> class. For better idea, if for example it is set to 0.157f, this means the maximal drop down of the accuracy epoch after epoch cannot be more than 15.7%. Normally the accuracy is going up most of the time, epoch after epoch. When the oposite happened - the  epoch's accuracy is 0.10 and the next epoch's accuracy is 0.09 will be still be interesting for us and we will continue trying it, but if it is 0.10 and drops for even one epoch with more than 15.7% to let's say 0.08 in our case than we will stop evaluating this option anymore. So the statistics inside <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Tuning_Edition_Community12.java/">bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Tuning_Edition_Community12</a> directory, are based on the "current" INITIAL_LEARNING_RATE_MAX_TOLERANCE = 0.157f (15.7%). In general, they can be done better and provide even more accurate data (e.g. having more clusters for all parameteres matrix elements).
+ - Based with this data we need less time to design and train our CNN to good accuracy level. We need only a few tries with neighbur learning rates (2f * learning_rate and learning rate / 2f) or to find the best values, which in some cases need more runs to complete with high accuracy (>= 99.9%) for a reasonable time.
 
 # How to create the Datasets by Yourself?
 
  - The app uses the input chess board images inside <a href="https://github.com/bagaturchess/ChessBoardScanner/tree/main/res/cnn/">./res/cnn/*</a> directory. Currently (19.04.2023) there are 7 chess pieces sets = 3 book sets + 2 chess.com sets + 1 chess24.com set + 1 lichess.org set.
- - We generate datasets for these initial board positions in each chess pieces set. We use <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/dataset/DatasetGenerator_ByBoardImage.java/">DatasetGenerator_ByBoardImage</a> main function for this purpose. All datasets are generated under ./datasets_deepnetts/*
+ - We generate datasets for these initial board positions in each chess pieces set. We use <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/dataset/DatasetGenerator_ByBoardImage.java/">bagaturchess.scanner.machinelearning.dataset.DatasetGenerator_ByBoardImage</a> main function for this purpose. All datasets are generated under ./datasets_deepnetts/*
 
 # How to create an additional dataset for given chess set and do a CNN training of a new Convolutional Neural Network?
 
@@ -57,9 +63,9 @@ The basic main classes could be found in the description below.
 # Directions for further development
 
   -  Simplification and automation of the process so we have predictable results each time.
-  -  Extend the solution to work with chess diagrams drawn on paper, this will save a lot of positions from old books in computer format.
   -  Add support for additional popular online chess sites, which can be recognized by the program.
-  -  Restructuring of the old code base.
+  -  Extend the solution to work with chess diagrams drawn on paper, this will save a lot of positions from old books in computer format.
+  -  Restructuring/Refactoring/Improvements of the old code base.
   -  Improve board corners detection, besides the currently used algorithms: findChessBoardCorners by build-in function, findChessBoardCorners by Hough lines and findChessBoardCorners by contours. This is not highest prio after the implementation of the manual correction capabilities for the board corners into the Android version of the app.
 
 # Do you like the project?
@@ -83,3 +89,6 @@ This project would not be possible without:
 
 Good luck!
 
+# License
+
+The license is GPL-2.0-only

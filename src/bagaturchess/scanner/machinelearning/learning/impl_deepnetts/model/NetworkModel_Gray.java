@@ -46,23 +46,8 @@ public class NetworkModel_Gray extends NetworkModel<ConvolutionalNetwork> {
 			
 			if (true) {
 				
-				throw new IllegalStateException();
+				throw new IllegalStateException("Use NetworkModelBuilder class");
 			}
-			
-			System.out.println("Creating network ...");
-			network =  ConvolutionalNetwork.builder()
-	                .addInputLayer(squareSize, squareSize, 1)
-	                .addConvolutionalLayer(3, 3, 3)
-	                .addMaxPoolingLayer(2, 2)
-	                .addConvolutionalLayer(3, 3, 3)
-	                .addMaxPoolingLayer(2, 2)
-	                .addFullyConnectedLayer(8 * 13)
-	                .addOutputLayer(13, ActivationType.SOFTMAX)
-	                .hiddenActivationFunction(ActivationType.TANH)
-	                .lossFunction(LossType.CROSS_ENTROPY)
-	                .randomSeed(777)
-	                .build();
-			System.out.println("Network created.");	
 		}
 	}
 	
