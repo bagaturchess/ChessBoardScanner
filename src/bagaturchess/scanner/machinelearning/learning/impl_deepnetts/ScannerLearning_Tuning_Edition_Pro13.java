@@ -51,15 +51,23 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	private static final int MAX_COUNT_CNN_LAYERS 							= 2;
 	
 	private static final int INITIAL_SIZE_CONVOLUTION_FILTER				= 2;
-	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 2;
-	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 6;
+	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 1;
+	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 2;
+	
+	private static final int INITIAL_SIZE_MAXPOOLING_FILTER					= 1;
+	private static final int STEP_SIZE_MAXPOOLING_FILTER					= 1;
+	private static final int MAX_SIZE_MAXPOOLING_FILTER 					= 3;
+	
+	private static final int INITIAL_STRIDE_MAXPOOLING_FILTER				= 1;
+	private static final int STEP_STRIDE_MAXPOOLING_FILTER					= 1;
+	private static final int MAX_STRIDE_MAXPOOLING_FILTER 					= 3;
 	
 	private static final int INITIAL_MULTIPLIER_FULLY_CONNECTED				= 9; //1
 	private static final int STEP_MULTIPLIER_FULLY_CONNECTED 				= 1; //4;
 	private static final int MAX_MULTIPLIER_FULLY_CONNECTED 				= 9; //13;
 	
-	private static final float MIN_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_400;
-	private static final float MAX_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_20;
+	private static final float MIN_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_100;
+	private static final float MAX_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_10;
 	
 	
 	private static final Map<String, TrainingStatistics> GLOBAL_STATS 		= new Hashtable<String, TrainingStatistics>();
@@ -132,6 +140,7 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet"
 								)
+					);
 			*/
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
@@ -218,144 +227,168 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	            	
 	            	for (int convolution_filter_size = INITIAL_SIZE_CONVOLUTION_FILTER; convolution_filter_size <= MAX_SIZE_CONVOLUTION_FILTER; convolution_filter_size += STEP_SIZE_CONVOLUTION_FILTER) {
 	            		
-		             	for (int size_fully_connected_layer = INITIAL_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer <= MAX_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer += STEP_MULTIPLIER_FULLY_CONNECTED * labels_count) {
-		             		
-		    	            float LEARNING_RATE_MIN 					= MIN_LEARNING_RATE;
-		    	            float LEARNING_RATE_MAX 					= MAX_LEARNING_RATE;
-		    	            
-		    	            final List<Float> training_accuracies 		= new ArrayList<Float>();
-		    	            
-		    	            final int[] current_layers_count 			= new int[] {convolution_layers_count};
-		    	            final int[] current_filter_size 			= new int[] {convolution_filter_size};
-		    	            
-		    	            final float[] current_learning_rate 		= new float[] {LEARNING_RATE_MAX};
-		    	            
-		    	            while (current_learning_rate[0] >= LEARNING_RATE_MIN) {
-		    	            	
-		        	            final int[] current_size_fully_connected_layers = new int[] {size_fully_connected_layer};
-		        	            
-		    	            	neural_net[0] 									= NetworkModelBuilder.build(TrainingUtils.SQUARE_IMAGE_SIZE, labels_count, convolution_layers_count, convolution_filter_size, size_fully_connected_layer);
-		    	            	
-		    	            	// create a trainer and train network
-		    		            final BackpropagationTrainer trainer 			= neural_net[0].getTrainer();
-		    		            
-		    		            final int[] current_count_epochs 				= new int[count_epochs];
-		    	            	
-		    		            final VarStatistic stats_accuracy 				= new VarStatistic();
-		    		            final VarStatistic stats_accuracy_trend 		= new VarStatistic();
-		    		    		
-		    	            	training_accuracies.add(0f);
-		    	            	
-		    	            	loop_counter++;
-		    	            	
-		    	            	LOGGER.error("Starting training for " + output_file_name + " LEARNING_RATE=" + current_learning_rate[0] + " test " + loop_counter);
-								
-		    	            	final long start_time = System.currentTimeMillis();
-		    	            	
-		    	            	trainer.addListener(new TrainingListener() {
-		    						
-		    						@Override
-		    						public void handleEvent(TrainingEvent event) {
-		    							
-		    							float accuracy = event.getSource().getTrainingAccuracy();
-		    							
-		    							if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
-		    								
-		    								String net_parameters_str = "_" + current_layers_count[0]
-		    										+ "_" + current_filter_size[0]
-		    										+ "_" + current_size_fully_connected_layers[0]
-		    										+ "_" + current_learning_rate[0];
-		    								
-		    								String net_name = output_file_name + net_parameters_str;
-		    								
-		    								LOGGER.info("TEST EPOCH " + (current_count_epochs[0] + 1) + " FINISHED for " + net_name + " accuracy is " + accuracy);
-		    								
-		    								float prev_accuracy =  training_accuracies.get(training_accuracies.size() - 1);
-		    								
-		    								if (accuracy < prev_accuracy - learning_rate_deviation_max_tolerance * prev_accuracy) {
-		    									
-		    									accuracy = 0;
-		    								}
-		    								
-		    				            	training_accuracies.set(training_accuracies.size() - 1, accuracy);
-		    				            	
-		        							stats_accuracy.addValue(accuracy);
-		        							stats_accuracy_trend.addValue(accuracy - prev_accuracy);
-		        							
-		        							AutoTuningParameters params = new TrainingUtils.AutoTuningParameters(current_layers_count[0], current_filter_size[0], current_size_fully_connected_layers[0], current_learning_rate[0]);
-		        							
-		        							System.out.println("count_epochs=" + count_epochs);
-		        							System.out.println("current_count_epochs[0]=" + current_count_epochs[0]);
-		        							System.out.println("MAX_EPOCH=" + (count_epochs - current_count_epochs[0]));
-		        							
-		    								GLOBAL_STATS.put(
-		    										
-		    										net_name,
-		    										
-		    										new TrainingStatistics(
-		    											output_file_name,
-		    											net_parameters_str,
-			    										accuracy,
-			    										System.currentTimeMillis() - start_time,
-			    										count_epochs - current_count_epochs[0],
-			    										params,
-			    										stats_accuracy,
-			    										stats_accuracy_trend
-			    									)
-		    								);
-		    								
-		    								try {
-		    									
-												dumpGlobalStatistics();
-												
-											} catch (FileNotFoundException e) {
-												
-												e.printStackTrace();
-											}
-		    								
-		    								if (accuracy == 0) {
-		    									
-		    									current_count_epochs[0] = 1;
-		    								}
-		    								
-		    								current_count_epochs[0]--;
-		    								
-		    								if (current_count_epochs[0] <= 0) {
-		    									
-		    									trainer.stop();
-		    								}
-		    								
-		    							} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
-		    								
-		    								//Do nothing
-		    							}
-		    						}
-		    					});
-		    		            
-		    		            trainer.setLearningRate(current_learning_rate[0])
-		    		                    .setMaxError(TrainingUtils.MAX_ERROR_MEAN_CROSS_ENTROPY)
-		    		                    .setMaxEpochs(TrainingUtils.MAX_EPOCHS);
-		    		            
-		    		            while (true) {
-		    		            	
-		    			            try {
-		    			            	
-		    			            	trainer.train(imageSet);
-		    			            	
-		    			            	break;
-		    			            	
-		    			            } catch (java.util.concurrent.RejectedExecutionException ree) {
-		    			            	
-		    			            	System.out.println("RejectedExecutionException - will retry.");
-		    			            	//ree.printStackTrace();
-		    			            	
-		    				            Thread.sleep(1000);
-		    			            }
-		    		            }
-		    		            
-		    		            current_learning_rate[0] = 0.5f * current_learning_rate[0];
-		    	            }
-		            	}
+	            		for (int maxpooling_filter_size = INITIAL_SIZE_MAXPOOLING_FILTER; maxpooling_filter_size <= MAX_SIZE_MAXPOOLING_FILTER; maxpooling_filter_size += STEP_SIZE_MAXPOOLING_FILTER) {
+	            		
+	            			for (int maxpooling_filter_stride = INITIAL_STRIDE_MAXPOOLING_FILTER; maxpooling_filter_stride <= MAX_STRIDE_MAXPOOLING_FILTER; maxpooling_filter_stride += STEP_STRIDE_MAXPOOLING_FILTER) {
+	            		
+				             	for (int size_fully_connected_layer = INITIAL_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer <= MAX_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer += STEP_MULTIPLIER_FULLY_CONNECTED * labels_count) {
+				             		
+				    	            float LEARNING_RATE_MIN 						= MIN_LEARNING_RATE;
+				    	            float LEARNING_RATE_MAX 						= MAX_LEARNING_RATE;
+				    	            
+				    	            final List<Float> training_accuracies 			= new ArrayList<Float>();
+				    	            
+				    	            final int[] current_layers_count 				= new int[] {convolution_layers_count};
+				    	            final int[] current_convolutional_filter_size 	= new int[] {convolution_filter_size};
+				    	            final int[] current_maxpooling_filter_size 		= new int[] {maxpooling_filter_size};
+				    	            final int[] current_maxpooling_filter_stride 	= new int[] {maxpooling_filter_stride};
+				    	            final float[] current_learning_rate 			= new float[] {LEARNING_RATE_MAX};
+				    	            
+				    	            while (current_learning_rate[0] >= LEARNING_RATE_MIN) {
+				    	            	
+				        	            final int[] current_size_fully_connected_layers = new int[] {size_fully_connected_layer};
+				        	            
+				    	            	neural_net[0] 									= NetworkModelBuilder.build(
+															    	            			TrainingUtils.SQUARE_IMAGE_SIZE,
+															    	            			labels_count,
+															    	            			convolution_layers_count,
+															    	            			convolution_filter_size,
+															    	            			maxpooling_filter_size,
+															    	            			maxpooling_filter_stride,
+															    	            			size_fully_connected_layer
+				    	            			);
+				    	            	
+				    	            	// create a trainer and train network
+				    		            final BackpropagationTrainer trainer 			= neural_net[0].getTrainer();
+				    		            
+				    		            final int[] current_count_epochs 				= new int[count_epochs];
+				    	            	
+				    		            final VarStatistic stats_accuracy 				= new VarStatistic();
+				    		            final VarStatistic stats_accuracy_trend 		= new VarStatistic();
+				    		    		
+				    	            	training_accuracies.add(0f);
+				    	            	
+				    	            	loop_counter++;
+				    	            	
+				    	            	LOGGER.error("Starting training for " + output_file_name + " LEARNING_RATE=" + current_learning_rate[0] + " test " + loop_counter);
+										
+				    	            	final long start_time = System.currentTimeMillis();
+				    	            	
+				    	            	trainer.addListener(new TrainingListener() {
+				    						
+				    						@Override
+				    						public void handleEvent(TrainingEvent event) {
+				    							
+				    							float accuracy = event.getSource().getTrainingAccuracy();
+				    							
+				    							if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
+				    								
+				    								String net_parameters_str = "_" + current_layers_count[0]
+				    										+ "_" + current_convolutional_filter_size[0]
+				    										+ "_" + current_maxpooling_filter_size[0]
+				    										+ "_" + current_maxpooling_filter_stride[0]
+				    										+ "_" + current_size_fully_connected_layers[0]
+				    										+ "_" + current_learning_rate[0];
+				    								
+				    								String net_name = output_file_name + net_parameters_str;
+				    								
+				    								LOGGER.info("TEST EPOCH " + (current_count_epochs[0] + 1) + " FINISHED for " + net_name + " accuracy is " + accuracy);
+				    								
+				    								float prev_accuracy =  training_accuracies.get(training_accuracies.size() - 1);
+				    								
+				    								if (accuracy < prev_accuracy - learning_rate_deviation_max_tolerance * prev_accuracy) {
+				    									
+				    									accuracy = 0;
+				    								}
+				    								
+				    				            	training_accuracies.set(training_accuracies.size() - 1, accuracy);
+				    				            	
+				        							stats_accuracy.addValue(accuracy);
+				        							stats_accuracy_trend.addValue(accuracy - prev_accuracy);
+				        							
+				        							AutoTuningParameters params = new TrainingUtils.AutoTuningParameters(
+				        									current_layers_count[0],
+				        									current_convolutional_filter_size[0],
+				        									current_maxpooling_filter_size[0],
+				        									current_maxpooling_filter_stride[0],
+				        									current_size_fully_connected_layers[0],
+				        									current_learning_rate[0]
+				        								);
+				        							
+				        							System.out.println("count_epochs=" + count_epochs);
+				        							System.out.println("current_count_epochs[0]=" + current_count_epochs[0]);
+				        							System.out.println("MAX_EPOCH=" + (count_epochs - current_count_epochs[0]));
+				        							
+				    								GLOBAL_STATS.put(
+				    										
+				    										net_name,
+				    										
+				    										new TrainingStatistics(
+				    											output_file_name,
+				    											net_parameters_str,
+					    										accuracy,
+					    										System.currentTimeMillis() - start_time,
+					    										count_epochs - current_count_epochs[0],
+					    										params,
+					    										stats_accuracy,
+					    										stats_accuracy_trend
+					    									)
+				    								);
+				    								
+				    								try {
+				    									
+														dumpGlobalStatistics();
+														
+													} catch (FileNotFoundException e) {
+														
+														e.printStackTrace();
+													}
+				    								
+				    								if (accuracy == 0) {
+				    									
+				    									current_count_epochs[0] = 1;
+				    								}
+				    								
+				    								current_count_epochs[0]--;
+				    								
+				    								if (current_count_epochs[0] <= 0) {
+				    									
+				    									trainer.stop();
+				    								}
+				    								
+				    							} else if (event.getType().equals(TrainingEvent.Type.STOPPED)) {
+				    								
+				    								//Do nothing
+				    							}
+				    						}
+				    					});
+				    		            
+				    		            trainer.setLearningRate(current_learning_rate[0])
+				    		                    .setMaxError(TrainingUtils.MAX_ERROR_MEAN_CROSS_ENTROPY)
+				    		                    .setMaxEpochs(TrainingUtils.MAX_EPOCHS);
+				    		            
+				    		            while (true) {
+				    		            	
+				    			            try {
+				    			            	
+				    			            	trainer.train(imageSet);
+				    			            	
+				    			            	break;
+				    			            	
+				    			            } catch (java.util.concurrent.RejectedExecutionException ree) {
+				    			            	
+				    			            	System.out.println("RejectedExecutionException - will retry.");
+				    			            	//ree.printStackTrace();
+				    			            	
+				    				            Thread.sleep(1000);
+				    			            }
+				    		            }
+				    		            
+				    		            current_learning_rate[0] = 0.5f * current_learning_rate[0];
+				    	            }
+				            	}
+		            		}
+	            		}
 	            	}
 	            }
 	            
@@ -389,6 +422,8 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 				
 				List<Object> scores_lists = new ArrayList<Object>();
 				
+				scores_lists.add(new HashMap<Integer, Float>());
+				scores_lists.add(new HashMap<Integer, Float>());
 				scores_lists.add(new HashMap<Integer, Float>());
 				scores_lists.add(new HashMap<Integer, Float>());
 				scores_lists.add(new HashMap<Integer, Float>());
@@ -428,12 +463,16 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 			
 			if (net_stat.accuracy > 0) {
 				
-				List<Object> scores_lists 							= cnns_tuning_scores.get(net_stat.net_name);
-				Map<Integer, Float> scores_layers 					= (Map<Integer, Float>) scores_lists.get(0);
-				Map<Integer, Float> scores_filter_sizes				= (Map<Integer, Float>) scores_lists.get(1);
-				Map<Integer, Float> scores_fully_connected_sizes 	= (Map<Integer, Float>) scores_lists.get(2);
-				Map<Float, Float> scores_learning_rates 			= (Map<Float, Float>) scores_lists.get(3);
-				List<String> text 									= (List<String>) scores_lists.get(4);
+				
+				List<Object> scores_lists 								= cnns_tuning_scores.get(net_stat.net_name);
+				
+				Map<Integer, Float> scores_layers 						= (Map<Integer, Float>) scores_lists.get(0);
+				Map<Integer, Float> scores_convolutional_filter_sizes	= (Map<Integer, Float>) scores_lists.get(1);
+				Map<Integer, Float> scores_maxpooling_filter_sizes 		= (Map<Integer, Float>) scores_lists.get(2);
+				Map<Integer, Float> scores_maxpooling_filter_strides	= (Map<Integer, Float>) scores_lists.get(3);
+				Map<Integer, Float> scores_fully_connected_sizes 		= (Map<Integer, Float>) scores_lists.get(4);
+				Map<Float, Float> scores_learning_rates 				= (Map<Float, Float>) scores_lists.get(5);
+				List<String> text 										= (List<String>) scores_lists.get(6);
 				
 				text.set(0, text.get(0) + "\r\n" + message);
 				
@@ -449,13 +488,29 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 				scores_layers.replace(net_stat.params.count_convolutional_layers, score + scores_layers.get(net_stat.params.count_convolutional_layers));
 				
 				
-				if (!scores_filter_sizes.containsKey(net_stat.params.convolution_filter_size)) {
+				if (!scores_convolutional_filter_sizes.containsKey(net_stat.params.convolution_filter_size)) {
 					
-					scores_filter_sizes.put(net_stat.params.convolution_filter_size, 0f);
+					scores_convolutional_filter_sizes.put(net_stat.params.convolution_filter_size, 0f);
 				}
 				
-				scores_filter_sizes.replace(net_stat.params.convolution_filter_size, score + scores_filter_sizes.get(net_stat.params.convolution_filter_size));
+				scores_convolutional_filter_sizes.replace(net_stat.params.convolution_filter_size, score + scores_convolutional_filter_sizes.get(net_stat.params.convolution_filter_size));
 				
+				
+				if (!scores_maxpooling_filter_sizes.containsKey(net_stat.params.maxpooling_filter_size)) {
+					
+					scores_maxpooling_filter_sizes.put(net_stat.params.maxpooling_filter_size, 0f);
+				}
+				
+				scores_maxpooling_filter_sizes.replace(net_stat.params.maxpooling_filter_size, score + scores_maxpooling_filter_sizes.get(net_stat.params.maxpooling_filter_size));
+				
+				
+				if (!scores_maxpooling_filter_strides.containsKey(net_stat.params.maxpooling_filter_stride)) {
+					
+					scores_maxpooling_filter_strides.put(net_stat.params.maxpooling_filter_stride, 0f);
+				}
+				
+				scores_maxpooling_filter_strides.replace(net_stat.params.maxpooling_filter_stride, score + scores_maxpooling_filter_strides.get(net_stat.params.maxpooling_filter_stride));
+
 				
 				if (!scores_fully_connected_sizes.containsKey(net_stat.params.size_fully_connected_layer)) {
 					
@@ -477,12 +532,16 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 		
 		for (String net_name_prefix: cnns_tuning_scores.keySet()) {
 			
-			List<Object> scores_lists 							= cnns_tuning_scores.get(net_name_prefix);
-			Map<Integer, Integer> scores_layers 				= (Map<Integer, Integer>) scores_lists.get(0);
-			Map<Integer, Float> scores_filter_sizes				= (Map<Integer, Float>) scores_lists.get(1);
-			Map<Integer, Integer> scores_fully_connected_sizes 	= (Map<Integer, Integer>) scores_lists.get(2);
-			Map<Float, Integer> scores_learning_rates 			= (Map<Float, Integer>) scores_lists.get(3);
-			List<String> text 									= (List<String>) scores_lists.get(4);
+			
+			List<Object> scores_lists 								= cnns_tuning_scores.get(net_name_prefix);
+			
+			Map<Integer, Integer> scores_layers 					= (Map<Integer, Integer>) scores_lists.get(0);
+			Map<Integer, Float> scores_convolutional_filter_sizes	= (Map<Integer, Float>) scores_lists.get(1);
+			Map<Integer, Float> scores_maxpooling_filter_sizes 		= (Map<Integer, Float>) scores_lists.get(2);
+			Map<Integer, Float> scores_maxpooling_filter_strides	= (Map<Integer, Float>) scores_lists.get(3);
+			Map<Integer, Integer> scores_fully_connected_sizes 		= (Map<Integer, Integer>) scores_lists.get(4);
+			Map<Float, Integer> scores_learning_rates 				= (Map<Float, Integer>) scores_lists.get(5);
+			List<String> text 										= (List<String>) scores_lists.get(6);
 			
 			
 			String message = "\r\n";
@@ -492,9 +551,19 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 				message += "\r\nCONVOLUTIONAL LAYERS COUNT: " + cur_scores_layers + " has " + scores_layers.get(cur_scores_layers) + " scores";
 			}
 			
-			for (Integer cur_scores_filter_sizes: scores_filter_sizes.keySet()) {
+			for (Integer cur_scores_convolutional_filter_sizes: scores_convolutional_filter_sizes.keySet()) {
 				
-				message += "\r\nCONVOLUTIONAL FILTER SIZE: " + cur_scores_filter_sizes + " has " + scores_filter_sizes.get(cur_scores_filter_sizes) + " scores";
+				message += "\r\nCONVOLUTIONAL FILTER SIZE: " + cur_scores_convolutional_filter_sizes + " has " + scores_convolutional_filter_sizes.get(cur_scores_convolutional_filter_sizes) + " scores";
+			}
+			
+			for (Integer cur_scores_maxpooling_filter_sizes: scores_maxpooling_filter_sizes.keySet()) {
+				
+				message += "\r\nMAXPOOLING FILTER SIZE: " + cur_scores_maxpooling_filter_sizes + " has " + scores_maxpooling_filter_sizes.get(cur_scores_maxpooling_filter_sizes) + " scores";
+			}
+			
+			for (Integer cur_scores_maxpooling_filter_strides: scores_maxpooling_filter_strides.keySet()) {
+				
+				message += "\r\nMAXPOOLING FILTER STRIDE: " + cur_scores_maxpooling_filter_strides + " has " + scores_maxpooling_filter_strides.get(cur_scores_maxpooling_filter_strides) + " scores";
 			}
 			
 			for (Integer cur_scores_fully_connected_sizes: scores_fully_connected_sizes.keySet()) {

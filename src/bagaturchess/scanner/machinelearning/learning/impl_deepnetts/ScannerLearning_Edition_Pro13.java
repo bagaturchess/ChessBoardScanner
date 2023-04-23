@@ -86,20 +86,17 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 													TrainingUtils.CNN_BOOK_SET1
 								)
         			);
-        	*/
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET2
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
-        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
@@ -107,21 +104,19 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								)
 					);
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													CNN_CHESSCOM_SET2
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
 													TrainingUtils.CNN_CHESS24COM_SET1
 								)
         			);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													TrainingUtils.CNN_LICHESSORG_SET1
 								)

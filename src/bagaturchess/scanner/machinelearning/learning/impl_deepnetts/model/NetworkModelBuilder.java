@@ -31,6 +31,11 @@ public class NetworkModelBuilder {
 	
 	
 	public static final ConvolutionalNetwork build(int square_size, int count_labels, int count_layers, int convolution_filter_size, int size_fully_connected_layer) throws ClassNotFoundException, IOException {
+		
+		return build(square_size, count_labels, count_layers, convolution_filter_size, 2, 2, size_fully_connected_layer);
+	}
+	
+	public static final ConvolutionalNetwork build(int square_size, int count_labels, int count_layers, int convolution_filter_size, int maxpooling_filter_size, int maxpooling_filter_stride, int size_fully_connected_layer) throws ClassNotFoundException, IOException {
 
 		ConvolutionalNetwork neuralNet = null;
 
@@ -43,7 +48,7 @@ public class NetworkModelBuilder {
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
                 .hiddenActivationFunction(ActivationType.TANH)
@@ -58,9 +63,9 @@ public class NetworkModelBuilder {
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
                 .hiddenActivationFunction(ActivationType.TANH)
@@ -75,11 +80,11 @@ public class NetworkModelBuilder {
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
-                .addMaxPoolingLayer(2, 2)
+                .addMaxPoolingLayer(maxpooling_filter_size, maxpooling_filter_stride)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
                 .hiddenActivationFunction(ActivationType.TANH)
