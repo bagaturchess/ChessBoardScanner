@@ -52,7 +52,7 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	
 	private static final int INITIAL_SIZE_CONVOLUTION_FILTER				= 2;
 	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 1;
-	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 5;
+	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 2;
 	
 	private static final int MIN_HAS_MAXPOOLING_LAYER						= 1;
 	private static final int MAX_HAS_MAXPOOLING_LAYER						= 1;
