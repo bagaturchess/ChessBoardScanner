@@ -1,8 +1,6 @@
 
-dnet_books_set_2_extended.dnet accuracy is 0.14462858 epochs are 2 training time is 93 seconds
-dnet_lichessorg_set_1_extended.dnet accuracy is 0.3153388 epochs are 3 training time is 128 seconds
-dnet_books_set_1_extended.dnet accuracy is 0.009415064 epochs are 2 training time is 112 seconds
-dnet_chesscom_set_2_extended.dnet accuracy is 1.0 epochs are 17 training time is 37 seconds
-dnet_books_set_3_extended.dnet accuracy is 0.62654805 epochs are 9 training time is 133 seconds
-dnet_chesscom_set_1_extended.dnet accuracy is 0.12982158 epochs are 3 training time is 111 seconds
-dnet_chess24com_set_1_extended.dnet accuracy is 0.30651826 epochs are 3 training time is 106 seconds
+dnet_books_set_2_extended.dnet accuracy is 0.32125247 epochs are 39 training time is 1078 seconds
+dnet_lichessorg_set_1_extended.dnet accuracy is 1.0 epochs are 34 training time is 920 seconds
+dnet_books_set_1_extended.dnet accuracy is 0.47671077 epochs are 31 training time is 1072 seconds
+dnet_chesscom_set_1_extended.dnet accuracy is 0.41870245 epochs are 43 training time is 1073 seconds
+dnet_chess24com_set_1_extended.dnet accuracy is 0.5191306 epochs are 48 training time is 1065 seconds

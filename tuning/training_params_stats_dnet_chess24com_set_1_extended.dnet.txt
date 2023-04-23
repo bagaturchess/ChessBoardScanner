@@ -1,16 +1,113 @@
 
-dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.27723825 in 26 epochs for 53 seconds
-dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.29713646 in 28 epochs for 50 seconds
-dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.3016042 in 26 epochs for 50 seconds
-dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.31490964 in 28 epochs for 53 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_2_117_0.1 maximal achieved accuracy is 0.009615385 in 2 epochs for 47 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.009615385 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_4_117_0.0125 maximal achieved accuracy is 0.020087264 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_4_117_0.0125 maximal achieved accuracy is 0.0370374 in 2 epochs for 33 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_4_117_0.025 maximal achieved accuracy is 0.041365303 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_4_117_0.025 maximal achieved accuracy is 0.050151393 in 2 epochs for 35 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_3_117_0.0125 maximal achieved accuracy is 0.059483133 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_4_117_0.05 maximal achieved accuracy is 0.06102766 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_4_117_0.0125 maximal achieved accuracy is 0.06334274 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_4_117_0.1 maximal achieved accuracy is 0.0630215 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_4_117_0.0125 maximal achieved accuracy is 0.071298115 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_4_117_0.05 maximal achieved accuracy is 0.07344418 in 2 epochs for 41 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_4_117_0.025 maximal achieved accuracy is 0.07537555 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_4_117_0.025 maximal achieved accuracy is 0.07681086 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_4_117_0.025 maximal achieved accuracy is 0.078588374 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_4_117_0.05 maximal achieved accuracy is 0.08189924 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_4_117_0.05 maximal achieved accuracy is 0.08538019 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_4_117_0.05 maximal achieved accuracy is 0.08661211 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_4_117_0.1 maximal achieved accuracy is 0.085130535 in 2 epochs for 35 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_3_117_0.025 maximal achieved accuracy is 0.08438588 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_3_117_0.0125 maximal achieved accuracy is 0.088900685 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_4_117_0.1 maximal achieved accuracy is 0.09028657 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_4_117_0.0125 maximal achieved accuracy is 0.09024884 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_4_117_0.1 maximal achieved accuracy is 0.09131766 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_3_117_0.0125 maximal achieved accuracy is 0.09386721 in 2 epochs for 44 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_4_117_0.025 maximal achieved accuracy is 0.09496692 in 2 epochs for 36 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_4_117_0.1 maximal achieved accuracy is 0.094129756 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_3_117_0.0125 maximal achieved accuracy is 0.09556957 in 2 epochs for 55 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_3_117_0.05 maximal achieved accuracy is 0.09776847 in 2 epochs for 51 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_4_117_0.1 maximal achieved accuracy is 0.0969266 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_3_117_0.025 maximal achieved accuracy is 0.0977116 in 2 epochs for 56 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_3_117_0.05 maximal achieved accuracy is 0.09809426 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_3_117_0.1 maximal achieved accuracy is 0.09820493 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_4_117_0.05 maximal achieved accuracy is 0.101265684 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_3_117_0.025 maximal achieved accuracy is 0.10344914 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_3_117_0.025 maximal achieved accuracy is 0.10419517 in 2 epochs for 47 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_3_117_0.1 maximal achieved accuracy is 0.10744968 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_3_117_0.05 maximal achieved accuracy is 0.10871911 in 2 epochs for 46 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_4_117_0.0125 maximal achieved accuracy is 0.1080343 in 2 epochs for 35 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_2_117_0.0125 maximal achieved accuracy is 0.10742845 in 2 epochs for 50 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_2_117_0.0125 maximal achieved accuracy is 0.10970134 in 2 epochs for 47 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_3_117_0.1 maximal achieved accuracy is 0.11235856 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_4_117_0.025 maximal achieved accuracy is 0.11311901 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_4_117_0.0125 maximal achieved accuracy is 0.11546311 in 2 epochs for 35 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_4_117_0.025 maximal achieved accuracy is 0.117841326 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_2_117_0.1 maximal achieved accuracy is 0.11767718 in 2 epochs for 47 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_4_117_0.1 maximal achieved accuracy is 0.118595436 in 2 epochs for 36 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_2_117_0.025 maximal achieved accuracy is 0.118262336 in 2 epochs for 49 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_2_117_0.0125 maximal achieved accuracy is 0.11763856 in 2 epochs for 49 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_4_117_0.05 maximal achieved accuracy is 0.119248465 in 2 epochs for 43 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_4_117_0.05 maximal achieved accuracy is 0.11864833 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_5_2_117_0.05 maximal achieved accuracy is 0.12030412 in 2 epochs for 65 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_3_117_0.05 maximal achieved accuracy is 0.120189704 in 2 epochs for 44 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_3_117_0.025 maximal achieved accuracy is 0.120574765 in 2 epochs for 34 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_3_117_0.0125 maximal achieved accuracy is 0.11982308 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_3_117_0.05 maximal achieved accuracy is 0.123457596 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_3_117_0.0125 maximal achieved accuracy is 0.12258683 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_2_117_0.0125 maximal achieved accuracy is 0.124200456 in 2 epochs for 49 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_4_117_0.1 maximal achieved accuracy is 0.12402953 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_3_117_0.0125 maximal achieved accuracy is 0.12959906 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_2_117_0.025 maximal achieved accuracy is 0.13270587 in 2 epochs for 46 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_3_117_0.025 maximal achieved accuracy is 0.1320844 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_2_117_0.025 maximal achieved accuracy is 0.13151751 in 2 epochs for 48 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_2_117_0.0125 maximal achieved accuracy is 0.13144904 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_2_117_0.0125 maximal achieved accuracy is 0.13262966 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_3_117_0.1 maximal achieved accuracy is 0.138425 in 2 epochs for 35 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.14341731 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_2_117_0.025 maximal achieved accuracy is 0.1482643 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_3_117_0.025 maximal achieved accuracy is 0.1465881 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_3_117_0.05 maximal achieved accuracy is 0.14772132 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_3_117_0.1 maximal achieved accuracy is 0.149449 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_2_117_0.1 maximal achieved accuracy is 0.15164898 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_2_117_0.05 maximal achieved accuracy is 0.15397252 in 2 epochs for 50 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_2_117_0.1 maximal achieved accuracy is 0.15347499 in 2 epochs for 51 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_5_2_117_0.05 maximal achieved accuracy is 0.15696129 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_2_117_0.025 maximal achieved accuracy is 0.15967767 in 2 epochs for 48 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_3_117_0.05 maximal achieved accuracy is 0.16063963 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_3_117_0.1 maximal achieved accuracy is 0.16209406 in 2 epochs for 36 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_3_117_0.1 maximal achieved accuracy is 0.16184634 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_2_117_0.025 maximal achieved accuracy is 0.16118203 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.16437954 in 2 epochs for 36 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_2_2_117_0.05 maximal achieved accuracy is 0.16296841 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.16323763 in 2 epochs for 45 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_3_2_117_0.05 maximal achieved accuracy is 0.16471703 in 2 epochs for 51 seconds
+dnet_chess24com_set_1_extended.dnet_2_3_1_4_2_117_0.1 maximal achieved accuracy is 0.17777508 in 2 epochs for 51 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.1795796 in 2 epochs for 42 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.17869298 in 2 epochs for 41 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_2_117_0.05 maximal achieved accuracy is 0.18948182 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.19295338 in 2 epochs for 39 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.19947802 in 2 epochs for 38 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.20433845 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.20705241 in 2 epochs for 37 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.20805338 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_4_2_117_0.1 maximal achieved accuracy is 0.21192679 in 2 epochs for 40 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.22623816 in 2 epochs for 40 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 3.1875 scores
-CONVOLUTIONAL FILTER SIZE 2 has 3.1875 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 3.1875 scores
-MAXPOOLING FILTER SIZE 3 has 3.1875 scores
-MAXPOOLING FILTER STRIDE 2 has 3.1875 scores
-FULLY CONNECTED LAYER SIZE 117 has 3.1875 scores
-LEARNING RATE 0.0125 has 0.71875 scores
-LEARNING RATE 0.1 has 0.78125 scores
-LEARNING RATE 0.025 has 0.8125 scores
-LEARNING RATE 0.05 has 0.875 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 52.086422 scores
+CONVOLUTIONAL FILTER SIZE 2 has 31.296293 scores
+CONVOLUTIONAL FILTER SIZE 3 has 20.790125 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 52.086422 scores
+MAXPOOLING FILTER SIZE 2 has 10.953086 scores
+MAXPOOLING FILTER SIZE 3 has 14.950618 scores
+MAXPOOLING FILTER SIZE 4 has 14.476543 scores
+MAXPOOLING FILTER SIZE 5 has 11.706172 scores
+MAXPOOLING FILTER STRIDE 2 has 22.906172 scores
+MAXPOOLING FILTER STRIDE 3 has 18.767902 scores
+MAXPOOLING FILTER STRIDE 4 has 10.412345 scores
+FULLY CONNECTED LAYER SIZE 117 has 52.086422 scores
+LEARNING RATE 0.1 has 13.572839 scores
+LEARNING RATE 0.0125 has 10.999999 scores
+LEARNING RATE 0.025 has 12.972839 scores
+LEARNING RATE 0.05 has 14.540741 scores

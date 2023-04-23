@@ -1,16 +1,28 @@
 
-dnet_universal_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.052332576 in 2 epochs for 428 seconds
-dnet_universal_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.06299841 in 2 epochs for 328 seconds
-dnet_universal_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.17321454 in 2 epochs for 1294 seconds
-dnet_universal_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.18982825 in 2 epochs for 355 seconds
+dnet_universal_extended.dnet_2_2_1_2_4_117_0.0125 maximal achieved accuracy is 0.009579935 in 2 epochs for 267 seconds
+dnet_universal_extended.dnet_2_2_1_2_4_117_0.025 maximal achieved accuracy is 0.011360677 in 2 epochs for 267 seconds
+dnet_universal_extended.dnet_2_2_1_2_4_117_0.05 maximal achieved accuracy is 0.013857912 in 2 epochs for 267 seconds
+dnet_universal_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.017012572 in 2 epochs for 252 seconds
+dnet_universal_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.015908075 in 2 epochs for 242 seconds
+dnet_universal_extended.dnet_2_2_1_2_4_117_0.1 maximal achieved accuracy is 0.0159362 in 2 epochs for 251 seconds
+dnet_universal_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.0190423 in 2 epochs for 282 seconds
+dnet_universal_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.023089685 in 2 epochs for 387 seconds
+dnet_universal_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.024272451 in 2 epochs for 279 seconds
+dnet_universal_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.04272061 in 2 epochs for 342 seconds
+dnet_universal_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.044595536 in 2 epochs for 272 seconds
+dnet_universal_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.081205174 in 2 epochs for 496 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.18476568 in 2 epochs for 291 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 0.8125 scores
-CONVOLUTIONAL FILTER SIZE 2 has 0.8125 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 0.8125 scores
-MAXPOOLING FILTER SIZE 3 has 0.8125 scores
-MAXPOOLING FILTER STRIDE 2 has 0.8125 scores
-FULLY CONNECTED LAYER SIZE 117 has 0.8125 scores
-LEARNING RATE 0.0125 has 0.03125 scores
-LEARNING RATE 0.025 has 0.0625 scores
-LEARNING RATE 0.1 has 0.34375 scores
-LEARNING RATE 0.05 has 0.375 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 2.0098767 scores
+CONVOLUTIONAL FILTER SIZE 2 has 2.0098767 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 2.0098767 scores
+MAXPOOLING FILTER SIZE 2 has 1.0987655 scores
+MAXPOOLING FILTER SIZE 3 has 0.9111111 scores
+MAXPOOLING FILTER STRIDE 2 has 1.5358025 scores
+MAXPOOLING FILTER STRIDE 3 has 0.2765432 scores
+MAXPOOLING FILTER STRIDE 4 has 0.19753087 scores
+FULLY CONNECTED LAYER SIZE 117 has 2.0098767 scores
+LEARNING RATE 0.0125 has 0.24197532 scores
+LEARNING RATE 0.025 has 0.3876543 scores
+LEARNING RATE 0.05 has 0.25432098 scores
+LEARNING RATE 0.1 has 1.1259259 scores
