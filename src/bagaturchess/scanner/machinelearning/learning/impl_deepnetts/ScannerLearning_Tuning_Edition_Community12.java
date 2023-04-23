@@ -52,18 +52,18 @@ public class ScannerLearning_Tuning_Edition_Community12 implements Runnable {
 	
 	private static final int INITIAL_SIZE_CONVOLUTION_FILTER				= 2;
 	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 1;
-	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 2;
+	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 5;
 	
 	private static final int MIN_HAS_MAXPOOLING_LAYER						= 1;
 	private static final int MAX_HAS_MAXPOOLING_LAYER						= 1;
 	
-	private static final int INITIAL_SIZE_MAXPOOLING_FILTER					= 3;
+	private static final int INITIAL_SIZE_MAXPOOLING_FILTER					= 2;
 	private static final int STEP_SIZE_MAXPOOLING_FILTER					= 1;
-	private static final int MAX_SIZE_MAXPOOLING_FILTER 					= 3;
+	private static final int MAX_SIZE_MAXPOOLING_FILTER 					= 5;
 	
 	private static final int INITIAL_STRIDE_MAXPOOLING_FILTER				= 2;
 	private static final int STEP_STRIDE_MAXPOOLING_FILTER					= 1;
-	private static final int MAX_STRIDE_MAXPOOLING_FILTER 					= 2;
+	private static final int MAX_STRIDE_MAXPOOLING_FILTER 					= 4;
 	
 	private static final int INITIAL_MULTIPLIER_FULLY_CONNECTED				= 9; //1
 	private static final int STEP_MULTIPLIER_FULLY_CONNECTED 				= 1; //4;
@@ -135,7 +135,7 @@ public class ScannerLearning_Tuning_Edition_Community12 implements Runnable {
 								)
         			);
         	
-        	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet"
 								)
 					);
@@ -144,26 +144,29 @@ public class ScannerLearning_Tuning_Edition_Community12 implements Runnable {
 													"dnet_books_set_3_extended.dnet"
 								)
 					);
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet"
 								)
 					);
         	
-        	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet"
 								)
 					);
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet"
 								)
         			);
         	
-        	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet"
 								)
 					);
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet"

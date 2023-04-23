@@ -16,7 +16,9 @@ import deepnetts.net.loss.LossType;
 import deepnetts.util.FileIO;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -81,12 +83,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	List<Runnable> learningTasks = new ArrayList<Runnable>();
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET1
 								)
         			);
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET2
 								)
@@ -97,6 +100,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
@@ -104,11 +108,12 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								)
 					);
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
@@ -116,18 +121,18 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								)
         			);
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													TrainingUtils.CNN_LICHESSORG_SET1
 								)
 					);
         	*/
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
 													TrainingUtils.CNN_UNIVERSAL
 								)
-			);
+			);*/
         	
         	
 			ExecutorService executor = Executors.newFixedThreadPool(learningTasks.size());
@@ -203,14 +208,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 						global_accuracies.put(OUTPUT_FILE_NAME, event.getSource().getTrainingAccuracy());
 						global_epochs.put(OUTPUT_FILE_NAME, epochs_count[0]);
 						global_times.put(OUTPUT_FILE_NAME, System.currentTimeMillis() - start_time);
-						
-						dumpGlobalAccuracies();
-						
-						LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
-				        	
-			        	// Save trained network to file
+			        	
 			        	try {
 			        		
+							dumpGlobalAccuracies();
+							
+							LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
+							
 							FileIO.writeToFile(neural_net[0], OUTPUT_FILE_NAME);
 							
 					        LOGGER.info("Network saved as " + OUTPUT_FILE_NAME);
@@ -278,7 +282,9 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     }
     
     
-	private static final void dumpGlobalAccuracies() {
+	private static final void dumpGlobalAccuracies() throws FileNotFoundException {
+		
+		String message = "";
 		
 		for (String net_name: global_accuracies.keySet()) {
 			
@@ -286,9 +292,23 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 			int epochs = global_epochs.get(net_name);
 			long time = global_times.get(net_name);
 			
-			System.out.println(net_name + " accuracy is " + accuracy + " epochs are " + epochs + " training time is " + time / 1000 + " seconds");
+			message += "\r\n";
+			message += net_name + " accuracy is " + accuracy + " epochs are " + epochs + " training time is " + time / 1000 + " seconds";
 		}
 		
+		System.out.println(message);
+		
+		
+		File dir = new File("./training");
+		
+		if (!dir.exists()) {
+			
+			dir.mkdir();
+		}
+		
+		PrintWriter out_file = new PrintWriter("./training/progress.txt");
+		out_file.println(message);
+		out_file.close();
 	}
 }
 
