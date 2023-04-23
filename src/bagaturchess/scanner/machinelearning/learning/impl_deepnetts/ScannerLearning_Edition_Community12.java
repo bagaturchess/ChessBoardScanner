@@ -83,49 +83,50 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_1_extended/",
 													"dnet_books_set_1_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.05f)
+													TrainingUtils.CNN_BOOK_SET1
 								)
         			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.0125f)
+													TrainingUtils.CNN_BOOK_SET2
 								)
 					);
         	
+        	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.025f)
+													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.1f)
+													TrainingUtils.CNN_CHESSCOM_SET1
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.05f)
+													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.025f)
+													TrainingUtils.CNN_CHESS24COM_SET1
 								)
         			);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
-													new AutoTuningParameters(2, 5, 0.0125f)
+													TrainingUtils.CNN_LICHESSORG_SET1
 								)
 					);
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
-													new AutoTuningParameters(2, 3, 0.025f)
+													TrainingUtils.CNN_UNIVERSAL
 								)
 			);
         	
@@ -153,21 +154,21 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
         LOGGER.info("Training convolutional network");
         LOGGER.info("Loading images...");
         
-        // create a data set from images and labels
-        ImageSet imageSet = new ImageSet(TrainingUtils.SQUARE_IMAGE_SIZE, TrainingUtils.SQUARE_IMAGE_SIZE);
-        
-        //This is important: with gray scale images, the recognition of chess board squares works better!
-        //Available only in Pro version of Deep Netts
-        if (true) {
-        	
-        	throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
-        	//imageSet.setGrayscale(true);
-        }
-        
-        imageSet.loadLabels(new File(labelsFile));
-        
         try {
         	
+            // create a data set from images and labels
+            ImageSet imageSet = new ImageSet(TrainingUtils.SQUARE_IMAGE_SIZE, TrainingUtils.SQUARE_IMAGE_SIZE);
+            
+            //This is important: with gray scale images, the recognition of chess board squares works better!
+            //Available only in Pro version of Deep Netts
+            if (true) {
+            	
+            	//throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
+            	imageSet.setGrayscale(true);
+            }
+            
+            imageSet.loadLabels(new File(labelsFile));
+            
             imageSet.loadImages(new File(trainingFile));
             //ImageSet[] imageSets = imageSet.split(0.7, 0.3);
             
@@ -183,7 +184,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
             
             LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with best parameters=" + training_params);
             
-            neural_net[0] = NetworkModelBuilder.build(TrainingUtils.SQUARE_IMAGE_SIZE, labels_count, training_params.count_convolutional_layers, training_params.size_fully_connected_layer);
+            neural_net[0] = NetworkModelBuilder.build(TrainingUtils.SQUARE_IMAGE_SIZE, labels_count, training_params.count_convolutional_layers, training_params.convolution_filter_size, training_params.size_fully_connected_layer);
             
             // create a trainer and train network
             final BackpropagationTrainer trainer = neural_net[0].getTrainer();

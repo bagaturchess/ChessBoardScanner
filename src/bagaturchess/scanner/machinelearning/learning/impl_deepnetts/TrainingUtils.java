@@ -2,15 +2,32 @@ package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 
 
 public class TrainingUtils {
-
+	
+	
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 5, 0.025f);
+	
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 5, 0.0125f);
+	
+	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 5, 0.025f);
+	
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 5, 0.0125f);
+	
+	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 5, 0.05f);
+	
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 5, 0.025f);
+	
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 5, 0.0125f);
+	
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 13, 0.025f);
+	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
 	
 	public static final long SAVE_NET_FILE_INTERVAL 				= 3 * 60 * 1000;
 	
-	public static final float MAX_ERROR_MEAN_CROSS_ENTROPY 			= 0.00001f;
-	
 	public static final long MAX_EPOCHS 							= 10000;
+	
+	public static final float MAX_ERROR_MEAN_CROSS_ENTROPY 			= 0.00001f;
 	
 	public static final float MAX_ERROR_MEAN_SQUARED_ERROR 			= MAX_ERROR_MEAN_CROSS_ENTROPY / 1000f;
 	
@@ -39,14 +56,18 @@ public class TrainingUtils {
 		
 		public int count_convolutional_layers;
 		
+		public int convolution_filter_size;
+		
 		public int size_fully_connected_layer;
 		
 		public float learning_rate;
 		
 		
-		public AutoTuningParameters(int _count_convolutional_layers, int _size_fully_connected_layer, float _learning_rate) {
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _size_fully_connected_layer, float _learning_rate) {
 			
 			count_convolutional_layers = _count_convolutional_layers;
+			
+			convolution_filter_size = _convolution_filter_size;
 			
 			size_fully_connected_layer = _size_fully_connected_layer;
 			
@@ -57,7 +78,7 @@ public class TrainingUtils {
 		@Override
 		public String toString() {
 			
-			return "AutoTuningParameters: [" + count_convolutional_layers + "	" + size_fully_connected_layer + "	" + learning_rate + "]";
+			return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + size_fully_connected_layer + " " + learning_rate + "]";
 		}
 	}
 }

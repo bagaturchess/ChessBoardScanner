@@ -1,110 +1,21 @@
 
-dnet_universal_extended.dnet_1_65_0.05 maximal achieved accuracy is 0.0 in 2 epochs for 160 seconds
-dnet_universal_extended.dnet_1_65_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 159 seconds
-dnet_universal_extended.dnet_2_13_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 153 seconds
-dnet_universal_extended.dnet_1_52_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 153 seconds
-dnet_universal_extended.dnet_1_52_0.05 maximal achieved accuracy is 0.0 in 2 epochs for 149 seconds
-dnet_universal_extended.dnet_1_39_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 143 seconds
-dnet_universal_extended.dnet_1_39_0.05 maximal achieved accuracy is 0.0 in 2 epochs for 139 seconds
-dnet_universal_extended.dnet_1_26_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 134 seconds
-dnet_universal_extended.dnet_1_26_0.05 maximal achieved accuracy is 0.0 in 2 epochs for 132 seconds
-dnet_universal_extended.dnet_1_13_0.1 maximal achieved accuracy is 0.0 in 2 epochs for 127 seconds
-dnet_universal_extended.dnet_1_13_0.05 maximal achieved accuracy is 0.0 in 2 epochs for 126 seconds
-dnet_universal_extended.dnet_1_13_0.0125 maximal achieved accuracy is 0.00944574 in 2 epochs for 118 seconds
-dnet_universal_extended.dnet_1_13_0.025 maximal achieved accuracy is 0.008593833 in 2 epochs for 121 seconds
-dnet_universal_extended.dnet_2_13_0.003125 maximal achieved accuracy is 0.0106577715 in 2 epochs for 151 seconds
-dnet_universal_extended.dnet_1_26_0.0015625 maximal achieved accuracy is 0.009897922 in 2 epochs for 130 seconds
-dnet_universal_extended.dnet_3_39_0.0015625 maximal achieved accuracy is 0.010692153 in 2 epochs for 163 seconds
-dnet_universal_extended.dnet_1_52_0.025 maximal achieved accuracy is 0.010285614 in 2 epochs for 146 seconds
-dnet_universal_extended.dnet_1_52_0.0015625 maximal achieved accuracy is 0.009995894 in 2 epochs for 145 seconds
-dnet_universal_extended.dnet_3_13_0.0015625 maximal achieved accuracy is 0.009805842 in 2 epochs for 167 seconds
-dnet_universal_extended.dnet_2_13_0.0015625 maximal achieved accuracy is 0.008848094 in 2 epochs for 153 seconds
-dnet_universal_extended.dnet_1_13_0.00625 maximal achieved accuracy is 0.010148426 in 2 epochs for 117 seconds
-dnet_universal_extended.dnet_3_13_0.003125 maximal achieved accuracy is 0.0107372785 in 2 epochs for 174 seconds
-dnet_universal_extended.dnet_1_26_0.0125 maximal achieved accuracy is 0.012564196 in 2 epochs for 130 seconds
-dnet_universal_extended.dnet_3_39_0.003125 maximal achieved accuracy is 0.012061959 in 2 epochs for 168 seconds
-dnet_universal_extended.dnet_1_39_0.003125 maximal achieved accuracy is 0.0119447615 in 2 epochs for 147 seconds
-dnet_universal_extended.dnet_1_26_0.003125 maximal achieved accuracy is 0.0112319 in 2 epochs for 130 seconds
-dnet_universal_extended.dnet_1_39_0.0015625 maximal achieved accuracy is 0.011922798 in 2 epochs for 158 seconds
-dnet_universal_extended.dnet_1_13_0.0015625 maximal achieved accuracy is 0.011232725 in 2 epochs for 118 seconds
-dnet_universal_extended.dnet_2_39_0.1 maximal achieved accuracy is 0.011277055 in 2 epochs for 157 seconds
-dnet_universal_extended.dnet_2_26_0.0015625 maximal achieved accuracy is 0.013896631 in 2 epochs for 154 seconds
-dnet_universal_extended.dnet_1_26_0.00625 maximal achieved accuracy is 0.013317318 in 2 epochs for 129 seconds
-dnet_universal_extended.dnet_3_26_0.003125 maximal achieved accuracy is 0.012881755 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_2_39_0.0015625 maximal achieved accuracy is 0.012673724 in 2 epochs for 158 seconds
-dnet_universal_extended.dnet_1_65_0.0125 maximal achieved accuracy is 0.013027638 in 2 epochs for 148 seconds
-dnet_universal_extended.dnet_2_52_0.1 maximal achieved accuracy is 0.012711432 in 2 epochs for 160 seconds
-dnet_universal_extended.dnet_3_26_0.0015625 maximal achieved accuracy is 0.011800066 in 2 epochs for 171 seconds
-dnet_universal_extended.dnet_2_65_0.0015625 maximal achieved accuracy is 0.014127917 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_1_65_0.003125 maximal achieved accuracy is 0.013856079 in 2 epochs for 147 seconds
-dnet_universal_extended.dnet_3_26_0.1 maximal achieved accuracy is 0.01388404 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_1_52_0.00625 maximal achieved accuracy is 0.015287091 in 2 epochs for 139 seconds
-dnet_universal_extended.dnet_2_26_0.1 maximal achieved accuracy is 0.014907767 in 2 epochs for 160 seconds
-dnet_universal_extended.dnet_1_65_0.0015625 maximal achieved accuracy is 0.01507446 in 2 epochs for 148 seconds
-dnet_universal_extended.dnet_3_39_0.00625 maximal achieved accuracy is 0.0150559945 in 2 epochs for 172 seconds
-dnet_universal_extended.dnet_1_13_0.003125 maximal achieved accuracy is 0.016236003 in 2 epochs for 117 seconds
-dnet_universal_extended.dnet_3_13_0.00625 maximal achieved accuracy is 0.015316798 in 2 epochs for 169 seconds
-dnet_universal_extended.dnet_2_39_0.003125 maximal achieved accuracy is 0.017317731 in 2 epochs for 164 seconds
-dnet_universal_extended.dnet_2_52_0.0015625 maximal achieved accuracy is 0.016805915 in 2 epochs for 166 seconds
-dnet_universal_extended.dnet_1_65_0.025 maximal achieved accuracy is 0.017263994 in 2 epochs for 151 seconds
-dnet_universal_extended.dnet_1_52_0.0125 maximal achieved accuracy is 0.017872509 in 2 epochs for 143 seconds
-dnet_universal_extended.dnet_3_39_0.0125 maximal achieved accuracy is 0.0172717 in 2 epochs for 172 seconds
-dnet_universal_extended.dnet_3_13_0.025 maximal achieved accuracy is 0.01855136 in 2 epochs for 168 seconds
-dnet_universal_extended.dnet_1_52_0.003125 maximal achieved accuracy is 0.019352166 in 2 epochs for 144 seconds
-dnet_universal_extended.dnet_3_26_0.00625 maximal achieved accuracy is 0.019767532 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_1_39_0.0125 maximal achieved accuracy is 0.019031154 in 2 epochs for 142 seconds
-dnet_universal_extended.dnet_1_65_0.00625 maximal achieved accuracy is 0.018469844 in 2 epochs for 145 seconds
-dnet_universal_extended.dnet_2_65_0.003125 maximal achieved accuracy is 0.021674037 in 2 epochs for 169 seconds
-dnet_universal_extended.dnet_1_26_0.025 maximal achieved accuracy is 0.021891935 in 2 epochs for 130 seconds
-dnet_universal_extended.dnet_1_39_0.00625 maximal achieved accuracy is 0.021374056 in 2 epochs for 145 seconds
-dnet_universal_extended.dnet_2_26_0.003125 maximal achieved accuracy is 0.02388333 in 2 epochs for 153 seconds
-dnet_universal_extended.dnet_2_65_0.1 maximal achieved accuracy is 0.024705924 in 2 epochs for 168 seconds
-dnet_universal_extended.dnet_2_52_0.003125 maximal achieved accuracy is 0.025383523 in 2 epochs for 165 seconds
-dnet_universal_extended.dnet_3_39_0.025 maximal achieved accuracy is 0.02440641 in 2 epochs for 179 seconds
-dnet_universal_extended.dnet_3_26_0.025 maximal achieved accuracy is 0.026249526 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_2_13_0.00625 maximal achieved accuracy is 0.025733504 in 2 epochs for 152 seconds
-dnet_universal_extended.dnet_3_26_0.0125 maximal achieved accuracy is 0.026229002 in 2 epochs for 175 seconds
-dnet_universal_extended.dnet_1_39_0.025 maximal achieved accuracy is 0.02778144 in 2 epochs for 141 seconds
-dnet_universal_extended.dnet_2_39_0.0125 maximal achieved accuracy is 0.028038992 in 2 epochs for 161 seconds
-dnet_universal_extended.dnet_2_39_0.00625 maximal achieved accuracy is 0.027632149 in 2 epochs for 160 seconds
-dnet_universal_extended.dnet_3_13_0.0125 maximal achieved accuracy is 0.027075317 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_2_52_0.0125 maximal achieved accuracy is 0.03217682 in 2 epochs for 164 seconds
-dnet_universal_extended.dnet_2_65_0.00625 maximal achieved accuracy is 0.031278424 in 2 epochs for 169 seconds
-dnet_universal_extended.dnet_2_52_0.00625 maximal achieved accuracy is 0.03164149 in 2 epochs for 163 seconds
-dnet_universal_extended.dnet_2_52_0.05 maximal achieved accuracy is 0.0326503 in 2 epochs for 163 seconds
-dnet_universal_extended.dnet_2_26_0.00625 maximal achieved accuracy is 0.03353942 in 2 epochs for 157 seconds
-dnet_universal_extended.dnet_2_39_0.025 maximal achieved accuracy is 0.034987874 in 2 epochs for 182 seconds
-dnet_universal_extended.dnet_3_52_0.1 maximal achieved accuracy is 0.03523507 in 2 epochs for 164 seconds
-dnet_universal_extended.dnet_2_26_0.025 maximal achieved accuracy is 0.03686926 in 2 epochs for 155 seconds
-dnet_universal_extended.dnet_2_65_0.0125 maximal achieved accuracy is 0.03627576 in 2 epochs for 169 seconds
-dnet_universal_extended.dnet_2_65_0.025 maximal achieved accuracy is 0.03736651 in 2 epochs for 171 seconds
-dnet_universal_extended.dnet_3_39_0.05 maximal achieved accuracy is 0.03966536 in 2 epochs for 173 seconds
-dnet_universal_extended.dnet_3_39_0.1 maximal achieved accuracy is 0.040096063 in 2 epochs for 173 seconds
-dnet_universal_extended.dnet_2_65_0.05 maximal achieved accuracy is 0.039727468 in 2 epochs for 174 seconds
-dnet_universal_extended.dnet_3_13_0.05 maximal achieved accuracy is 0.04026722 in 2 epochs for 176 seconds
-dnet_universal_extended.dnet_3_52_0.05 maximal achieved accuracy is 0.04162932 in 2 epochs for 163 seconds
-dnet_universal_extended.dnet_2_52_0.025 maximal achieved accuracy is 0.04219509 in 2 epochs for 162 seconds
-dnet_universal_extended.dnet_2_13_0.05 maximal achieved accuracy is 0.044649217 in 2 epochs for 180 seconds
-dnet_universal_extended.dnet_2_13_0.0125 maximal achieved accuracy is 0.045645162 in 2 epochs for 153 seconds
-dnet_universal_extended.dnet_3_26_0.05 maximal achieved accuracy is 0.044982553 in 2 epochs for 170 seconds
-dnet_universal_extended.dnet_3_13_0.1 maximal achieved accuracy is 0.04667609 in 2 epochs for 178 seconds
-dnet_universal_extended.dnet_2_26_0.0125 maximal achieved accuracy is 0.054238245 in 2 epochs for 177 seconds
-dnet_universal_extended.dnet_2_26_0.05 maximal achieved accuracy is 0.06064506 in 2 epochs for 152 seconds
-dnet_universal_extended.dnet_2_13_0.025 maximal achieved accuracy is 0.05993137 in 2 epochs for 156 seconds
-dnet_universal_extended.dnet_2_39_0.05 maximal achieved accuracy is 0.06779789 in 2 epochs for 160 seconds
+dnet_universal_extended.dnet_2_4_117_0.003125 maximal achieved accuracy is 0.015045048 in 2 epochs for 209 seconds
+dnet_universal_extended.dnet_2_4_117_0.00625 maximal achieved accuracy is 0.019121189 in 2 epochs for 299 seconds
+dnet_universal_extended.dnet_2_4_117_0.0125 maximal achieved accuracy is 0.022351678 in 2 epochs for 203 seconds
+dnet_universal_extended.dnet_2_2_117_0.003125 maximal achieved accuracy is 0.028895445 in 2 epochs for 148 seconds
+dnet_universal_extended.dnet_2_4_117_0.05 maximal achieved accuracy is 0.035088766 in 2 epochs for 205 seconds
+dnet_universal_extended.dnet_2_2_117_0.00625 maximal achieved accuracy is 0.041010316 in 2 epochs for 143 seconds
+dnet_universal_extended.dnet_2_4_117_0.025 maximal achieved accuracy is 0.042900722 in 2 epochs for 202 seconds
+dnet_universal_extended.dnet_2_2_117_0.0125 maximal achieved accuracy is 0.04773671 in 2 epochs for 144 seconds
+dnet_universal_extended.dnet_2_2_117_0.025 maximal achieved accuracy is 0.062897705 in 2 epochs for 144 seconds
+dnet_universal_extended.dnet_2_2_117_0.05 maximal achieved accuracy is 0.11959119 in 2 epochs for 148 seconds
 
-CONVOLUTIONAL LAYERS COUNT: 1 has 956 scores
-CONVOLUTIONAL LAYERS COUNT: 2 has 2145 scores
-CONVOLUTIONAL LAYERS COUNT: 3 has 1270 scores
-FULLY CONNECTED LAYER SIZE: 65 has 683 scores
-FULLY CONNECTED LAYER SIZE: 52 has 788 scores
-FULLY CONNECTED LAYER SIZE: 39 has 1010 scores
-FULLY CONNECTED LAYER SIZE: 26 has 1007 scores
-FULLY CONNECTED LAYER SIZE: 13 has 883 scores
-LEARNING RATE: 0.05 has 793 scores
-LEARNING RATE: 0.1 has 483 scores
-LEARNING RATE: 0.0125 has 748 scores
-LEARNING RATE: 0.025 has 785 scores
-LEARNING RATE: 0.003125 has 499 scores
-LEARNING RATE: 0.0015625 has 368 scores
-LEARNING RATE: 0.00625 has 695 scores
+CONVOLUTIONAL LAYERS COUNT: 2 has 2.6799998 scores
+CONVOLUTIONAL FILTER SIZE: 2 has 1.88 scores
+CONVOLUTIONAL FILTER SIZE: 4 has 0.79999995 scores
+FULLY CONNECTED LAYER SIZE: 117 has 2.6799998 scores
+LEARNING RATE: 0.003125 has 0.19999999 scores
+LEARNING RATE: 0.00625 has 0.36 scores
+LEARNING RATE: 0.0125 has 0.48000002 scores
+LEARNING RATE: 0.05 has 0.88 scores
+LEARNING RATE: 0.025 has 0.76 scores

@@ -30,7 +30,7 @@ import deepnetts.net.loss.LossType;
 public class NetworkModelBuilder {
 	
 	
-	public static final ConvolutionalNetwork build(int square_size, int count_labels, int count_layers, int size_fully_connected_layer) throws ClassNotFoundException, IOException {
+	public static final ConvolutionalNetwork build(int square_size, int count_labels, int count_layers, int convolution_filter_size, int size_fully_connected_layer) throws ClassNotFoundException, IOException {
 
 		ConvolutionalNetwork neuralNet = null;
 
@@ -42,7 +42,7 @@ public class NetworkModelBuilder {
 				
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
@@ -57,9 +57,9 @@ public class NetworkModelBuilder {
 				
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
@@ -74,11 +74,11 @@ public class NetworkModelBuilder {
 				
 				neuralNet =  ConvolutionalNetwork.builder()
                 .addInputLayer(square_size, square_size, 3)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
-                .addConvolutionalLayer(3, 2, 2)
+                .addConvolutionalLayer(3, convolution_filter_size, convolution_filter_size)
                 .addMaxPoolingLayer(2, 2)
                 .addFullyConnectedLayer(size_fully_connected_layer)
                 .addOutputLayer(count_labels, ActivationType.SOFTMAX)
