@@ -1,58 +1,16 @@
 
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_1_117_0.1 maximal achieved accuracy is 0.009615385 in 4 epochs for 61 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_1_117_0.025 maximal achieved accuracy is 0.014636945 in 4 epochs for 64 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_2_117_0.1 maximal achieved accuracy is 0.045446757 in 4 epochs for 26 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_1_117_0.0125 maximal achieved accuracy is 0.050580844 in 4 epochs for 59 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_3_117_0.0125 maximal achieved accuracy is 0.052363947 in 4 epochs for 21 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_3_117_0.025 maximal achieved accuracy is 0.0618827 in 4 epochs for 20 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_3_117_0.1 maximal achieved accuracy is 0.06174556 in 4 epochs for 21 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_3_117_0.05 maximal achieved accuracy is 0.0712946 in 4 epochs for 20 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.0711646 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_2_117_0.0125 maximal achieved accuracy is 0.07447965 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_2_117_0.05 maximal achieved accuracy is 0.09185299 in 4 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_3_117_0.0125 maximal achieved accuracy is 0.12148048 in 2 epochs for 23 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_1_2_117_0.025 maximal achieved accuracy is 0.12840864 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_3_117_0.025 maximal achieved accuracy is 0.1367723 in 2 epochs for 23 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_3_117_0.0125 maximal achieved accuracy is 0.13826272 in 2 epochs for 26 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_1_117_0.025 maximal achieved accuracy is 0.14210364 in 4 epochs for 55 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.14526609 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_2_117_0.0125 maximal achieved accuracy is 0.14980336 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_3_117_0.05 maximal achieved accuracy is 0.1489916 in 2 epochs for 23 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_2_117_0.025 maximal achieved accuracy is 0.16717729 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_1_117_0.0125 maximal achieved accuracy is 0.16703194 in 4 epochs for 53 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_3_117_0.025 maximal achieved accuracy is 0.16898939 in 2 epochs for 26 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.19335079 in 2 epochs for 32 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_3_117_0.05 maximal achieved accuracy is 0.19747496 in 2 epochs for 26 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.19886301 in 4 epochs for 21 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.20132464 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_2_117_0.05 maximal achieved accuracy is 0.20063744 in 2 epochs for 26 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_2_117_0.1 maximal achieved accuracy is 0.20007882 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_3_117_0.1 maximal achieved accuracy is 0.20500602 in 2 epochs for 23 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.21847025 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.23024759 in 2 epochs for 33 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.23908748 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.24702479 in 4 epochs for 24 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_1_117_0.0125 maximal achieved accuracy is 0.25113276 in 2 epochs for 59 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.25054562 in 4 epochs for 20 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_3_117_0.1 maximal achieved accuracy is 0.25447738 in 2 epochs for 27 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.2581997 in 2 epochs for 33 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_1_117_0.0125 maximal achieved accuracy is 0.2644427 in 2 epochs for 68 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_4_1_117_0.025 maximal achieved accuracy is 0.29161644 in 2 epochs for 59 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.32045862 in 2 epochs for 32 seconds
-dnet_chesscom_set_1_extended.dnet_2_2_1_3_1_117_0.025 maximal achieved accuracy is 0.3399582 in 2 epochs for 66 seconds
+dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.2076826 in 4 epochs for 68 seconds
+dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.24029388 in 4 epochs for 97 seconds
+dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.27154878 in 6 epochs for 55 seconds
+dnet_chesscom_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.2740889 in 4 epochs for 55 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 33.125 scores
-CONVOLUTIONAL FILTER SIZE 2 has 33.125 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 33.125 scores
-MAXPOOLING FILTER SIZE 1 has 5.3958335 scores
-MAXPOOLING FILTER SIZE 2 has 8.833333 scores
-MAXPOOLING FILTER SIZE 3 has 10.145834 scores
-MAXPOOLING FILTER SIZE 4 has 8.75 scores
-MAXPOOLING FILTER STRIDE 1 has 7.270833 scores
-MAXPOOLING FILTER STRIDE 2 has 13.958332 scores
-MAXPOOLING FILTER STRIDE 3 has 11.895834 scores
-FULLY CONNECTED LAYER SIZE 117 has 33.125 scores
-LEARNING RATE 0.1 has 7.6458335 scores
-LEARNING RATE 0.025 has 9.666667 scores
-LEARNING RATE 0.0125 has 8.979166 scores
-LEARNING RATE 0.05 has 6.8333335 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 1.8928571 scores
+CONVOLUTIONAL FILTER SIZE 2 has 1.8928571 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 1.8928571 scores
+MAXPOOLING FILTER SIZE 3 has 1.8928571 scores
+MAXPOOLING FILTER STRIDE 2 has 1.8928571 scores
+FULLY CONNECTED LAYER SIZE 117 has 1.8928571 scores
+LEARNING RATE 0.025 has 0.35714287 scores
+LEARNING RATE 0.0125 has 0.42857143 scores
+LEARNING RATE 0.1 has 0.53571427 scores
+LEARNING RATE 0.05 has 0.5714286 scores

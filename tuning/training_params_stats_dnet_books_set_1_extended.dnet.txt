@@ -1,0 +1,16 @@
+
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.093040265 in 2 epochs for 73 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.16892864 in 2 epochs for 74 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.20368974 in 4 epochs for 74 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.30481166 in 2 epochs for 274 seconds
+
+CONVOLUTIONAL LAYERS COUNT 2 has 1.4642859 scores
+CONVOLUTIONAL FILTER SIZE 2 has 1.4642859 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 1.4642859 scores
+MAXPOOLING FILTER SIZE 3 has 1.4642859 scores
+MAXPOOLING FILTER STRIDE 2 has 1.4642859 scores
+FULLY CONNECTED LAYER SIZE 117 has 1.4642859 scores
+LEARNING RATE 0.0125 has 0.035714287 scores
+LEARNING RATE 0.05 has 0.2857143 scores
+LEARNING RATE 0.1 has 0.32142857 scores
+LEARNING RATE 0.025 has 0.8214286 scores

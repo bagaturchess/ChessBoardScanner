@@ -1,0 +1,16 @@
+
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.27723825 in 6 epochs for 48 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.3016042 in 6 epochs for 49 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.31088626 in 6 epochs for 69 seconds
+dnet_chess24com_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.31490964 in 6 epochs for 49 seconds
+
+CONVOLUTIONAL LAYERS COUNT 2 has 3.142857 scores
+CONVOLUTIONAL FILTER SIZE 2 has 3.142857 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 3.142857 scores
+MAXPOOLING FILTER SIZE 3 has 3.142857 scores
+MAXPOOLING FILTER STRIDE 2 has 3.142857 scores
+FULLY CONNECTED LAYER SIZE 117 has 3.142857 scores
+LEARNING RATE 0.0125 has 0.60714287 scores
+LEARNING RATE 0.025 has 0.78571427 scores
+LEARNING RATE 0.1 has 0.85714287 scores
+LEARNING RATE 0.05 has 0.89285713 scores
