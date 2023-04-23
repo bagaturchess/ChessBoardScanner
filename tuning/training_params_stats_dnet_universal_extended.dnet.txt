@@ -1,21 +1,16 @@
 
-dnet_universal_extended.dnet_2_2_1_1_3_117_0.1 maximal achieved accuracy is 0.008586443 in 2 epochs for 126 seconds
-dnet_universal_extended.dnet_2_2_1_1_1_117_0.0125 maximal achieved accuracy is 0.008723635 in 2 epochs for 372 seconds
-dnet_universal_extended.dnet_2_2_1_1_3_117_0.05 maximal achieved accuracy is 0.009410136 in 2 epochs for 135 seconds
-dnet_universal_extended.dnet_2_2_1_1_3_117_0.025 maximal achieved accuracy is 0.0124392 in 2 epochs for 137 seconds
-dnet_universal_extended.dnet_2_2_1_1_2_117_0.0125 maximal achieved accuracy is 0.017255833 in 2 epochs for 182 seconds
-dnet_universal_extended.dnet_2_2_1_1_2_117_0.025 maximal achieved accuracy is 0.028024783 in 2 epochs for 174 seconds
-dnet_universal_extended.dnet_2_2_1_1_2_117_0.05 maximal achieved accuracy is 0.027804656 in 2 epochs for 163 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.052332576 in 2 epochs for 428 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.06299841 in 2 epochs for 328 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.17321454 in 2 epochs for 1294 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.18982825 in 2 epochs for 355 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 2.375 scores
-CONVOLUTIONAL FILTER SIZE 2 has 2.375 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 2.375 scores
-MAXPOOLING FILTER SIZE 1 has 2.375 scores
-MAXPOOLING FILTER STRIDE 1 has 0.29166666 scores
-MAXPOOLING FILTER STRIDE 2 has 1.1875 scores
-MAXPOOLING FILTER STRIDE 3 has 0.8958334 scores
-FULLY CONNECTED LAYER SIZE 117 has 2.375 scores
-LEARNING RATE 0.1 has 0.25 scores
-LEARNING RATE 0.0125 has 0.6666666 scores
-LEARNING RATE 0.05 has 0.7291666 scores
-LEARNING RATE 0.025 has 0.7291667 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 0.8125 scores
+CONVOLUTIONAL FILTER SIZE 2 has 0.8125 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 0.8125 scores
+MAXPOOLING FILTER SIZE 3 has 0.8125 scores
+MAXPOOLING FILTER STRIDE 2 has 0.8125 scores
+FULLY CONNECTED LAYER SIZE 117 has 0.8125 scores
+LEARNING RATE 0.0125 has 0.03125 scores
+LEARNING RATE 0.025 has 0.0625 scores
+LEARNING RATE 0.1 has 0.34375 scores
+LEARNING RATE 0.05 has 0.375 scores

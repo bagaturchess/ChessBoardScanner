@@ -1,16 +1,16 @@
 
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.26484233 in 6 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.2757838 in 4 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.2778928 in 4 epochs for 58 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.27975953 in 4 epochs for 57 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.26484233 in 22 epochs for 62 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.2778928 in 22 epochs for 62 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.3130206 in 22 epochs for 101 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.33537287 in 22 epochs for 105 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 2.642857 scores
-CONVOLUTIONAL FILTER SIZE 2 has 2.642857 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 2.642857 scores
-MAXPOOLING FILTER SIZE 3 has 2.642857 scores
-MAXPOOLING FILTER STRIDE 2 has 2.642857 scores
-FULLY CONNECTED LAYER SIZE 117 has 2.642857 scores
-LEARNING RATE 0.1 has 0.5 scores
-LEARNING RATE 0.05 has 0.6785714 scores
-LEARNING RATE 0.0125 has 0.71428573 scores
-LEARNING RATE 0.025 has 0.75 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 3.125 scores
+CONVOLUTIONAL FILTER SIZE 2 has 3.125 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 3.125 scores
+MAXPOOLING FILTER SIZE 3 has 3.125 scores
+MAXPOOLING FILTER STRIDE 2 has 3.125 scores
+FULLY CONNECTED LAYER SIZE 117 has 3.125 scores
+LEARNING RATE 0.1 has 0.625 scores
+LEARNING RATE 0.0125 has 0.75 scores
+LEARNING RATE 0.05 has 0.84375 scores
+LEARNING RATE 0.025 has 0.90625 scores
