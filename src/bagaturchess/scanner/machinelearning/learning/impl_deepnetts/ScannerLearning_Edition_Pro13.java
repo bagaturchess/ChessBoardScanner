@@ -106,7 +106,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
-													CNN_CHESSCOM_SET2
+													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
         	
@@ -162,8 +162,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
             //Available only in Pro version of Deep Netts
             if (true) {
             	
-            	//throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
-            	imageSet.setGrayscale(true);
+            	throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
+            	//imageSet.setGrayscale(true);
             }
             
             imageSet.loadLabels(new File(labelsFile));
@@ -181,7 +181,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
             
             int labels_count = imageSet.getLabelsCount();
             
-            LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with best parameters=" + training_params);
+            LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with parameters=" + training_params);
             
             neural_net[0] = NetworkModelBuilder.build(TrainingUtils.SQUARE_IMAGE_SIZE, labels_count, training_params.count_convolutional_layers, training_params.convolution_filter_size, training_params.size_fully_connected_layer);
             

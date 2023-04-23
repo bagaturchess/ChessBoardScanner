@@ -4,21 +4,21 @@ package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 public class TrainingUtils {
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 2, 2, 5, 0.025f);
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.025f);
 	
-	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 2, 2, 5, 0.0125f);
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.0125f);
 	
-	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 2, 2, 5, 0.025f);
+	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.025f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 2, 2, 5, 0.0125f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.0125f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 2, 2, 5, 0.05f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.05f);
 	
-	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 2, 2, 5, 0.025f);
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.025f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 2, 2, 5, 0.0125f);
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 5, 0.0125f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 2, 2, 13, 0.05f);
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 2, 2, 13, 0.025f);
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
@@ -58,6 +58,8 @@ public class TrainingUtils {
 		
 		public int convolution_filter_size;
 		
+		public int has_maxpooling_layer;//0 = false, 1 = true
+		
 		public int maxpooling_filter_size;
 		
 		public int maxpooling_filter_stride;
@@ -67,11 +69,13 @@ public class TrainingUtils {
 		public float learning_rate;
 		
 		
-		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate) {
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate) {
 			
 			count_convolutional_layers = _count_convolutional_layers;
 			
 			convolution_filter_size = _convolution_filter_size;
+			
+			has_maxpooling_layer = _has_maxpooling_layer;
 			
 			maxpooling_filter_size = _maxpooling_filter_size;
 			
@@ -86,7 +90,14 @@ public class TrainingUtils {
 		@Override
 		public String toString() {
 			
-			return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + maxpooling_filter_size + " " + maxpooling_filter_stride + " " + size_fully_connected_layer + " " + learning_rate + "]";
+			if (has_maxpooling_layer != 0) {
+				
+				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + size_fully_connected_layer + " " + learning_rate + "]";
+				
+			} else {
+			
+				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + " " + maxpooling_filter_size + " " + maxpooling_filter_stride + " " + size_fully_connected_layer + " " + learning_rate + "]";
+			}
 		}
 	}
 }

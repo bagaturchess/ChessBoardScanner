@@ -86,13 +86,11 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 													TrainingUtils.CNN_BOOK_SET1
 								)
         			);
-        	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET2
 								)
 					);
-        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
@@ -164,7 +162,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
             if (true) {
             	
             	//throw new IllegalStateException("Uncomment the setGrayscale(true) method call below for the pro version.");
-            	imageSet.setGrayscale(true);
+            	//imageSet.setGrayscale(true);
             }
             
             imageSet.loadLabels(new File(labelsFile));
@@ -182,7 +180,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
             
             int labels_count = imageSet.getLabelsCount();
             
-            LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with best parameters=" + training_params);
+            LOGGER.error("Starting training for " + OUTPUT_FILE_NAME + " with parameters=" + training_params);
             
             neural_net[0] = NetworkModelBuilder.build(TrainingUtils.SQUARE_IMAGE_SIZE, labels_count, training_params.count_convolutional_layers, training_params.convolution_filter_size, training_params.size_fully_connected_layer);
             
