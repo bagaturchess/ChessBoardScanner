@@ -18,7 +18,7 @@ public class TrainingUtils {
 	
 	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.0125f); //0.025f
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.01f);
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0237f);
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
