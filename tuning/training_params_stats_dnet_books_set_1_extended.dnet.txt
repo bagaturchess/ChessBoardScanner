@@ -1,78 +1,26 @@
 
-dnet_books_set_1_extended.dnet_2_2_1_5_4_117_0.0125 maximal achieved accuracy is 0.010090525 in 2 epochs for 56 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_4_117_0.0125 maximal achieved accuracy is 0.009596243 in 2 epochs for 64 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_4_117_0.025 maximal achieved accuracy is 0.00965034 in 2 epochs for 59 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_2_117_0.1 maximal achieved accuracy is 0.009415064 in 2 epochs for 151 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_4_117_0.05 maximal achieved accuracy is 0.009426656 in 2 epochs for 62 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_4_117_0.1 maximal achieved accuracy is 0.010067707 in 2 epochs for 64 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_4_117_0.1 maximal achieved accuracy is 0.009415064 in 2 epochs for 60 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_3_117_0.0125 maximal achieved accuracy is 0.01244975 in 2 epochs for 57 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_3_117_0.1 maximal achieved accuracy is 0.01744103 in 2 epochs for 68 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_3_117_0.025 maximal achieved accuracy is 0.020702783 in 2 epochs for 56 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_4_117_0.025 maximal achieved accuracy is 0.019925294 in 2 epochs for 63 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_3_117_0.05 maximal achieved accuracy is 0.021702383 in 2 epochs for 69 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_3_117_0.0125 maximal achieved accuracy is 0.02218744 in 2 epochs for 71 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_4_117_0.05 maximal achieved accuracy is 0.024440084 in 2 epochs for 65 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_4_117_0.0125 maximal achieved accuracy is 0.028251968 in 2 epochs for 66 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_3_117_0.025 maximal achieved accuracy is 0.027528496 in 2 epochs for 69 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_4_117_0.0125 maximal achieved accuracy is 0.03445032 in 2 epochs for 56 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_4_117_0.025 maximal achieved accuracy is 0.03555972 in 2 epochs for 53 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_2_117_0.0125 maximal achieved accuracy is 0.041381873 in 2 epochs for 75 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_4_117_0.0125 maximal achieved accuracy is 0.041375503 in 2 epochs for 56 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_4_117_0.025 maximal achieved accuracy is 0.043479778 in 2 epochs for 55 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.04423052 in 2 epochs for 53 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_4_117_0.025 maximal achieved accuracy is 0.04563286 in 2 epochs for 55 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_3_117_0.05 maximal achieved accuracy is 0.046779707 in 2 epochs for 58 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.057598993 in 2 epochs for 62 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_4_117_0.1 maximal achieved accuracy is 0.059122954 in 2 epochs for 61 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_2_117_0.05 maximal achieved accuracy is 0.062857285 in 2 epochs for 76 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_3_117_0.0125 maximal achieved accuracy is 0.06380205 in 2 epochs for 67 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.07516054 in 2 epochs for 62 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.08025369 in 2 epochs for 58 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.079614505 in 2 epochs for 54 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_3_117_0.025 maximal achieved accuracy is 0.0828799 in 2 epochs for 57 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_3_117_0.025 maximal achieved accuracy is 0.08449448 in 2 epochs for 59 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_4_117_0.1 maximal achieved accuracy is 0.084547296 in 2 epochs for 50 seconds
-dnet_books_set_1_extended.dnet_2_3_1_2_2_117_0.025 maximal achieved accuracy is 0.08488749 in 2 epochs for 75 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_4_117_0.05 maximal achieved accuracy is 0.0893732 in 2 epochs for 50 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.095063284 in 2 epochs for 83 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_4_117_0.05 maximal achieved accuracy is 0.09835328 in 2 epochs for 111 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_4_117_0.1 maximal achieved accuracy is 0.10126697 in 2 epochs for 51 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_4_117_0.05 maximal achieved accuracy is 0.10357399 in 2 epochs for 54 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.11085358 in 2 epochs for 67 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_3_117_0.0125 maximal achieved accuracy is 0.11127508 in 2 epochs for 107 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_2_117_0.0125 maximal achieved accuracy is 0.11333948 in 2 epochs for 62 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_3_117_0.1 maximal achieved accuracy is 0.11538876 in 2 epochs for 61 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_3_117_0.05 maximal achieved accuracy is 0.11761803 in 2 epochs for 58 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_2_117_0.0125 maximal achieved accuracy is 0.12239229 in 2 epochs for 66 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_3_117_0.05 maximal achieved accuracy is 0.14218429 in 2 epochs for 57 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.14927617 in 2 epochs for 59 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_2_117_0.025 maximal achieved accuracy is 0.15871479 in 2 epochs for 60 seconds
-dnet_books_set_1_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.17430395 in 2 epochs for 66 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_3_117_0.1 maximal achieved accuracy is 0.17705503 in 2 epochs for 55 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_2_117_0.025 maximal achieved accuracy is 0.18227194 in 2 epochs for 103 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.194783 in 2 epochs for 114 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_2_117_0.05 maximal achieved accuracy is 0.1948221 in 2 epochs for 70 seconds
-dnet_books_set_1_extended.dnet_2_2_1_5_2_117_0.1 maximal achieved accuracy is 0.2076284 in 2 epochs for 66 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_3_117_0.1 maximal achieved accuracy is 0.2072954 in 2 epochs for 54 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_2_117_0.05 maximal achieved accuracy is 0.20822033 in 2 epochs for 57 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.21072905 in 2 epochs for 62 seconds
-dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.23012838 in 2 epochs for 60 seconds
-dnet_books_set_1_extended.dnet_2_2_1_4_2_117_0.1 maximal achieved accuracy is 0.23999113 in 2 epochs for 59 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.045956288 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.075 maximal achieved accuracy is 0.09102252 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.010011292 maximal achieved accuracy is 0.12908095 in 100 epochs for 38 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.013348389 maximal achieved accuracy is 0.14319527 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.017797852 maximal achieved accuracy is 0.15602817 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.02373047 maximal achieved accuracy is 0.17019561 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.031640626 maximal achieved accuracy is 0.18926504 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.056250002 maximal achieved accuracy is 0.19255379 in 100 epochs for 37 seconds
+dnet_books_set_1_extended.dnet_2_2_1_3_2_117_0.0421875 maximal achieved accuracy is 0.20508735 in 100 epochs for 37 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 22.333334 scores
-CONVOLUTIONAL FILTER SIZE 2 has 21.187654 scores
-CONVOLUTIONAL FILTER SIZE 3 has 1.145679 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 22.333334 scores
-MAXPOOLING FILTER SIZE 2 has 5.454321 scores
-MAXPOOLING FILTER SIZE 3 has 6.2049384 scores
-MAXPOOLING FILTER SIZE 4 has 6.4074078 scores
-MAXPOOLING FILTER SIZE 5 has 4.266667 scores
-MAXPOOLING FILTER STRIDE 2 has 12.88642 scores
-MAXPOOLING FILTER STRIDE 3 has 6.3012347 scores
-MAXPOOLING FILTER STRIDE 4 has 3.145679 scores
-FULLY CONNECTED LAYER SIZE 117 has 22.333334 scores
-LEARNING RATE 0.0125 has 3.162963 scores
-LEARNING RATE 0.025 has 4.8098764 scores
-LEARNING RATE 0.1 has 7.34321 scores
-LEARNING RATE 0.05 has 7.017284 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 3.925926 scores
+CONVOLUTIONAL FILTER SIZE 2 has 3.925926 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 3.925926 scores
+MAXPOOLING FILTER SIZE 3 has 3.925926 scores
+MAXPOOLING FILTER STRIDE 2 has 3.925926 scores
+FULLY CONNECTED LAYER SIZE 117 has 3.925926 scores
+LEARNING RATE 0.1 has 0.037037037 scores
+LEARNING RATE 0.056250002 has 0.6296296 scores
+LEARNING RATE 0.0421875 has 0.7037037 scores
+LEARNING RATE 0.075 has 0.11111111 scores
+LEARNING RATE 0.010011292 has 0.33333334 scores
+LEARNING RATE 0.02373047 has 0.5555556 scores
+LEARNING RATE 0.031640626 has 0.5925926 scores
+LEARNING RATE 0.017797852 has 0.5185185 scores
+LEARNING RATE 0.013348389 has 0.44444445 scores

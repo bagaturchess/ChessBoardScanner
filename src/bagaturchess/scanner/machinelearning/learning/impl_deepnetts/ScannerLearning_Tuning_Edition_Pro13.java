@@ -41,7 +41,7 @@ import bagaturchess.scanner.machinelearning.learning.impl_deepnetts.model.Networ
 public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	
 	
-	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 			= 0.05f; //0.157f;
+	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 			= 0.025f; //0.050f; //0.157f;
 	
 	private static final int INITIAL_EPOCHS_COUNT 							= 2;
 	private static final int STEP_EPOCHS_COUNT 								= 2;
@@ -51,19 +51,19 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	private static final int MAX_COUNT_CNN_LAYERS 							= 2;
 	
 	private static final int INITIAL_SIZE_CONVOLUTION_FILTER				= 2;
-	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 1;
-	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 2;
+	private static final int STEP_SIZE_CONVOLUTION_FILTER					= 2;
+	private static final int MAX_SIZE_CONVOLUTION_FILTER 					= 2; //4 //6
 	
 	private static final int MIN_HAS_MAXPOOLING_LAYER						= 1;
 	private static final int MAX_HAS_MAXPOOLING_LAYER						= 1;
 	
-	private static final int INITIAL_SIZE_MAXPOOLING_FILTER					= 2;
+	private static final int INITIAL_SIZE_MAXPOOLING_FILTER					= 3;
 	private static final int STEP_SIZE_MAXPOOLING_FILTER					= 1;
-	private static final int MAX_SIZE_MAXPOOLING_FILTER 					= 5;
+	private static final int MAX_SIZE_MAXPOOLING_FILTER 					= 3;
 	
 	private static final int INITIAL_STRIDE_MAXPOOLING_FILTER				= 2;
 	private static final int STEP_STRIDE_MAXPOOLING_FILTER					= 1;
-	private static final int MAX_STRIDE_MAXPOOLING_FILTER 					= 4;
+	private static final int MAX_STRIDE_MAXPOOLING_FILTER 					= 2;
 	
 	private static final int INITIAL_MULTIPLIER_FULLY_CONNECTED				= 9; //1
 	private static final int STEP_MULTIPLIER_FULLY_CONNECTED 				= 1; //4;
@@ -157,10 +157,11 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 					);
         	*/
         	
-        	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet"
 								)
         			);
+        	*/
         	
         	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet"
@@ -406,7 +407,7 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 					    			            }
 					    		            }
 					    		            
-					    		            current_learning_rate[0] = 0.5f * current_learning_rate[0];
+					    		            current_learning_rate[0] = 0.75f * current_learning_rate[0];
 					    	            }
 					            	}
 			            		}
