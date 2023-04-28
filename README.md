@@ -8,14 +8,14 @@ The architecture is extensible and different chess sets could be added additiona
 
 The code is used productively by this app, which could be found here: https://metatransapps.com/chess-board-scanner-and-analyzer/
 
+# Advanced technologies solve complex problems
+ - Machine Learning (ML) subdomain of Artificial Intelligence: Both libraries or frameworks Deep Netts Community Edition and Deeplearning4j frameworks as a basis for convolutional neural  networks (CNN) for chess board classification and chess pieces recognition. It uses both ML frameworks in order to demonstrate how to integrate your code with both, but the code works well with them separately as well.
+ - Computer Vision (CV) subdomain of Artificial Intelligence: It uses OpenCV as a computer vision library or framework, which helps in extracting the chess board from the image and transforming it to ideal square.
+
 # Deep technical details
 
 If you need technical explanation of the algorithms used, please check this [YoutTube video](https://youtu.be/PS5xAGx89mU).
 The description in this video is still valid and the related source code exists, although there are some changes in the general concept of the app in last 1-2 years, giving more attention on the CNNs for all purposes and having Computer Vision for edvanced and more convenient features for the users.
-
-# Advanced technologies solve complex problems
- - Machine Learning (ML) subdomain of Artificial Intelligence: Both libraries or frameworks Deep Netts Community Edition and Deeplearning4j frameworks as a basis for convolutional neural  networks (CNN) for chess board classification and chess pieces recognition. It uses both ML frameworks in order to demonstrate how to integrate your code with both, but the code works well with them separately as well.
- - Computer Vision (CV) subdomain of Artificial Intelligence: It uses OpenCV as a computer vision library or framework, which helps in extracting the chess board from the image and transforming it to ideal square.
 
 # Running the program
 
