@@ -23,7 +23,7 @@ The project structure is an eclipse based project, which can be directly importe
 All necessary libraries for Deep Netts and Deeplearning4j are included into the libs folder, but you need to add the OpenCV library version 4.5.1 (java and native parts) and refer them from the project as described here: https://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html
 The basic main classes could be found in the description below.
 
-# How to Create and Train convolutional neural networks (CNNs) from given datasets with images of chess boards faving different chess pieces?
+# How to Create and Train convolutional neural networks (CNNs) from given datasets with images of chess boards having different chess pieces?
 
  - You could create and train CNNs by using the main function of <a href="https://github.com/bagaturchess/ChessBoardScanner/blob/main/src/bagaturchess/scanner/machinelearning/learning/impl_deepnetts/ScannerLearning_Edition_Community12.java/">bagaturchess.scanner.machinelearning.learning.impl_deepnetts.ScannerLearning_Edition_Community12</a> class.
  - There are 2 options for the source/input datasets, which contain images as examples of chess pieces in chess board suqare. This is the source of the learning/training:
@@ -95,10 +95,10 @@ The author of the project is <a href="https://www.linkedin.com/in/topchiyski/">K
 # Credits
 
 This project would not be possible without:
-  -  [OpenCV](https://opencv.org/)
+  -  [StackOverflow](https://stackoverflow.com/)
   -  [DeepNetts](https://www.deepnetts.com/)
   -  [Deeplearning4j](https://deeplearning4j.org/)
-  -  [StackOverflow](https://stackoverflow.com/)
+  -  [OpenCV](https://opencv.org/)
 
 Good luck!
 
