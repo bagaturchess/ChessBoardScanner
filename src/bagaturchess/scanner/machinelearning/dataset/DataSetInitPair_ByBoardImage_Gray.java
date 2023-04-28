@@ -27,7 +27,6 @@ import java.util.Map;
 
 import bagaturchess.bitboard.api.BoardUtils;
 import bagaturchess.bitboard.api.IBitBoard;
-import bagaturchess.bitboard.api.IBoardConfig;
 import bagaturchess.bitboard.impl.Constants;
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.common.ResultPair;
@@ -45,13 +44,10 @@ import static bagaturchess.bitboard.impl1.internal.ChessConstants.ROOK;
 public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 	
 	
-	private static final double TRANSLATIONS_RATIO = 0.05;
-	
-	
 	private String dirToSave;
 	
 	
-	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage, String FEN, String _dirToSave, boolean extend) {
+	public DataSetInitPair_ByBoardImage_Gray(BufferedImage boardImage, String FEN, String _dirToSave, double translations_ratio, float rotation_degrees) {
 		
 		super();
 		
@@ -61,7 +57,7 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 		
 		int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix(boardImage);
 		
-		ResultPair<Integer, Integer> lightAndDarkSquaresColors = MatrixUtils.getSquaresColor_Gray(matrixOfInitialBoard);
+		//ResultPair<Integer, Integer> lightAndDarkSquaresColors = MatrixUtils.getSquaresColor_Gray(matrixOfInitialBoard);
 		
 		matrixOfInitialBoard = MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
 		
@@ -78,8 +74,10 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 			translations.add(graySquare);
 			
 			int fillColour = (int) (256d * Math.random());
+			fillColour = ScannerUtils.createColor(fillColour, fillColour, fillColour);
 			
-			/*int fillColour = lightAndDarkSquaresColors.getSecond().intValue();
+			/*
+			int fillColour = lightAndDarkSquaresColors.getSecond().intValue();
 			int avg_color = MatrixUtils.getAVG(graySquare);
 			if (Math.abs(avg_color - lightAndDarkSquaresColors.getFirst().intValue()) <=  Math.abs(avg_color - lightAndDarkSquaresColors.getSecond().intValue())) {
 				fillColour = lightAndDarkSquaresColors.getFirst().intValue();
@@ -87,11 +85,46 @@ public class DataSetInitPair_ByBoardImage_Gray extends DataSetInitPair {
 			}
 			*/
 			
-			if (extend) translations.addAll(MatrixUtils.generateShifts(graySquare, TRANSLATIONS_RATIO, fillColour));
+			if (translations_ratio > 0) {
+				
+				int pixels_count = (int) Math.max(1, translations_ratio * graySquare.length);
+				
+				//System.out.println("pixels_count=" + pixels_count);
+				
+				//System.out.println("graySquare.length=" + graySquare.length);
+				
+				//System.exit(0);
+				
+				if (pixels_count < 1) {
+					
+					throw new IllegalStateException("translation pixels_count=" + pixels_count);
+				}
+				
+				//TODO: MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
+				translations.addAll(MatrixUtils.generateShifts_ByPixelsCount(graySquare, pixels_count, fillColour));
+			}
 			
-			//System.out.println(translations.size());
 			
-			for (int[][] matrix : translations) {
+			List<int[][]> all_variants = new ArrayList<int[][]>();
+			
+			all_variants.addAll(translations);
+			
+			if (rotation_degrees > 0) {
+				
+				for (int[][] matrix : translations) {
+					
+					//TODO: MatrixUtils.normalizeMatrix(matrixOfInitialBoard);
+										
+					all_variants.add(MatrixUtils.rotateMatrix(matrix, rotation_degrees, fillColour));
+					
+					all_variants.add(MatrixUtils.rotateMatrix(matrix, -rotation_degrees, fillColour));
+				}
+			}
+			
+			
+			//System.out.println("square_id=" + square_id + " translations=" + translations.size());
+			
+			for (int[][] matrix : all_variants) {
 				
 				int size_old = pids.size();
 				

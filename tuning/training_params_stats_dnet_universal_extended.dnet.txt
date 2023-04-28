@@ -1,28 +1,26 @@
 
-dnet_universal_extended.dnet_2_2_1_2_4_117_0.0125 maximal achieved accuracy is 0.009579935 in 2 epochs for 267 seconds
-dnet_universal_extended.dnet_2_2_1_2_4_117_0.025 maximal achieved accuracy is 0.011360677 in 2 epochs for 267 seconds
-dnet_universal_extended.dnet_2_2_1_2_4_117_0.05 maximal achieved accuracy is 0.013857912 in 2 epochs for 267 seconds
-dnet_universal_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.017012572 in 2 epochs for 252 seconds
-dnet_universal_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.015908075 in 2 epochs for 242 seconds
-dnet_universal_extended.dnet_2_2_1_2_4_117_0.1 maximal achieved accuracy is 0.0159362 in 2 epochs for 251 seconds
-dnet_universal_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.0190423 in 2 epochs for 282 seconds
-dnet_universal_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.023089685 in 2 epochs for 387 seconds
-dnet_universal_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.024272451 in 2 epochs for 279 seconds
-dnet_universal_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.04272061 in 2 epochs for 342 seconds
-dnet_universal_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.044595536 in 2 epochs for 272 seconds
-dnet_universal_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.081205174 in 2 epochs for 496 seconds
-dnet_universal_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.18476568 in 2 epochs for 291 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.010011292 maximal achieved accuracy is 0.05618551 in 60 epochs for 77 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.013348389 maximal achieved accuracy is 0.058031198 in 60 epochs for 79 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.017797852 maximal achieved accuracy is 0.060865764 in 60 epochs for 78 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.02373047 maximal achieved accuracy is 0.07031162 in 60 epochs for 78 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.031640626 maximal achieved accuracy is 0.07862074 in 60 epochs for 76 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.0421875 maximal achieved accuracy is 0.10640323 in 60 epochs for 97 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.056250002 maximal achieved accuracy is 0.10741305 in 62 epochs for 80 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.075 maximal achieved accuracy is 0.13445105 in 62 epochs for 79 seconds
+dnet_universal_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.16422565 in 62 epochs for 78 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 2.0098767 scores
-CONVOLUTIONAL FILTER SIZE 2 has 2.0098767 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 2.0098767 scores
-MAXPOOLING FILTER SIZE 2 has 1.0987655 scores
-MAXPOOLING FILTER SIZE 3 has 0.9111111 scores
-MAXPOOLING FILTER STRIDE 2 has 1.5358025 scores
-MAXPOOLING FILTER STRIDE 3 has 0.2765432 scores
-MAXPOOLING FILTER STRIDE 4 has 0.19753087 scores
-FULLY CONNECTED LAYER SIZE 117 has 2.0098767 scores
-LEARNING RATE 0.0125 has 0.24197532 scores
-LEARNING RATE 0.025 has 0.3876543 scores
-LEARNING RATE 0.05 has 0.25432098 scores
-LEARNING RATE 0.1 has 1.1259259 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 0.7222222 scores
+CONVOLUTIONAL FILTER SIZE 2 has 0.7222222 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 0.7222222 scores
+MAXPOOLING FILTER SIZE 3 has 0.7222222 scores
+MAXPOOLING FILTER STRIDE 2 has 0.7222222 scores
+FULLY CONNECTED LAYER SIZE 117 has 0.7222222 scores
+LEARNING RATE 0.0421875 has 0.083333336 scores
+LEARNING RATE 0.056250002 has 0.097222224 scores
+LEARNING RATE 0.1 has 0.19444445 scores
+LEARNING RATE 0.010011292 has 0.013888889 scores
+LEARNING RATE 0.075 has 0.1388889 scores
+LEARNING RATE 0.02373047 has 0.055555556 scores
+LEARNING RATE 0.031640626 has 0.06944445 scores
+LEARNING RATE 0.017797852 has 0.041666668 scores
+LEARNING RATE 0.013348389 has 0.027777778 scores

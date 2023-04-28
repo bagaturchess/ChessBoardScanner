@@ -547,6 +547,26 @@ public class MatrixUtils {
 	}
 	
 	
+	public static List<int[][]> generateShifts_ByPixelsCount(int[][] matrix, int count_pixels, int fillColor) {
+		
+		List<int[][]> result = new ArrayList<int[][]>();
+		
+		int size = matrix.length;
+		
+		Set<Translation> translations = generateShifts_ByPixelsCount(count_pixels, count_pixels, size, size);
+		
+		for (Translation translation : translations) {
+			
+			if (translation.x != 0 || translation.y != 0) {
+				
+				result.add(moveWithXY(matrix, translation.x, translation.y, fillColor));
+			}
+		}
+		
+		return result;
+	}
+	
+	
 	private static Set<Translation> generateShifts(double ratio, int width_org, int height_org) {
 		
 		Set<Translation> result = new HashSet<Translation>();
@@ -554,6 +574,32 @@ public class MatrixUtils {
 		for (int x = - (int) (ratio * width_org); x <= (int) (ratio * width_org); x++) {
 			for (int y = - (int) (ratio * height_org); y <= (int) (ratio * height_org); y++) {
 				result.add(new Translation((int)x, (int)y));
+			}
+		}
+	    
+	    return result;
+	}
+	
+	
+	private static Set<Translation> generateShifts_ByPixelsCount(int count_pixels_x, int count_pixels_y, int width_org, int height_org) {
+		
+		if (count_pixels_x > width_org / 2) {
+			
+			throw new IllegalStateException("count_pixels_x=" + count_pixels_x);
+		}
+		
+		if (count_pixels_y > height_org / 2) {
+			
+			throw new IllegalStateException("count_pixels_y=" + count_pixels_y);
+		}
+		
+		Set<Translation> result = new HashSet<Translation>();
+		
+		for (int x = -count_pixels_x; x <= count_pixels_x; x++) {
+			
+			for (int y = -count_pixels_y; y <= count_pixels_y; y++) {
+				
+				result.add(new Translation(x, y));
 			}
 		}
 	    
@@ -579,9 +625,11 @@ public class MatrixUtils {
 		
 		for (int x = 0; x < source.length; x++) {
 			for (int y = 0; y < source.length; y++) {
-				int x1 = (int) (centerX + (x-centerX) * Math.cos(angleInRadians) - (y-centerY) * Math.sin(angleInRadians));
-				int y1 = (int) (centerY + (x-centerX) * Math.sin(angleInRadians) + (y-centerY) * Math.cos(angleInRadians));
-				result[(int) Math.floor(0.5 + x1 + (resultSize - source.length) / 2)][(int) Math.floor(0.5 + y1 + (resultSize - source.length) / 2)] = source[x][y];
+				double x1 = centerX + (x-centerX) * Math.cos(angleInRadians) - (y-centerY) * Math.sin(angleInRadians);
+				double y1 = centerY + (x-centerX) * Math.sin(angleInRadians) + (y-centerY) * Math.cos(angleInRadians);
+				int x_new = (int) Math.max(0, Math.floor(0.5 + x1 + (resultSize - source.length) / 2));
+				int y_new = (int) Math.max(0, Math.floor(0.5 + y1 + (resultSize - source.length) / 2));
+				result[x_new][y_new] = source[x][y];
 			}
 		}
 		

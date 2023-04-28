@@ -4,21 +4,27 @@ package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 public class TrainingUtils {
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0375f); //0.025f //0.05f
+	public static final float MIN_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_100;
+	public static final float MAX_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_2;
 	
-	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0125f);
+	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
-	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.05f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0375f); //0.05f; //0.025f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027812842f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.1f);
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f); //0.06461083f
 	
-	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.1f); //0.05f; //0.025f
+	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.0125f); //0.025f
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.02781284f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0237f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f);
+	
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.034336843f, 0.19f);
+	
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, MAX_LEARNING_RATE, 0.19f);
+	
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.014780886f, 0.19f);
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
@@ -43,12 +49,13 @@ public class TrainingUtils {
 	public static final float LEARNING_RATE_400 					= 0.0025f;
 	public static final float LEARNING_RATE_800 					= 0.00125f;
 	
-	public static final float LEARNING_RATE_1K 						= 0.001f;
+	/*public static final float LEARNING_RATE_1K 						= 0.001f;
 	public static final float LEARNING_RATE_2K 						= 0.0005f;
 	public static final float LEARNING_RATE_4K 						= 0.00025f;
 	public static final float LEARNING_RATE_8K 						= 0.000125f;
 	public static final float LEARNING_RATE_10K 					= 0.000125f;
 	public static final float LEARNING_RATE_16K 					= 0.0000625f;
+	*/
 	
 	
 	public static class AutoTuningParameters {
@@ -68,8 +75,16 @@ public class TrainingUtils {
 		
 		public float learning_rate;
 		
+		public float learning_rate_decrease_percent;
+		
 		
 		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate) {
+			
+			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, DEFAULT_LEARNING_RATE_DECREASE_PERCENT);
+		}
+		
+		
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _learning_rate_decrease_percent) {
 			
 			count_convolutional_layers = _count_convolutional_layers;
 			
@@ -84,19 +99,21 @@ public class TrainingUtils {
 			size_fully_connected_layer = _size_fully_connected_layer;
 			
 			learning_rate = _learning_rate;
+			
+			learning_rate_decrease_percent = _learning_rate_decrease_percent;
 		}
 		
 		
 		@Override
 		public String toString() {
 			
-			if (has_maxpooling_layer != 0) {
+			if (has_maxpooling_layer == 0) {
 				
-				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + size_fully_connected_layer + " " + learning_rate + "]";
+				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + size_fully_connected_layer + " " + learning_rate + " " + learning_rate_decrease_percent + "]";
 				
 			} else {
 			
-				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + " " + maxpooling_filter_size + " " + maxpooling_filter_stride + " " + size_fully_connected_layer + " " + learning_rate + "]";
+				return "AutoTuningParameters: [" + count_convolutional_layers + " " + convolution_filter_size + " " + has_maxpooling_layer + " " + maxpooling_filter_size + " " + maxpooling_filter_stride + " " + size_fully_connected_layer + " " + learning_rate + " " + learning_rate_decrease_percent + "]";
 			}
 		}
 	}

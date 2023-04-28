@@ -1,99 +1,26 @@
 
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_2_117_0.1 maximal achieved accuracy is 0.0024038462 in 2 epochs for 56 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_4_117_0.0125 maximal achieved accuracy is 0.035499666 in 2 epochs for 48 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_4_117_0.0125 maximal achieved accuracy is 0.034593776 in 2 epochs for 40 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_4_117_0.025 maximal achieved accuracy is 0.05524293 in 2 epochs for 47 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_4_117_0.025 maximal achieved accuracy is 0.06730686 in 2 epochs for 41 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_4_117_0.1 maximal achieved accuracy is 0.066707484 in 2 epochs for 49 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_4_117_0.05 maximal achieved accuracy is 0.074786834 in 2 epochs for 48 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_4_117_0.0125 maximal achieved accuracy is 0.07970234 in 2 epochs for 40 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_4_117_0.0125 maximal achieved accuracy is 0.07885378 in 2 epochs for 51 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_4_117_0.025 maximal achieved accuracy is 0.07998936 in 2 epochs for 40 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_4_117_0.05 maximal achieved accuracy is 0.08037567 in 2 epochs for 38 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_4_117_0.1 maximal achieved accuracy is 0.08066081 in 2 epochs for 39 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_3_117_0.0125 maximal achieved accuracy is 0.08177332 in 2 epochs for 44 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_4_117_0.0125 maximal achieved accuracy is 0.08281697 in 2 epochs for 39 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_3_117_0.025 maximal achieved accuracy is 0.08305904 in 2 epochs for 44 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_4_117_0.1 maximal achieved accuracy is 0.08542791 in 2 epochs for 52 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_4_117_0.025 maximal achieved accuracy is 0.0879339 in 2 epochs for 40 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_4_117_0.05 maximal achieved accuracy is 0.08960668 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_4_117_0.025 maximal achieved accuracy is 0.09587285 in 2 epochs for 51 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_4_117_0.1 maximal achieved accuracy is 0.099290796 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_3_117_0.0125 maximal achieved accuracy is 0.0995179 in 2 epochs for 53 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_3_117_0.1 maximal achieved accuracy is 0.10319735 in 2 epochs for 44 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_2_117_0.1 maximal achieved accuracy is 0.10374664 in 2 epochs for 58 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_3_117_0.0125 maximal achieved accuracy is 0.10563238 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_2_117_0.1 maximal achieved accuracy is 0.10932822 in 2 epochs for 58 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_3_117_0.05 maximal achieved accuracy is 0.11538553 in 2 epochs for 77 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_4_117_0.05 maximal achieved accuracy is 0.11707764 in 2 epochs for 41 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_4_117_0.1 maximal achieved accuracy is 0.11773573 in 2 epochs for 50 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_2_117_0.0125 maximal achieved accuracy is 0.119828 in 2 epochs for 57 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_4_117_0.05 maximal achieved accuracy is 0.12131616 in 2 epochs for 53 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_3_117_0.025 maximal achieved accuracy is 0.12517841 in 2 epochs for 54 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_3_117_0.0125 maximal achieved accuracy is 0.1257643 in 2 epochs for 53 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_2_117_0.0125 maximal achieved accuracy is 0.12989214 in 2 epochs for 62 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_3_117_0.0125 maximal achieved accuracy is 0.13055107 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_4_117_0.0125 maximal achieved accuracy is 0.13143893 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_3_117_0.025 maximal achieved accuracy is 0.13621868 in 2 epochs for 51 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_2_117_0.0125 maximal achieved accuracy is 0.13884948 in 2 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_3_117_0.0125 maximal achieved accuracy is 0.14119932 in 2 epochs for 52 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_2_117_0.0125 maximal achieved accuracy is 0.13992748 in 2 epochs for 47 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_3_117_0.1 maximal achieved accuracy is 0.14280844 in 2 epochs for 54 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_3_117_0.05 maximal achieved accuracy is 0.14180978 in 2 epochs for 52 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_2_117_0.025 maximal achieved accuracy is 0.14590727 in 2 epochs for 60 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_4_117_0.025 maximal achieved accuracy is 0.14579222 in 2 epochs for 41 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_3_117_0.1 maximal achieved accuracy is 0.14624462 in 2 epochs for 52 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_3_117_0.05 maximal achieved accuracy is 0.1475209 in 2 epochs for 54 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_4_117_0.1 maximal achieved accuracy is 0.1489508 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_3_117_0.0125 maximal achieved accuracy is 0.14901611 in 2 epochs for 45 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_4_117_0.05 maximal achieved accuracy is 0.14961764 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_2_117_0.025 maximal achieved accuracy is 0.15139495 in 2 epochs for 46 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_4_117_0.1 maximal achieved accuracy is 0.15375309 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_2_117_0.05 maximal achieved accuracy is 0.15385891 in 2 epochs for 57 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_2_2_117_0.025 maximal achieved accuracy is 0.15289111 in 2 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_2_117_0.0125 maximal achieved accuracy is 0.15538263 in 2 epochs for 52 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_3_117_0.025 maximal achieved accuracy is 0.15552579 in 2 epochs for 56 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_3_117_0.025 maximal achieved accuracy is 0.15578535 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_3_117_0.05 maximal achieved accuracy is 0.15774809 in 2 epochs for 55 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_3_117_0.1 maximal achieved accuracy is 0.15846814 in 2 epochs for 54 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_2_117_0.025 maximal achieved accuracy is 0.16289052 in 2 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_3_117_0.025 maximal achieved accuracy is 0.1624311 in 2 epochs for 45 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_2_117_0.0125 maximal achieved accuracy is 0.16360746 in 2 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_3_117_0.025 maximal achieved accuracy is 0.16599678 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_3_2_117_0.05 maximal achieved accuracy is 0.168118 in 2 epochs for 60 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_2_117_0.025 maximal achieved accuracy is 0.16745602 in 2 epochs for 53 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_3_117_0.05 maximal achieved accuracy is 0.16983892 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_3_1_4_2_117_0.05 maximal achieved accuracy is 0.1731986 in 2 epochs for 59 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.0125 maximal achieved accuracy is 0.17388405 in 2 epochs for 49 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_2_117_0.05 maximal achieved accuracy is 0.17546429 in 2 epochs for 48 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_2_117_0.025 maximal achieved accuracy is 0.1792951 in 2 epochs for 53 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_2_117_0.05 maximal achieved accuracy is 0.18415838 in 2 epochs for 46 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_3_117_0.05 maximal achieved accuracy is 0.1841546 in 2 epochs for 43 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.025 maximal achieved accuracy is 0.1872789 in 2 epochs for 49 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_3_117_0.05 maximal achieved accuracy is 0.19148864 in 2 epochs for 42 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_3_117_0.1 maximal achieved accuracy is 0.19736156 in 2 epochs for 45 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_3_117_0.1 maximal achieved accuracy is 0.20383216 in 2 epochs for 44 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_2_117_0.05 maximal achieved accuracy is 0.20619291 in 2 epochs for 50 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_3_117_0.1 maximal achieved accuracy is 0.20764135 in 2 epochs for 47 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.05 maximal achieved accuracy is 0.2124571 in 2 epochs for 48 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_5_2_117_0.1 maximal achieved accuracy is 0.21692397 in 2 epochs for 45 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_2_2_117_0.1 maximal achieved accuracy is 0.22650272 in 2 epochs for 45 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.23446386 in 2 epochs for 47 seconds
-dnet_lichessorg_set_1_extended.dnet_2_2_1_4_2_117_0.1 maximal achieved accuracy is 0.258727 in 2 epochs for 47 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.010011292 maximal achieved accuracy is 0.2896364 in 36 epochs for 127 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.013348389 maximal achieved accuracy is 0.29779178 in 36 epochs for 127 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.30154285 in 38 epochs for 130 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.017797852 maximal achieved accuracy is 0.30458954 in 36 epochs for 127 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.02373047 maximal achieved accuracy is 0.30980495 in 36 epochs for 127 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.031640626 maximal achieved accuracy is 0.31233707 in 36 epochs for 138 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.056250002 maximal achieved accuracy is 0.31753537 in 36 epochs for 147 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.075 maximal achieved accuracy is 0.31802097 in 36 epochs for 149 seconds
+dnet_lichessorg_set_1_extended.dnet_2_2_1_3_2_117_0.0421875 maximal achieved accuracy is 0.31714675 in 36 epochs for 148 seconds
 
-CONVOLUTIONAL LAYERS COUNT 2 has 51.44198 scores
-CONVOLUTIONAL FILTER SIZE 2 has 32.622223 scores
-CONVOLUTIONAL FILTER SIZE 3 has 18.819752 scores
-HAS MAXPOOLING LAYER [0 or 1] 1 has 51.44198 scores
-MAXPOOLING FILTER SIZE 2 has 13.674074 scores
-MAXPOOLING FILTER SIZE 3 has 17.54074 scores
-MAXPOOLING FILTER SIZE 4 has 14.320987 scores
-MAXPOOLING FILTER SIZE 5 has 5.9061728 scores
-MAXPOOLING FILTER STRIDE 2 has 21.980246 scores
-MAXPOOLING FILTER STRIDE 3 has 19.782717 scores
-MAXPOOLING FILTER STRIDE 4 has 9.679012 scores
-FULLY CONNECTED LAYER SIZE 117 has 51.44198 scores
-LEARNING RATE 0.1 has 13.713581 scores
-LEARNING RATE 0.0125 has 10.6 scores
-LEARNING RATE 0.025 has 12.691358 scores
-LEARNING RATE 0.05 has 14.4370365 scores
+CONVOLUTIONAL LAYERS COUNT 2 has 7.4444447 scores
+CONVOLUTIONAL FILTER SIZE 2 has 7.4444447 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 7.4444447 scores
+MAXPOOLING FILTER SIZE 3 has 7.4444447 scores
+MAXPOOLING FILTER STRIDE 2 has 7.4444447 scores
+FULLY CONNECTED LAYER SIZE 117 has 7.4444447 scores
+LEARNING RATE 0.1 has 0.7916667 scores
+LEARNING RATE 0.056250002 has 0.8611111 scores
+LEARNING RATE 0.0421875 has 0.8888889 scores
+LEARNING RATE 0.010011292 has 0.7638889 scores
+LEARNING RATE 0.075 has 0.875 scores
+LEARNING RATE 0.02373047 has 0.8333333 scores
+LEARNING RATE 0.031640626 has 0.8472222 scores
+LEARNING RATE 0.017797852 has 0.8055556 scores
+LEARNING RATE 0.013348389 has 0.7777778 scores

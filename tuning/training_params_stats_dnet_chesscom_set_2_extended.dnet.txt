@@ -1,0 +1,26 @@
+
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.010011292 maximal achieved accuracy is 0.2374006 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.013348389 maximal achieved accuracy is 0.32393906 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.075 maximal achieved accuracy is 0.32814822 in 100 epochs for 9 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.1 maximal achieved accuracy is 0.3345833 in 100 epochs for 9 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.056250002 maximal achieved accuracy is 0.33386013 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.017797852 maximal achieved accuracy is 0.34081528 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.0421875 maximal achieved accuracy is 0.34506315 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.031640626 maximal achieved accuracy is 0.3457623 in 100 epochs for 8 seconds
+dnet_chesscom_set_2_extended.dnet_2_2_1_3_2_117_0.02373047 maximal achieved accuracy is 0.3457623 in 100 epochs for 8 seconds
+
+CONVOLUTIONAL LAYERS COUNT 2 has 8.263889 scores
+CONVOLUTIONAL FILTER SIZE 2 has 8.263889 scores
+HAS MAXPOOLING LAYER [0 or 1] 1 has 8.263889 scores
+MAXPOOLING FILTER SIZE 3 has 8.263889 scores
+MAXPOOLING FILTER STRIDE 2 has 8.263889 scores
+FULLY CONNECTED LAYER SIZE 117 has 8.263889 scores
+LEARNING RATE 0.1 has 0.9305556 scores
+LEARNING RATE 0.056250002 has 0.9444444 scores
+LEARNING RATE 0.0421875 has 0.9722222 scores
+LEARNING RATE 0.010011292 has 0.6527778 scores
+LEARNING RATE 0.075 has 0.9166667 scores
+LEARNING RATE 0.02373047 has 1.0 scores
+LEARNING RATE 0.031640626 has 0.9861111 scores
+LEARNING RATE 0.017797852 has 0.9583333 scores
+LEARNING RATE 0.013348389 has 0.9027778 scores

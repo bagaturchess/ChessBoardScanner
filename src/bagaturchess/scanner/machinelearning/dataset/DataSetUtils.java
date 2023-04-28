@@ -15,16 +15,16 @@ import bagaturchess.scanner.utils.ScannerUtils;
 public class DataSetUtils {
 	
 	
-	public static DataSetInitPair[] getInitPairs_Gray(BoardProperties boardProperties, String[] fileNames, String[] FENs, String genDir, boolean extend_set) throws IOException {
+	public static DataSetInitPair[] getInitPairs_Gray(BoardProperties boardProperties, String[] fileNames, String[] FENs, String genDir, double translations_ratio, float rotation_degrees) throws IOException {
 		DataSetInitPair[] result = new DataSetInitPair[fileNames.length];
 		for (int i = 0; i < result.length; i++) {			
-			result[i] = getInitPair_Gray(boardProperties, fileNames[i], FENs[i], genDir, extend_set);
+			result[i] = getInitPair_Gray(boardProperties, fileNames[i], FENs[i], genDir, translations_ratio, rotation_degrees);
 		}
 		return result;
 	}
 	
 	
-	private static DataSetInitPair getInitPair_Gray(BoardProperties boardProperties, String fileName, String FEN, String genDir, boolean extend_set) throws IOException {
+	private static DataSetInitPair getInitPair_Gray(BoardProperties boardProperties, String fileName, String FEN, String genDir, double translations_ratio, float rotation_degrees) throws IOException {
 		
 		File file = new File(fileName);
 		
@@ -37,7 +37,7 @@ public class DataSetUtils {
 		
 		boardImage = ScannerUtils.resizeImage(boardImage, boardProperties.getImageSize());
 		
-		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage, FEN, genDir, extend_set);
+		DataSetInitPair pair = new DataSetInitPair_ByBoardImage_Gray(boardImage, FEN, genDir, translations_ratio, rotation_degrees);
 		
 		return pair;
 	}

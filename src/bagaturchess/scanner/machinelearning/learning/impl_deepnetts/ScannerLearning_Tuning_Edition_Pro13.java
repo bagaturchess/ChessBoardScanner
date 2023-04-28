@@ -41,7 +41,7 @@ import bagaturchess.scanner.machinelearning.learning.impl_deepnetts.model.Networ
 public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	
 	
-	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 			= 0.025f; //0.050f; //0.157f;
+	private static final float INITIAL_LEARNING_RATE_MAX_TOLERANCE 			= 0.333f; //0.025f; //0.050f; //0.157f; //0.333f
 	
 	private static final int INITIAL_EPOCHS_COUNT 							= 2;
 	private static final int STEP_EPOCHS_COUNT 								= 2;
@@ -68,9 +68,6 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 	private static final int INITIAL_MULTIPLIER_FULLY_CONNECTED				= 9; //1
 	private static final int STEP_MULTIPLIER_FULLY_CONNECTED 				= 1; //4;
 	private static final int MAX_MULTIPLIER_FULLY_CONNECTED 				= 9; //13;
-	
-	private static final float MIN_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_100;
-	private static final float MAX_LEARNING_RATE 							= TrainingUtils.LEARNING_RATE_10;
 	
 	
 	private static final Map<String, TrainingStatistics> GLOBAL_STATS 		= new Hashtable<String, TrainingStatistics>();
@@ -135,39 +132,41 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 								)
         			);
         	
-        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet"
 								)
 					);
+        	
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet"
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet"
 								)
 					);
         	
-        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet"
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet"
 								)
         			);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet"
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Tuning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet"
@@ -252,8 +251,8 @@ public class ScannerLearning_Tuning_Edition_Pro13 implements Runnable {
 		            				
 					             	for (int size_fully_connected_layer = INITIAL_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer <= MAX_MULTIPLIER_FULLY_CONNECTED * labels_count; size_fully_connected_layer += STEP_MULTIPLIER_FULLY_CONNECTED * labels_count) {
 					             		
-					    	            float LEARNING_RATE_MIN 						= MIN_LEARNING_RATE;
-					    	            float LEARNING_RATE_MAX 						= MAX_LEARNING_RATE;
+					    	            float LEARNING_RATE_MIN 						= TrainingUtils.MIN_LEARNING_RATE;
+					    	            float LEARNING_RATE_MAX 						= TrainingUtils.MAX_LEARNING_RATE;
 					    	            
 					    	            final List<Float> training_accuracies 			= new ArrayList<Float>();
 					    	            

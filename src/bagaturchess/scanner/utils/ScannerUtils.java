@@ -55,7 +55,7 @@ public class ScannerUtils {
 	}
 
 
-	private static int createColor(int r, int g, int b) {
+	public static int createColor(int r, int g, int b) {
 		//return (int) (r * 0.2989d + g * 0.5870 + b * 0.1142);
 		return (int) ((r + g + b) / 3d);
 	}
