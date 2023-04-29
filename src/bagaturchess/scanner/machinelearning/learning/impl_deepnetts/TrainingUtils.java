@@ -5,26 +5,26 @@ public class TrainingUtils {
 	
 	
 	public static final float MIN_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_100;
-	public static final float MAX_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_2;
+	public static final float MAX_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_10;
 	
 	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027812842f, 0.19f);
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.032305416f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f); //0.06461083f
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0394169f, 0.19f); //0.06461083f
 	
-	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f);
+	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.060788337f, 0.19f);
 	
 	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.02781284f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.14121479f, 0.19f);
 	
 	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.034336843f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, MAX_LEARNING_RATE, 0.19f);
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.060788337f , 0.19f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.014780886f, 0.19f);
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f); //0.030394169f
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;

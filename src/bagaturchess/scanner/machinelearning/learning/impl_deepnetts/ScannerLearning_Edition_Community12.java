@@ -98,12 +98,12 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 								)
 					);
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
@@ -112,12 +112,12 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 					);
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
@@ -126,12 +126,12 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
         			);
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													TrainingUtils.CNN_LICHESSORG_SET1
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
@@ -191,7 +191,9 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
             
             int iteration_counter = 0;
             
-            while (final_current_learning_rate[0] >= LEARNING_RATE_MIN) {
+            final boolean[] training_completed_succesfully = new boolean[1];
+            
+            while (!training_completed_succesfully[0] && final_current_learning_rate[0] >= LEARNING_RATE_MIN) {
             	
             	iteration_counter++;
             	
@@ -259,13 +261,15 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
     						
     			        	int MIN_EPOCHS = MIN_EPOCHS_FOR_DIFF;
     			        	
-    			        	if (accuracies.size() >= MIN_EPOCHS) {
+    			        	if (accuracies.size() >= MIN_EPOCHS
+    			        			&& accuracy < 0.5f //Not at the end of training.
+    			        		) {
     							
     			        		boolean all_are_equal = true;
     			        		
     			        		float prev = -1;
     			        		
-    			        		for (int i = 0; i < accuracies.size(); i++) {
+    			        		for (int i = accuracies.size() - 1; i >=0; i--) {
     			        			
     			        			float cur = accuracies.get(i);
     			        			
@@ -308,6 +312,11 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 	    						//global_learning_rates.put(OUTPUT_FILE_NAME, 0f);
 	    						
 								trainer.stop();
+							}
+							
+							if (accuracy == 1f) {
+								
+								training_completed_succesfully[0] = true;
 							}
     					}
     				}
