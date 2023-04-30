@@ -10,21 +10,21 @@ public class TrainingUtils {
 	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.032305416f, 0.19f);
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.030167387f, 0.19f); //0.026167387f
 	
-	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0394169f, 0.19f); //0.06461083f
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.034336843f, 0.19f); //0.0394169f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.060788337f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.02781284f, 0.19f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0245284f, 0.19f); //0.0225284f
 	
 	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.14121479f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.034336843f, 0.19f);
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.026167387f, 0.19f); //0.034336843f
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.060788337f , 0.19f);
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.049238555f , 0.19f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, MAX_LEARNING_RATE, 0.19f); //0.030394169f
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.022876794f, 0.19f); //0.024619278f
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
