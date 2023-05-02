@@ -55,7 +55,7 @@ public class Test {
             netsNames.add("dnet_chesscom_set_2_extended.dnet");
             netsNames.add("dnet_chess24com_set_1_extended.dnet");
             netsNames.add("dnet_lichessorg_set_1_extended.dnet");
-            //netsNames.add("dnet_universal_extended.dnet");
+            netsNames.add("dnet_universal_extended.dnet");
             
             
             /*netsNames.add("dnet_books_set_1.dnet");
