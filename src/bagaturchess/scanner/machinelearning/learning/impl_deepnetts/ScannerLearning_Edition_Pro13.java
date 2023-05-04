@@ -36,11 +36,19 @@ import bagaturchess.scanner.machinelearning.learning.impl_deepnetts.model.Networ
 public class ScannerLearning_Edition_Pro13 implements Runnable {
 	
 	
-    private static final Logger LOGGER 	= LogManager.getLogger(DeepNetts.class.getName());
+    private static final Logger LOGGER 									= LogManager.getLogger(DeepNetts.class.getName());
     
+    
+	private static final float ACCURACY_MAX 							= 0.999f;
+	
 	private static final int MIN_EPOCHS_FOR_DIFF 						= 10;
 	
+	private static final boolean USE_LEARNING_RATE_MAX_TOLERANCE 		= false;
+	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.5f;
+	
+	
     private static final Map<String, List<Float>> global_accuracies 	= new Hashtable<String, List<Float>>();
+    private static final Map<String, Integer> global_tries 				= new Hashtable<String, Integer>();
 	private static final Map<String, Integer> global_epochs 			= new Hashtable<String, Integer>();
 	private static final Map<String, Long> global_times 				= new Hashtable<String, Long>();
 	private static final Map<String, Float> global_learning_rates		= new Hashtable<String, Float>();
@@ -54,9 +62,6 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     // download data set and set these paths
 	private String labelsFile;
 	private String trainingFile;
-    
-	
-	private boolean finished 			= false;
 	
 	
 	private ScannerLearning_Edition_Pro13(String _INPUT_DIR_NAME, String _OUTPUT_FILE_NAME, AutoTuningParameters _training_params) {
@@ -92,18 +97,19 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         			);
         	
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET2
 								)
 					);
+        	*/
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
-        	
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
@@ -112,26 +118,26 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 					);
         	
         	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
+        	*/
         	
-        	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
 													TrainingUtils.CNN_CHESS24COM_SET1
 								)
         			);
+        	*/
         	
-        	
-        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	/*learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													TrainingUtils.CNN_LICHESSORG_SET1
 								)
 					);
-        	
+        	*/
         	
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
@@ -222,6 +228,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     					
     					if (event.getType().equals(TrainingEvent.Type.EPOCH_FINISHED)) {
     						
+    						LOGGER.info(OUTPUT_FILE_NAME + " EPOCH_FINISHED event start");
+    						
     						if (epochs_count[0] == null) {
     							
     							epochs_count[0] = 0;
@@ -244,15 +252,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     						global_learning_rates.put(OUTPUT_FILE_NAME, final_current_learning_rate[0]);
     						
     			        	try {
-    			        		
-    							dumpGlobalAccuracies();
     							
-    							LOGGER.info("EPOCH_FINISHED for " + OUTPUT_FILE_NAME);
+    							dumpGlobalAccuracies();
     							
     							FileIO.writeToFile(neural_net[0], OUTPUT_FILE_NAME);
     							
     					        LOGGER.info("Network saved as " + OUTPUT_FILE_NAME);
-    					        
+    							
     						} catch (IOException e) {
     							
     							e.printStackTrace();
@@ -287,13 +293,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     			        			prev = cur;
     			        		}
     			        		
-    			        		LOGGER.info(OUTPUT_FILE_NAME + " accuracies all_are_equal=" + all_are_equal);
+    			        		//LOGGER.info(OUTPUT_FILE_NAME + " accuracies all_are_equal=" + all_are_equal);
     			        		
     							if (all_are_equal) {
     								
     								LOGGER.info("Accuracy is not changing " + MIN_EPOCHS + " epochs! It is equal to " + accuracy
-    										+ ". Now, setting it to 0 for " + OUTPUT_FILE_NAME
-    										+ " in order to stop the training with the current learning rate.");
+    										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
+    										+ " in order to stop the training with the current learning rate and try with the next one.");
     								
     								accuracy = 0;
     								
@@ -301,9 +307,29 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     							}
     						}
     						
+    			        	if (USE_LEARNING_RATE_MAX_TOLERANCE && accuracies.size() >= 2) {
+    			        		
+    			        		//In some cases the accuracy goes to 99.7% and then goes to 10%.
+    			        		//In such cases the training can take long time, so better try with next learning rate where the training will be a bit more stable.
+    			        		
+    							float prev_accuracy =  accuracies.get(accuracies.size() - 2);
+    							
+    							if (prev_accuracy >= 0.5f
+    									&& accuracy < prev_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_accuracy) {
+    								
+    								LOGGER.info("Accuracy is changing too much prev_accuracy=" + prev_accuracy + ", accuracy=" + accuracy
+    										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
+    										+ " in order to stop the training with the current learning rate and try with the next one.");
+
+    								accuracy = 0;
+    							}
+    			        	}
+							
 							if (accuracy == 0) {
 								
 								final_current_learning_rate[0] -= training_params.learning_rate_decrease_percent * final_current_learning_rate[0];
+								
+								global_tries.put(OUTPUT_FILE_NAME, global_tries.get(OUTPUT_FILE_NAME) + 1);
 								
 								//Clear global maps for this net
 								global_accuracies.put(OUTPUT_FILE_NAME, new ArrayList<Float>());
@@ -314,10 +340,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 								trainer.stop();
 							}
 							
-							if (accuracy == 1f) {
+							
+							if (accuracy == 1f || accuracy >= ACCURACY_MAX) {
 								
 								training_completed_succesfully[0] = true;
 							}
+							
+	    					LOGGER.info(OUTPUT_FILE_NAME + " EPOCH_FINISHED event exit");
     					}
     				}
     			});
@@ -370,10 +399,6 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         } catch (Throwable t) {
         	
         	t.printStackTrace();
-        	
-        } finally {
-        	
-        	finished = true;
         }
     }
     
@@ -385,14 +410,17 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
 		for (String net_name: global_accuracies.keySet()) {
 			
 			List<Float> accuracies 		= global_accuracies.get(net_name);
+			int tries 					= global_tries.get(net_name);
 			int epochs 					= global_epochs.get(net_name);
 			long time 					= global_times.get(net_name);
 			float current_learning_rate = global_learning_rates.get(net_name);
 			
 			message += "\r\n";
-			message += net_name + "> accuracy=" + (accuracies.size() == 0 ? 0 : accuracies.get(accuracies.size() - 1))
+			message += net_name + ">, LR_changes(tries)=" + (tries + 1) + " accuracy=" + (accuracies.size() == 0 ? 0 : accuracies.get(accuracies.size() - 1))
 						+ " epochs=" + epochs + " time=" + time / 1000 + "sec, LR=" + current_learning_rate + " All_Accuracies=" + accuracies;
 		}
+		
+		message += "\r\n";
 		
 		System.out.println(message);
 		
