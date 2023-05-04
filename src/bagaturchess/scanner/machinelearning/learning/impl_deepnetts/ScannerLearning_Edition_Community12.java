@@ -329,7 +329,14 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 								
 								final_current_learning_rate[0] -= training_params.learning_rate_decrease_percent * final_current_learning_rate[0];
 								
-								global_tries.put(OUTPUT_FILE_NAME, global_tries.get(OUTPUT_FILE_NAME) + 1);
+								Integer current_tries = global_tries.get(OUTPUT_FILE_NAME);
+								
+								if (current_tries == null) {
+									
+									current_tries = new Integer(0);
+								}
+								
+								global_tries.put(OUTPUT_FILE_NAME, current_tries + 1);
 								
 								//Clear global maps for this net
 								global_accuracies.put(OUTPUT_FILE_NAME, new ArrayList<Float>());
