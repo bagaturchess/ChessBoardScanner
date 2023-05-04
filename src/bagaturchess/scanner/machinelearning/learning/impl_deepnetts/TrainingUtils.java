@@ -10,7 +10,7 @@ public class TrainingUtils {
 	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.030167388f, 0.19f); //0.024435584f, 0.031167387f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.024435584f, 0.19f); //0.024435584f, 0.031167387f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027812842f, 0.19f); //0.0394169f
 	
@@ -24,7 +24,7 @@ public class TrainingUtils {
 	
 	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f , 0.19f); //0.03988323f
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0121576665f, 0.19f); //0.022876794f
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.022876794f, 0.19f); //0.022876794f
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
