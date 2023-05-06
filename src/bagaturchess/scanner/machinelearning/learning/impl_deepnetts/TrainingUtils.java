@@ -10,13 +10,13 @@ public class TrainingUtils {
 	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.024435584f, 0.09f); //0.024435584f, 0.031167387f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.031435584f, 0.09f, 0.997f); //0.024435584f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027812842f, 0.19f); //0.0394169f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.060788337f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.02252840f, 0.09f); //0.019868003f
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.025252840f, 0.09f, 0.997f); //0.022f, 0.019868003f
 	
 	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.14121479f, 0.19f);
 	
@@ -24,7 +24,7 @@ public class TrainingUtils {
 	
 	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f , 0.19f); //0.03988323f
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.022876794f, 0.05f); //0.022876794f
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.015176931f, 0.05f, 0.997f); //0.022876794f
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
@@ -61,6 +61,9 @@ public class TrainingUtils {
 	public static class AutoTuningParameters {
 		
 		
+		private static final float DEFAULT_MAX_ACCURACY = 1f;
+		
+		
 		public int count_convolutional_layers;
 		
 		public int convolution_filter_size;
@@ -77,14 +80,22 @@ public class TrainingUtils {
 		
 		public float learning_rate_decrease_percent;
 		
+		public float max_accuracy;
+		
 		
 		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate) {
 			
-			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, DEFAULT_LEARNING_RATE_DECREASE_PERCENT);
+			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, DEFAULT_LEARNING_RATE_DECREASE_PERCENT, DEFAULT_MAX_ACCURACY);
 		}
 		
+
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _max_accuracy) {
+			
+			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, DEFAULT_LEARNING_RATE_DECREASE_PERCENT, _max_accuracy);
+		}
+
 		
-		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _learning_rate_decrease_percent) {
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _learning_rate_decrease_percent, float _max_accuracy) {
 			
 			count_convolutional_layers = _count_convolutional_layers;
 			
@@ -101,6 +112,8 @@ public class TrainingUtils {
 			learning_rate = _learning_rate;
 			
 			learning_rate_decrease_percent = _learning_rate_decrease_percent;
+			
+			max_accuracy = _max_accuracy;
 		}
 		
 		

@@ -39,12 +39,10 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
     private static final Logger LOGGER 									= LogManager.getLogger(DeepNetts.class.getName());
     
     
-	private static final float ACCURACY_MAX 							= 0.999f;
+	private static final int MIN_EPOCHS_FOR_DIFF 						= 20;
 	
-	private static final int MIN_EPOCHS_FOR_DIFF 						= 10;
-	
-	private static final boolean USE_LEARNING_RATE_MAX_TOLERANCE 		= false;
-	private static final float LEARNING_RATE_MAX_TOLERANCE 				= 0.5f;
+	private static final boolean USE_LEARNING_RATE_DROP_MAX_TOLERANCE 	= false;
+	private static final float LEARNING_RATE_DROP_MAX_TOLERANCE 		= 0.5f;
 	
 	
     private static final Map<String, List<Float>> global_accuracies 	= new Hashtable<String, List<Float>>();
@@ -250,7 +248,17 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
     						global_epochs.put(OUTPUT_FILE_NAME, epochs_count[0]);
     						global_times.put(OUTPUT_FILE_NAME, System.currentTimeMillis() - start_time);
     						global_learning_rates.put(OUTPUT_FILE_NAME, final_current_learning_rate[0]);
+
+							Integer current_tries = global_tries.get(OUTPUT_FILE_NAME);
+							
+							if (current_tries == null) {
+								
+								current_tries = new Integer(0);
+								
+								global_tries.put(OUTPUT_FILE_NAME, current_tries);
+							}
     						
+							
     			        	try {
     							
     							dumpGlobalAccuracies();
@@ -307,7 +315,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
     							}
     						}
     						
-    			        	if (USE_LEARNING_RATE_MAX_TOLERANCE && accuracies.size() >= 2) {
+    			        	if (USE_LEARNING_RATE_DROP_MAX_TOLERANCE && accuracies.size() >= 2) {
     			        		
     			        		//In some cases the accuracy goes to 99.7% and then goes to 10%.
     			        		//In such cases the training can take long time, so better try with next learning rate where the training will be a bit more stable.
@@ -315,7 +323,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
     							float prev_accuracy =  accuracies.get(accuracies.size() - 2);
     							
     							if (prev_accuracy >= 0.5f
-    									&& accuracy < prev_accuracy - LEARNING_RATE_MAX_TOLERANCE * prev_accuracy) {
+    									&& accuracy < prev_accuracy - LEARNING_RATE_DROP_MAX_TOLERANCE * prev_accuracy) {
     								
     								LOGGER.info("Accuracy is changing too much prev_accuracy=" + prev_accuracy + ", accuracy=" + accuracy
     										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
@@ -329,13 +337,6 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 								
 								final_current_learning_rate[0] -= training_params.learning_rate_decrease_percent * final_current_learning_rate[0];
 								
-								Integer current_tries = global_tries.get(OUTPUT_FILE_NAME);
-								
-								if (current_tries == null) {
-									
-									current_tries = new Integer(0);
-								}
-								
 								global_tries.put(OUTPUT_FILE_NAME, current_tries + 1);
 								
 								//Clear global maps for this net
@@ -348,7 +349,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 							}
 							
 							
-							if (accuracy == 1f || accuracy >= ACCURACY_MAX) {
+							if (accuracy == 1f || accuracy >= training_params.max_accuracy) {
 								
 								training_completed_succesfully[0] = true;
 							}
