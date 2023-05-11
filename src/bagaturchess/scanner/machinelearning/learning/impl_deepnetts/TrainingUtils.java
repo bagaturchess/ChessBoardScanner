@@ -10,7 +10,7 @@ public class TrainingUtils {
 	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
 	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.026031807f, 0.09f, 0.997f); //0.031435584f, 0.024435584f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.030f, 0.09f); //0.026031807f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0394169f, 0.19f);
 	
@@ -20,11 +20,11 @@ public class TrainingUtils {
 	
 	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.14121479f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f); //0.034336843f
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f , 0.19f); //0.03988323f
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f , 0.19f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.014418085f, 0.05f, 0.997f); //0.015176931f, 0.022876794f
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027075f, 0.05f);
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;
@@ -89,9 +89,9 @@ public class TrainingUtils {
 		}
 		
 
-		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _max_accuracy) {
+		public AutoTuningParameters(int _count_convolutional_layers, int _convolution_filter_size, int _has_maxpooling_layer, int _maxpooling_filter_size, int _maxpooling_filter_stride, int _size_fully_connected_layer, float _learning_rate, float _learning_rate_decrease_percent) {
 			
-			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, DEFAULT_LEARNING_RATE_DECREASE_PERCENT, _max_accuracy);
+			this(_count_convolutional_layers, _convolution_filter_size, _has_maxpooling_layer, _maxpooling_filter_size, _maxpooling_filter_stride, _size_fully_connected_layer, _learning_rate, _learning_rate_decrease_percent, 1f);
 		}
 
 		
