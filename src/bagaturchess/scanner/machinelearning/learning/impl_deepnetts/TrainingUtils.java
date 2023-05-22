@@ -4,13 +4,12 @@ package bagaturchess.scanner.machinelearning.learning.impl_deepnetts;
 public class TrainingUtils {
 	
 	
-	public static final float MIN_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_100;
-	public static final float MAX_LEARNING_RATE 						= TrainingUtils.LEARNING_RATE_10;
+	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT = 0.5f;
 	
-	public static final float DEFAULT_LEARNING_RATE_DECREASE_PERCENT 	= 0.5f;
+	public static final float MIN_LEARNING_RATE 					= TrainingUtils.LEARNING_RATE_100;
+	public static final float MAX_LEARNING_RATE 					= TrainingUtils.LEARNING_RATE_10;	
 	
-	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.030f, 0.09f); //0.026031807f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027082335f, 0.05f); //0.02850772f, 0.030008126f, 0.0315875f, 0.03325f, 0.035f, 0.031201608f, 0.03767855f
 	
 	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0394169f, 0.19f);
 	
