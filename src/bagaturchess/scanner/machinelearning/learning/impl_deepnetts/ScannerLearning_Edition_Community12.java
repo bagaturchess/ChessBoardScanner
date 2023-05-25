@@ -95,19 +95,19 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
         			);
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_2_extended/",
 													"dnet_books_set_2_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET2
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET3
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_1_extended/",
 													"dnet_chesscom_set_1_extended.dnet",
@@ -116,26 +116,26 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 					);
         	
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chesscom_set_2_extended/",
 													"dnet_chesscom_set_2_extended.dnet",
 													TrainingUtils.CNN_CHESSCOM_SET2
 								)
 					);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_chess24com_set_1_extended/",
 													"dnet_chess24com_set_1_extended.dnet",
 													TrainingUtils.CNN_CHESS24COM_SET1
 								)
         			);
-        	*/
         	
-        	/*learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
+        	
+        	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_lichessorg_set_1_extended/",
 													"dnet_lichessorg_set_1_extended.dnet",
 													TrainingUtils.CNN_LICHESSORG_SET1
 								)
 					);
-        	*/
+        	
         	
         	learningTasks.add(new ScannerLearning_Edition_Community12("./datasets_deepnetts/dataset_universal_extended/",
 													"dnet_universal_extended.dnet",
@@ -349,7 +349,7 @@ public class ScannerLearning_Edition_Community12 implements Runnable {
 							}
 							
 							
-							if (accuracy == 1f || accuracy >= training_params.max_accuracy) {
+							if (accuracy >= training_params.max_accuracy) {
 								
 								training_completed_succesfully[0] = true;
 							}

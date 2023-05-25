@@ -75,7 +75,7 @@ public class RecognitionMain_DeepNetts {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/Ismail/initial_board_cropped.png");
 			
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set1/test7.png");
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/books/set1/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set2/test2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set3/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test5.png");
@@ -89,6 +89,22 @@ public class RecognitionMain_DeepNetts {
 			image = ImageHandlerSingleton.getInstance().resizeImage(image, boardProperties_processor.getImageSize());
 			
 			ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_input", "png", image);
+			
+			/*if (true) {
+				
+				int[][] matrixOfInitialBoard = ScannerUtils.convertToGrayMatrix((BufferedImage) image);
+				int[][] rotated = MatrixUtils.rotateMatrix(matrixOfInitialBoard, 1, 255);
+				
+				int[][][] rgbBoard = MatrixUtils.convertTo3ChannelsGray(rotated);
+
+				Object rotated_image = ScannerUtils.createRGBImage(rgbBoard);
+				
+				ImageHandlerSingleton.getInstance().saveImage("OpenCV_board_rotated", "png", rotated_image);
+				
+				System.out.println("done");
+				
+				System.exit(0);
+			}*/
 			
 			Object forMatching = image;
 			
