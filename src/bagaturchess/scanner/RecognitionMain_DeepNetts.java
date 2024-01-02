@@ -75,10 +75,12 @@ public class RecognitionMain_DeepNetts {
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/input2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/Ismail/initial_board_cropped.png");
 			
-			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/books/set1/input1.png");
+			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/cnn/books/set1/input1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set2/test2.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/books/set3/test1.png");
 			//Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./data/tests/chess.com/test5.png");
+			
+			Object image = ImageHandlerSingleton.getInstance().loadImageFromFS("./res/others/Customers.Boards/lichess_set1_a.jpg");
 			
 			long startTime = System.currentTimeMillis();
 			

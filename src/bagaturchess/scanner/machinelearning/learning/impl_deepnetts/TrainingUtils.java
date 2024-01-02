@@ -21,7 +21,7 @@ public class TrainingUtils {
 	
 	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f , 0.19f);
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f);
 	
 	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027075f, 0.05f);
 	

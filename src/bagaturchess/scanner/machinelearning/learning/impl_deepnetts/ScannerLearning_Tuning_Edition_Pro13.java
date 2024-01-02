@@ -10,7 +10,6 @@ import deepnetts.net.train.TrainingListener;
 import deepnetts.util.DeepNettsException;
 import deepnetts.eval.ClassifierEvaluator;
 import deepnetts.eval.ConfusionMatrix;
-import javafx.collections.transformation.SortedList;
 
 import javax.visrec.ml.eval.EvaluationMetrics;
 import deepnetts.net.layers.activation.ActivationType;

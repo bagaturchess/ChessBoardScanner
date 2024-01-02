@@ -42,6 +42,7 @@
 	<classpathentry kind="lib" path="libs/deepnetts_pro13/bcprov-jdk15on-1.64.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts_pro13/license3j-2.0.0-JVM8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv_java451"/>
+	<classpathentry kind="lib" path="libs/imageio-metadata-3.10.1.jar"/>
 	<classpathentry kind="lib" path="libs/deepnetts/deepnetts-core-1.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
