@@ -35,8 +35,6 @@ public class SupervisedData {
 					"./res/cnn/books/set1/input20.png",
 					"./res/cnn/books/set1/input21.png",
 					"./res/cnn/books/set1/input22.png",
-					"./res/cnn/books/set1/input23.png",
-					"./res/cnn/books/set1/input24.png",
 			},
 			new String[] {
 					Test.INITIAL_FEN,
@@ -55,8 +53,6 @@ public class SupervisedData {
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
-					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
-					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
@@ -112,6 +108,9 @@ public class SupervisedData {
 					"3Q2nr/5qpp/2k5/8/8/8/2B3PP/6K1 w - - 0 1",
 					"3Q2nr/5qpp/2k5/8/8/8/2B3PP/6K1 w - - 0 1",
 					"3Q2nr/5qpp/2k5/8/8/8/2B3PP/6K1 w - - 0 1",
+					Test.INITIAL_FEN,
+					"3Q2nr/5qpp/2k5/8/8/8/2B3PP/6K1 w - - 0 1",
+					"r5k1/1b3N2/8/8/6n1/1R4B1/6K1/8 w - - 0 1",
 			}
 		);
 	
@@ -135,6 +134,21 @@ public class SupervisedData {
 					"r3kn1r/2q1bp2/p1pp1n1p/1P2p1p1/P1B1P3/2N1BNPb/2P1QP2/R2R2K1 w KQkq - 0 1",
 					"r3kn1r/2q1bp2/p1pp1n1p/1P2p1p1/P1B1P3/2N1BNPb/2P1QP2/R2R2K1 w KQkq - 0 1",
 					"r3kn1r/2q1bp2/p1pp1n1p/1P2p1p1/P1B1P3/2N1BNPb/2P1QP2/R2R2K1 w KQkq - 0 1",
+			}
+		);
+	
+	
+	private static final SupervisedData gen_data_book_set4 = new SupervisedData(
+			"./datasets_deepnetts/dataset_books_set_4_extended/",
+			new String[] {
+					"./res/cnn/books/set3/input1.png",
+					"./res/cnn/books/set3/input2.png",
+					"./res/cnn/books/set3/input3.png",
+			},
+			new String[] {
+					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
+					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
+					"2r1r1k1/p5pb/qpQ2n1p/2bpN3/5B2/1PP2N1P/P2R1PP1/5RK1 w - - 0 1",
 			}
 		);
 	
@@ -258,8 +272,10 @@ public class SupervisedData {
 					"./res/cnn/lichess.org/set1/input17.png",
 					"./res/cnn/lichess.org/set1/input18.png",
 					"./res/cnn/lichess.org/set1/input19.png",
+					"./res/cnn/lichess.org/set1/input20.png",
 			},
 			new String[] {
+					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
 					Test.INITIAL_FEN,
@@ -287,6 +303,7 @@ public class SupervisedData {
 			gen_data_book_set1,
 			gen_data_book_set2,
 			gen_data_book_set3,
+			gen_data_book_set4,
 			gen_data_chesscom_set1,
 			gen_data_chesscom_set2,
 			gen_data_chess24com_set1,
