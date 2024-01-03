@@ -25,41 +25,26 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.bitboard.impl.utils.VarStatistic;
-import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
 import bagaturchess.scanner.common.IMatchingInfo;
+import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
+import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator_Scores_RGB;
+import bagaturchess.scanner.machinelearning.model.ProviderSwitch;
 
 
-public abstract class MatcherFinder_Base {
+public class MatcherFinder_RGB_Scores extends MatcherFinder_Base {
 	
 	
-	protected List<ProbabilitiesCalculator> scanners;
-	protected List<String> netsNames;
-	protected List<VarStatistic> scanners_stats;
-	
-	protected int squareSize;
-	
-	
-	public MatcherFinder_Base(int _squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
-		
-		squareSize = _squareSize;
-		netsNames = _netsNames;
-		
-		scanners = new ArrayList<ProbabilitiesCalculator>();
-		for (int i = 0; i < netsStreams.size(); i++) {
-			scanners.add(createScanner(netsStreams.get(i)));
-		}
-		
-		scanners_stats = new ArrayList<VarStatistic>();
-		for (int i = 0; i < netsStreams.size(); i++) {
-			scanners_stats.add(new VarStatistic(false));
-		}
+	public MatcherFinder_RGB_Scores(int squareSize, List<InputStream> netsStreams, List<String> _netsNames) throws ClassNotFoundException, IOException {
+		super(squareSize, netsStreams, _netsNames);
 	}
 	
 	
-	protected abstract ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException;
+	protected ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException {
+		return new ProbabilitiesCalculator_Scores_RGB(ProviderSwitch.getInstance().create(3, stream, squareSize));
+	}
 	
 	
+	@Override
 	public String findMatcher(Object image, IMatchingInfo matchingInfo) {
 		
 		long startTime = System.currentTimeMillis();

@@ -42,7 +42,7 @@ public abstract class Matcher_Composite_Base extends Matcher_Base {
 	
 	public Matcher_Composite_Base(int _imageSize, List<String> _netsNames, List<InputStream> _netsStreams, Map<String, Matcher_Base> _matchers) throws ClassNotFoundException, IOException {
 		
-		super(null, "Matcher_Composite_Gray");
+		super(null, "Matcher_Composite_Base");
 		
 		imageSize = _imageSize;
 		netsNames = _netsNames;

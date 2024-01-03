@@ -27,7 +27,7 @@ import java.util.Map;
 
 import bagaturchess.scanner.common.MatrixUtils;
 import bagaturchess.scanner.machinelearning.classification.MatcherFinder_Base;
-import bagaturchess.scanner.machinelearning.classification.MatcherFinder_RGB;
+import bagaturchess.scanner.machinelearning.classification.MatcherFinder_RGB_Scores;
 
 
 public class Matcher_Composite_RGB extends Matcher_Composite_Base {
@@ -40,7 +40,7 @@ public class Matcher_Composite_RGB extends Matcher_Composite_Base {
 
 		super(imageSize, _netsNames, _netsStreams, _matchers);
 
-		matcherFinder = new MatcherFinder_RGB(imageSize / 8, netsStreams, netsNames);
+		matcherFinder = new MatcherFinder_RGB_Scores(imageSize / 8, netsStreams, netsNames);
 	}
 	
 	
