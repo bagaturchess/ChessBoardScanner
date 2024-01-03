@@ -15,6 +15,9 @@ import bagaturchess.scanner.machinelearning.SupervisedData;
 public class DatasetGenerator_ByBoardImage {
 	
 	
+	private static final int SQUARE_SIZE 								= 32; //Pixels
+	
+	
 	private static final float ROTATION_DEGREES 						= 1f;
 	
 	
@@ -68,6 +71,9 @@ public class DatasetGenerator_ByBoardImage {
 		try {
 			
 			
+			BoardProperties boardProperties = new BoardProperties(8 * SQUARE_SIZE);
+			
+			
 			//gen1Set_In1Dir(SupervisedData.source_set_all[0], TRANSLATIONS_V2[0], ROTATION_DEGREES);
 			
 			/*
@@ -86,14 +92,15 @@ public class DatasetGenerator_ByBoardImage {
 			for (int i = 0; i < all_source_sets.length; i++) {
 				
 				//gen1Set_In1Dir(all_source_sets[i], TRANSLATIONS[i], ROTATION_DEGREES);
-				gen1Set_In1Dir(all_source_sets[i], TRANSLATION_PIXELS_PERCENT, ROTATION_DEGREES);
+				gen1Set_In1Dir(all_source_sets[i], TRANSLATION_PIXELS_PERCENT, ROTATION_DEGREES, boardProperties);
 			}
 			
 			
 			genAllSets_In1Dir(all_source_sets,
 					"./datasets_deepnetts/dataset_universal_extended/",
 					TRANSLATION_PIXELS_PERCENT_UNIVERSAL_NET,
-					ROTATION_DEGREES);
+					ROTATION_DEGREES,
+					boardProperties);
 			
 			
 		} catch (Exception e) {
@@ -103,9 +110,7 @@ public class DatasetGenerator_ByBoardImage {
 	}
 
 	
-	private static void gen1Set_In1Dir(SupervisedData gen_data, double translations_ration, float rotation_degrees) throws IOException {
-			
-		BoardProperties boardProperties = new BoardProperties(256);
+	private static void gen1Set_In1Dir(SupervisedData gen_data, double translations_ration, float rotation_degrees, BoardProperties boardProperties) throws IOException {
 		
 		//boolean extend = gen_data.flag1;
 		
@@ -123,9 +128,8 @@ public class DatasetGenerator_ByBoardImage {
 	}
 	
 	
-	private static void genAllSets_In1Dir(SupervisedData[] gen_data, String output_dir, double translations_ration, float rotation_degrees) throws IOException {
+	private static void genAllSets_In1Dir(SupervisedData[] gen_data, String output_dir, double translations_ration, float rotation_degrees, BoardProperties boardProperties) throws IOException {
 		
-		BoardProperties boardProperties = new BoardProperties(256);
 		for (int i = 0; i < gen_data.length; i++) {
 			
 			DataSetInitPair[] pairs = DataSetUtils.getInitPairs_Gray(
