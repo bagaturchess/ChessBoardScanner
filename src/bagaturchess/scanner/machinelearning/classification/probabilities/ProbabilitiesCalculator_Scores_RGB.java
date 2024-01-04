@@ -121,12 +121,22 @@ public class ProbabilitiesCalculator_Scores_RGB extends ProbabilitiesCalculator 
 		
 		if (count_w_king != 1) {
 			
-			scores -= 0.10;
+			scores -= 0.25;
+
+			if (count_w_king > 1) {
+
+				scores -= 0.01 * (count_w_king - 1);
+			}
 		}
 		
 		if (count_b_king != 1) {
 			
-			scores -= 0.10;
+			scores -= 0.25;
+
+			if (count_b_king > 1) {
+
+				scores -= 0.01 * (count_b_king - 1);
+			}
 		}
 		
 		if (count_w_queens > 1) {

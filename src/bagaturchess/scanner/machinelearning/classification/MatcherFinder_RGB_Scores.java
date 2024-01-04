@@ -22,10 +22,8 @@ package bagaturchess.scanner.machinelearning.classification;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
-import bagaturchess.scanner.common.IMatchingInfo;
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator;
 import bagaturchess.scanner.machinelearning.classification.probabilities.ProbabilitiesCalculator_Scores_RGB;
 import bagaturchess.scanner.machinelearning.model.ProviderSwitch;
@@ -41,75 +39,5 @@ public class MatcherFinder_RGB_Scores extends MatcherFinder_Base {
 	
 	protected ProbabilitiesCalculator createScanner(InputStream stream) throws ClassNotFoundException, IOException {
 		return new ProbabilitiesCalculator_Scores_RGB(ProviderSwitch.getInstance().create(3, stream, squareSize));
-	}
-	
-	
-	@Override
-	public String findMatcher(Object image, IMatchingInfo matchingInfo) {
-		
-		long startTime = System.currentTimeMillis();
-		
-		List<Double> probs = new ArrayList<Double>();
-		
-		for (int i = 0; i < scanners.size(); i++) {
-			
-			String currentName = netsNames.get(i);
-			
-			double currentProb = scanners.get(i).getAccumulatedProbability(image, matchingInfo, scanners_stats.get(i));
-			
-			probs.add(currentProb);
-			
-			if (matchingInfo != null) {
-				
-				matchingInfo.setCurrentPhaseProgress(i / (double) scanners.size());
-				matchingInfo.setMatchingFinderInfo(currentName, currentProb);
-			}
-			
-			System.out.println("MatcherFinder_Base(PROB): " + currentName + " " + currentProb + " " + scanners_stats.get(i));
-		}
-		
-		
-		
-		String bestName = null;
-		
-		double bestProb = 0;
-		
-		for (int i = 0; i < scanners.size(); i++) {
-			
-			String currentName = netsNames.get(i);
-			
-			double currentProb = probs.get(i);
-			
-			if (currentProb == Double.NaN) {
-				
-				throw new IllegalStateException("currentProb=" + currentProb);
-			}
-			
-			if (currentProb > 1) {
-				
-				currentProb = 1;
-			}
-			
-			if (currentProb < 0) {
-				
-				currentProb = 0;
-			}
-			
-			if (currentProb >= bestProb) {
-				
-				bestProb = currentProb;
-				
-				bestName = currentName;
-			}
-			
-			System.out.println("MatcherFinder_Base(SELECT): " + currentName + " " + currentProb + " " + scanners_stats.get(i));
-		}
-		
-		
-		long endTime = System.currentTimeMillis();
-		
-		System.out.println("MatcherFinder_Base: Time is " + (endTime - startTime) + " ms, best is " + bestName);
-		
-		return bestName;
 	}
 }
