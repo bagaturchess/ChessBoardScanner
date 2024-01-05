@@ -9,21 +9,23 @@ public class TrainingUtils {
 	public static final float MIN_LEARNING_RATE 					= TrainingUtils.LEARNING_RATE_100;
 	public static final float MAX_LEARNING_RATE 					= TrainingUtils.LEARNING_RATE_10;	
 	
-	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027082335f, 0.05f, 0.90f); //0.02850772f, 0.030008126f, 0.0315875f, 0.03325f, 0.035f, 0.031201608f, 0.03767855f
+	public static final AutoTuningParameters CNN_BOOK_SET1 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.028156757f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.0394169f, 0.19f);
+	public static final AutoTuningParameters CNN_BOOK_SET2 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.050056458f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.060788337f, 0.19f);
+	public static final AutoTuningParameters CNN_BOOK_SET3 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.011878632f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.022980085f, 0.09f, 0.97f);
+	public static final AutoTuningParameters CNN_BOOK_SET4 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.011878632f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.14121479f, 0.19f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET1 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.037542343f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f);
+	public static final AutoTuningParameters CNN_CHESSCOM_SET2 		= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.037542343f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.017168421f, 0.19f);
+	public static final AutoTuningParameters CNN_CHESS24COM_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.050056458f, 0.25f);
 	
-	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.027075f, 0.05f);
+	public static final AutoTuningParameters CNN_LICHESSORG_SET1 	= new AutoTuningParameters(2, 2, 1, 2, 2, 9, 0.06674194f, 0.25f);
+	
+	public static final AutoTuningParameters CNN_UNIVERSAL 			= new AutoTuningParameters(2, 2, 1, 3, 2, 9, 0.011878632f, 0.25f);
 	
 	
 	public static final int SQUARE_IMAGE_SIZE 						= 32;

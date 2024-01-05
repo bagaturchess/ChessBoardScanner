@@ -18,12 +18,12 @@ public class DatasetGenerator_ByBoardImage {
 	private static final int SQUARE_SIZE 								= 32; //Pixels
 	
 	
-	private static final float ROTATION_DEGREES 						= 1f;
+	private static final float ROTATION_DEGREES 						= 2f; //Degrees
 	
 	
-	private static final float TRANSLATION_PIXELS_PERCENT				= 0.033f; //Should be 1 pixel. For image with 32x32 pixels, 0.033 is a bit more than 1.
+	private static final float TRANSLATION_PIXELS_PERCENT				= 2 * 0.033f; //Should be at least 1 pixel. For image with 32x32 pixels, 0.033 is a bit more than 1.
 	
-	private static final float TRANSLATION_PIXELS_PERCENT_UNIVERSAL_NET	= 0; //0.033f; //Should be 1 pixel. For image with 32x32 pixels, 0.033 is a bit more than 1.
+	private static final float TRANSLATION_PIXELS_PERCENT_UNIVERSAL_NET	= 0; //0f;
 	
 	
 	//Use different scales to generate equal amount of images for each dataset

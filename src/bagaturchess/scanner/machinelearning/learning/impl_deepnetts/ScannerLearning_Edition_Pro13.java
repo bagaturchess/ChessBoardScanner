@@ -39,9 +39,9 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     private static final Logger LOGGER 									= LogManager.getLogger(DeepNetts.class.getName());
     
     
-	private static final int MIN_EPOCHS_FOR_DIFF 						= 20;
+	private static final int MIN_EPOCHS_FOR_DIFF 						= 5;
 	
-	private static final boolean USE_LEARNING_RATE_DROP_MAX_TOLERANCE 	= false;
+	private static final boolean USE_LEARNING_RATE_DROP_MAX_TOLERANCE 	= true;
 	private static final float LEARNING_RATE_DROP_MAX_TOLERANCE 		= 0.5f;
 	
 	
@@ -105,6 +105,13 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
         	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_3_extended/",
 													"dnet_books_set_3_extended.dnet",
 													TrainingUtils.CNN_BOOK_SET3
+								)
+					);
+        	
+        	
+        	learningTasks.add(new ScannerLearning_Edition_Pro13("./datasets_deepnetts/dataset_books_set_4_extended/",
+													"dnet_books_set_4_extended.dnet",
+													TrainingUtils.CNN_BOOK_SET4
 								)
 					);
         	
@@ -273,39 +280,27 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     						}
     			        	
     						
-    			        	int MIN_EPOCHS = MIN_EPOCHS_FOR_DIFF;
-    			        	
-    			        	if (accuracies.size() >= MIN_EPOCHS
+    			        	if (accuracies.size() >= MIN_EPOCHS_FOR_DIFF
     			        			&& accuracy < 0.5f //Not at the end of training.
     			        		) {
     							
-    			        		boolean all_are_equal = true;
-    			        		
-    			        		float prev = -1;
+    			        		int count_equal = 0;
     			        		
     			        		for (int i = accuracies.size() - 1; i >=0; i--) {
     			        			
     			        			float cur = accuracies.get(i);
     			        			
-    			        			if (prev != -1) {
-    			        				
-        			        			if (prev != cur) {
-        			        				
-        			        				all_are_equal = false;
-        			        				
-        			        				break;
-        			        			}
-    			        			}
-
-    			        			
-    			        			prev = cur;
+        			        		if (accuracy == cur) {
+        			        			
+        			        			count_equal++;
+        			        		}
     			        		}
     			        		
     			        		//LOGGER.info(OUTPUT_FILE_NAME + " accuracies all_are_equal=" + all_are_equal);
     			        		
-    							if (all_are_equal) {
+    							if (count_equal > MIN_EPOCHS_FOR_DIFF) {
     								
-    								LOGGER.info("Accuracy is not changing " + MIN_EPOCHS + " epochs! It is equal to " + accuracy
+    								LOGGER.info("Accuracy is the same " + MIN_EPOCHS_FOR_DIFF + " epochs! It is equal to " + accuracy
     										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
     										+ " in order to stop the training with the current learning rate and try with the next one.");
     								
@@ -315,15 +310,15 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     							}
     						}
     						
-    			        	if (USE_LEARNING_RATE_DROP_MAX_TOLERANCE && accuracies.size() >= 2) {
+    			        	if (USE_LEARNING_RATE_DROP_MAX_TOLERANCE && accuracies.size() > 5) {
     			        		
     			        		//In some cases the accuracy goes to 99.7% and then goes to 10%.
     			        		//In such cases the training can take long time, so better try with next learning rate where the training will be a bit more stable.
     			        		
     							float prev_accuracy =  accuracies.get(accuracies.size() - 2);
     							
-    							if (prev_accuracy >= 0.5f
-    									&& accuracy < prev_accuracy - LEARNING_RATE_DROP_MAX_TOLERANCE * prev_accuracy) {
+    							if (/*prev_accuracy >= 0.5f
+    									&&*/ accuracy < prev_accuracy - LEARNING_RATE_DROP_MAX_TOLERANCE * prev_accuracy) {
     								
     								LOGGER.info("Accuracy is changing too much prev_accuracy=" + prev_accuracy + ", accuracy=" + accuracy
     										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
