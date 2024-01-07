@@ -142,11 +142,9 @@ public class SupervisedData {
 			"./datasets_deepnetts/dataset_books_set_4_extended/",
 			new String[] {
 					"./res/cnn/books/set4/input1.png",
-					"./res/cnn/books/set4/input2.png",
-					"./res/cnn/books/set4/input3.jpg",
+					"./res/cnn/books/set4/input2.jpg",
 			},
 			new String[] {
-					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
 					"2r2rk1/p2n1ppp/1qb1pn2/1p4B1/3P4/P2B1P2/1P2N1PP/R2Q1RK1 w - - 0 1",
 					"2r1r1k1/p5pb/qpQ2n1p/2bpN3/5B2/1PP2N1P/P2R1PP1/5RK1 w - - 0 1",
 			}
