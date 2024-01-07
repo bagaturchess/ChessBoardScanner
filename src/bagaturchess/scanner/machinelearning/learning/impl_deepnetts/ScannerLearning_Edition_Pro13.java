@@ -41,7 +41,7 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     
 	private static final int MIN_EPOCHS_FOR_DIFF 						= 5;
 	
-	private static final boolean USE_LEARNING_RATE_DROP_MAX_TOLERANCE 	= true;
+	private static final boolean USE_LEARNING_RATE_DROP_MAX_TOLERANCE 	= false;
 	private static final float LEARNING_RATE_DROP_MAX_TOLERANCE 		= 0.5f;
 	
 	
@@ -317,8 +317,8 @@ public class ScannerLearning_Edition_Pro13 implements Runnable {
     			        		
     							float prev_accuracy =  accuracies.get(accuracies.size() - 2);
     							
-    							if (/*prev_accuracy >= 0.5f
-    									&&*/ accuracy < prev_accuracy - LEARNING_RATE_DROP_MAX_TOLERANCE * prev_accuracy) {
+    							if (prev_accuracy >= 0.5f
+    									&& accuracy < prev_accuracy - LEARNING_RATE_DROP_MAX_TOLERANCE * prev_accuracy) {
     								
     								LOGGER.info("Accuracy is changing too much prev_accuracy=" + prev_accuracy + ", accuracy=" + accuracy
     										+ ". Now, setting accuracy to 0 for " + OUTPUT_FILE_NAME
